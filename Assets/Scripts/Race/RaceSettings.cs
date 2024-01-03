@@ -4,8 +4,8 @@ public class RaceSettings
 {
     private GameObject m_Car;
 
-    private int m_NumberOfBots;
-
+    private int m_SceneIndex;
+    
     private float m_GameTime;
 
     private bool m_UseGameTimer;
@@ -16,12 +16,6 @@ public class RaceSettings
     { 
         get => m_Car; 
         set => m_Car = value; 
-    }
-
-    public int NumberOfBots 
-    { 
-        get => m_NumberOfBots; 
-        set => m_NumberOfBots = value; 
     }
 
     public float GameTime
@@ -40,5 +34,11 @@ public class RaceSettings
     { 
         get => m_AirStrike; 
         set => m_AirStrike = value;
+    }
+    
+    public int SceneIndex 
+    {
+        get => m_SceneIndex; 
+        set => m_SceneIndex = value;
     }
 }

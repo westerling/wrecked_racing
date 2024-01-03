@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RaceManager : MonoBehaviour
 {
+    public static RaceManager Current;
+    
     [SerializeField]
     private Checkpoint[] m_Checkpoints;
 
@@ -11,10 +13,6 @@ public class RaceManager : MonoBehaviour
     private Checkpoint m_LastCheckpoint;
     private RaceSettings m_RaceSettings;
     private List<CarRaceStats> m_RaceStats = new List<CarRaceStats>();
-
-    //private List<Car> m_Cars = new List<Car>();
-
-    public static RaceManager Current;
 
     public List<CarRaceStats> RaceStats 
     {

@@ -1,10 +1,7 @@
-using System;
 using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public event Action<bool> CarStatusChanged;
-
     [SerializeField]
     private Rigidbody m_Rigidbody;
 

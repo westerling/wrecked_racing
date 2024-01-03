@@ -102,17 +102,17 @@ public class InputManager : MonoBehaviour
 
     private void NavigateUpPerformed(InputAction.CallbackContext obj)
     {
-                NavigateMenu?.Invoke(MenuNavigation.Up);
+        NavigateMenu?.Invoke(MenuNavigation.Up);
     }
 
     private void NavigateForwardPerformed(InputAction.CallbackContext obj)
     {
-        throw new NotImplementedException();
+        BackMenu?.Invoke();
     }
 
     private void NavigateBackPerformed(InputAction.CallbackContext obj)
     {
-        throw new NotImplementedException();
+        GoMenu?.Invoke();
     }
 
     private void OnDestroy()
