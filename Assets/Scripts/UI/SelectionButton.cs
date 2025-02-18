@@ -1,7 +1,7 @@
 using UnityEngine.Events;
 using UnityEngine;
 
-public class SelectionButton : Button
+public class SelectionButton : CustomButton
 {
     [SerializeField]
     private UnityEvent m_OnLeft;

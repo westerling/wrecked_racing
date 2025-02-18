@@ -1,77 +1,74 @@
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+using System;
+using System.Diagnostics;
 
-public class Engine : CarComponent
+public class Engine : InputComponent
 {
-    private float m_CurrentAccelerationInput;
+    private float m_CurrentAccelerationInput = 0f;
+    private float m_CurrentBrakeInput = 0f;
 
-    private List<Wheel> m_DriveWheels = new List<Wheel>();
+    private RaceStatus m_RaceStatus;
 
-    private void Start()
+    protected override void AddListeners()
     {
-        AddListeners();
-        SetDriveWheels();
+        Car.InputManager.Accelerate += OnAccelerationPerformed;
+        Car.InputManager.Brake += OnBrakePerformed;
+        RaceManager.Current.OnRaceStatus += OnRaceStateChanged;
     }
 
-    private void FixedUpdate()
+    protected override void RemoveListeners()
     {
-        if (Physics.Raycast(transform.position, -transform.up, out var hit, Car.Stats.SuspensionRestDistance))
+        Car.InputManager.Accelerate -= OnAccelerationPerformed;
+        Car.InputManager.Brake -= OnBrakePerformed;
+        RaceManager.Current.OnRaceStatus -= OnRaceStateChanged;
+    }
+
+    private void Update()
+    {
+        if (m_RaceStatus == RaceStatus.Race)
         {
-            var carSpeed = Vector3.Dot(Car.transform.forward, Car.Rigidbody.velocity);
-
-            if (carSpeed > Car.Stats.TopSpeed + Car.StatusManager.SpeedModifier)
-            {
-                return;
-            }
-
-            var normalizedSpeed = Mathf.Clamp01(Mathf.Abs(carSpeed) / Car.Stats.TopSpeed);
-            var availableTorque = Car.Stats.Torque.Evaluate(normalizedSpeed) * Car.Stats.HorsePower * m_CurrentAccelerationInput;
-
-            foreach (var wheel in m_DriveWheels)
-            {
-                wheel.ApplyAccelerationForce(availableTorque, transform.forward, hit.point);
-            }
+            ApplyAcceleration();
         }
     }
 
-    private void AddListeners()
+    private void ApplyAcceleration()
     {
-        Car.InputManager.Accelerate += AccelerationPerformed;
+        var motorTorque = 0f;
+
+        if (m_CurrentAccelerationInput > 0)
+        {
+            motorTorque = Car.CurrentSpeed < (Car.Stats.TopSpeed * Car.StatusManager.GetModifierAmount(Stat.Speed)) ?
+            (m_CurrentAccelerationInput * Car.Stats.MotorTorque.Evaluate(Car.CurrentSpeedRatio) * Car.StatusManager.GetModifierAmount(Stat.Acceleration) / Car.DriveWheels.Count)
+            : 0;
+        }
+
+        else if (m_CurrentBrakeInput > 0)
+        {
+            if (Car.HeadingDirection != CarDirection.Forward)
+            {
+                motorTorque = -(Car.CurrentSpeed > -(Car.Stats.TopSpeed / 8) ?
+                (m_CurrentBrakeInput * Car.Stats.MotorTorque.Evaluate(Car.CurrentSpeedRatio) / Car.DriveWheels.Count)
+                : 0);
+            }       
+        }
+
+        foreach (var wheel in Car.DriveWheels)
+        {
+            wheel.MotorTorque = motorTorque;
+        }
     }
 
-    private void RemoveListeners()
+    private void OnRaceStateChanged(RaceStatus obj)
     {
-        Car.InputManager.Accelerate -= AccelerationPerformed;
+        m_RaceStatus = obj;
     }
 
-    private void AccelerationPerformed(float obj)
+    private void OnAccelerationPerformed(float obj)
     {
         m_CurrentAccelerationInput = obj;
     }
 
-    private void SetDriveWheels()
+    private void OnBrakePerformed(float obj)
     {
-        switch (Car.Stats.DriveTrain)
-        {
-            case Drivetrain.FWD:
-                m_DriveWheels.AddRange(Car.Wheels.Where(
-                    x => x.WheelPlacement == WheelPlacement.FrontLeft ||
-                    x.WheelPlacement == WheelPlacement.FrontRight));
-                break;
-            case Drivetrain.RWD:
-                m_DriveWheels.AddRange(Car.Wheels.Where(
-                    x => x.WheelPlacement == WheelPlacement.FrontLeft ||
-                    x.WheelPlacement == WheelPlacement.FrontRight));
-                break;
-            case Drivetrain.AWD:
-                m_DriveWheels.AddRange(Car.Wheels);
-                break;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        RemoveListeners();
+        m_CurrentBrakeInput = obj;
     }
 }

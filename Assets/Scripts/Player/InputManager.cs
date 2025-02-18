@@ -9,14 +9,19 @@ public class InputManager : MonoBehaviour
     public event Action<float> Steer;
     public event Action Fire;
 
-    public event Action<MenuNavigation> NavigateMenu;
-    public event Action BackMenu;
-    public event Action GoMenu;
+    public event Action<Player, MenuNavigation> NavigateMenu;
+    public event Action<Player> BackMenu;
+    public event Action<Player> GoMenu;
+
+    private Player m_Player;
+    private InputActionMap m_RaceInputActionMap;
+    private InputActionMap m_MenuInputActionMap;
+
+    private const string RaceInputActionMap = "Race";
+    private const string MenuInputActionMap = "Menu";
 
     [SerializeField]
     private PlayerInput m_Controls;
-
-    private Player m_Player;
 
     private void Awake()
     {
@@ -24,13 +29,46 @@ public class InputManager : MonoBehaviour
         {
             m_Player = player;
         }
+
+        m_RaceInputActionMap = m_Controls.actions.FindActionMap(RaceInputActionMap);
+        m_MenuInputActionMap = m_Controls.actions.FindActionMap(MenuInputActionMap);
     }
 
     private void Start()
     {
+        GameManager.Current.GameStateChanged += OnGameStateChanged;
         AddRaceListeners();
         AddMenuListeners();
-        
+
+        SetActionMapStatus(GameState.Menu);
+    }
+
+    private void OnGameStateChanged(GameState gameState)
+    {
+        SetActionMapStatus(gameState);
+    }
+
+    private void SetActionMapStatus(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.Menu:
+                m_RaceInputActionMap.Disable();
+                m_MenuInputActionMap.Enable();
+                break;
+            case GameState.Race:
+                m_RaceInputActionMap.Enable();
+                m_MenuInputActionMap.Disable();
+                break;
+            case GameState.Loading:
+                m_RaceInputActionMap.Disable();
+                m_MenuInputActionMap.Disable();
+                break;
+            default:
+                m_RaceInputActionMap.Disable();
+                m_MenuInputActionMap.Enable();
+                break;
+        }
     }
 
     private void AddMenuListeners()
@@ -38,9 +76,9 @@ public class InputManager : MonoBehaviour
         m_Controls.actions["NavigateUp"].performed += NavigateUpPerformed;
         m_Controls.actions["NavigateDown"].performed += NavigateDownPerformed;
         m_Controls.actions["NavigateLeft"].performed += NavigateLeftPerformed;
-        m_Controls.actions["NavigateLeft"].performed += NavigateLeftPerformed;
-        m_Controls.actions["BackMenu"].performed += NavigateBackPerformed;
-        m_Controls.actions["GoMenu"].performed += NavigateForwardPerformed;
+        m_Controls.actions["NavigateRight"].performed += NavigateRightPerformed;
+        m_Controls.actions["GoBackMenu"].performed += NavigateBackPerformed;
+        m_Controls.actions["EnterMenu"].performed += NavigateForwardPerformed;
     }
 
     private void AddRaceListeners()
@@ -53,16 +91,6 @@ public class InputManager : MonoBehaviour
         m_Controls.actions["Steer"].canceled += SteerPerformed;
         m_Controls.actions["Fire"].performed += FirePerfomed;
         m_Controls.actions["Fire"].canceled += FirePerfomed;
-    }
-
-    public void SetActionMap(InputActionMap actionMap)
-    {
-        if (actionMap.enabled)
-        {
-            return;
-        }
-
-
     }
 
     private void SteerPerformed(InputAction.CallbackContext obj)
@@ -87,35 +115,35 @@ public class InputManager : MonoBehaviour
 
     private void NavigateRightPerformed(InputAction.CallbackContext obj)
     {
-        NavigateMenu?.Invoke(MenuNavigation.Right);
+        NavigateMenu?.Invoke(m_Player, MenuNavigation.Right);
     }
 
     private void NavigateLeftPerformed(InputAction.CallbackContext obj)
     {
-        NavigateMenu?.Invoke(MenuNavigation.Left);
+        NavigateMenu?.Invoke(m_Player, MenuNavigation.Left);
     }
 
     private void NavigateDownPerformed(InputAction.CallbackContext obj)
     {
-        NavigateMenu?.Invoke(MenuNavigation.Down);
+        NavigateMenu?.Invoke(m_Player, MenuNavigation.Down);
     }
 
     private void NavigateUpPerformed(InputAction.CallbackContext obj)
     {
-        NavigateMenu?.Invoke(MenuNavigation.Up);
+        NavigateMenu?.Invoke(m_Player, MenuNavigation.Up);
     }
 
     private void NavigateForwardPerformed(InputAction.CallbackContext obj)
     {
-        BackMenu?.Invoke();
+        GoMenu?.Invoke(m_Player);
     }
 
     private void NavigateBackPerformed(InputAction.CallbackContext obj)
     {
-        GoMenu?.Invoke();
+        BackMenu?.Invoke(m_Player);
     }
 
-    private void OnDestroy()
+    private void RemoveRaceListeners()
     {
         m_Controls.actions["Accelerate"].performed -= AcceleratePerfomed;
         m_Controls.actions["Accelerate"].canceled -= AcceleratePerfomed;
@@ -125,13 +153,22 @@ public class InputManager : MonoBehaviour
         m_Controls.actions["Steer"].canceled -= SteerPerformed;
         m_Controls.actions["Fire"].performed -= FirePerfomed;
         m_Controls.actions["Fire"].canceled -= FirePerfomed;
+    }
 
+    private void RemoveMenuListeners()
+    {
         m_Controls.actions["NavigateUp"].performed -= NavigateUpPerformed;
         m_Controls.actions["NavigateDown"].performed -= NavigateDownPerformed;
         m_Controls.actions["NavigateLeft"].performed -= NavigateLeftPerformed;
-        m_Controls.actions["NavigateLeft"].performed -= NavigateLeftPerformed;
-        m_Controls.actions["BackMenu"].performed -= NavigateBackPerformed;
-        m_Controls.actions["GoMenu"].performed -= NavigateForwardPerformed;
+        m_Controls.actions["NavigateRight"].performed -= NavigateRightPerformed;
+        m_Controls.actions["GoBackMenu"].performed -= NavigateBackPerformed;
+        m_Controls.actions["EnterMenu"].performed -= NavigateForwardPerformed;
+    }
 
+    private void OnDestroy()
+    {
+        GameManager.Current.GameStateChanged -= OnGameStateChanged;
+        RemoveRaceListeners();
+        RemoveMenuListeners();
     }
 }

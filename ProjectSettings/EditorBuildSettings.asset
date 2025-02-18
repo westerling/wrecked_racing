@@ -4,5 +4,36 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/PersistentScene.unity
+    guid: a504873a89aaf434f989c53980fc1c1d
+  - enabled: 1
+    path: Assets/Scenes/StartMenu.unity
+    guid: 8432cf4c65ac4024b9a0d29bae173a90
+  - enabled: 1
+    path: Assets/Scenes/Tracks/02_Farm.unity
+    guid: f113d9f00f59ece499dba1a303080f69
+  - enabled: 1
+    path: Assets/Scenes/Tracks/03_Parking.unity
+    guid: a8a26d2aeed943b49a7bd50f5e51449f
+  - enabled: 1
+    path: Assets/Scenes/Tracks/04_City_Highway.unity
+    guid: 4ebeb867ac1f3944c97621d01d0a3710
+  - enabled: 1
+    path: Assets/Scenes/Tracks/05_Downtown.unity
+    guid: 09460d3dc51ffe54ab8a3b8997032e00
+  - enabled: 1
+    path: Assets/Scenes/Tracks/06_Disco.unity
+    guid: 571e0a475b8cc024a88cb9b3696d8b22
+  - enabled: 1
+    path: Assets/Scenes/Tracks/07_Frozen_Harbour.unity
+    guid: d5fee50acf603ca4aaca90bc2a5ff733
+  - enabled: 1
+    path: Assets/Scenes/Tracks/08_Birch_Raceway.unity
+    guid: fba02a702aae21941942a036e6c3731a
+  - enabled: 1
+    path: Assets/Scenes/Tracks/09_Station.unity
+    guid: 1d3894685bbb624479c6a5db51cd764c
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

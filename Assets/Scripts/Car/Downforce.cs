@@ -1,11 +1,8 @@
-using UnityEngine;
-
 public class Downforce : CarComponent
 {
-    void Update()
+    void FixedUpdate()
     {
-        var speed = Vector3.Dot(Car.transform.forward, Car.Rigidbody.velocity);
-        var lift = Car.Stats.Downforce * speed;
-        Car.Rigidbody.AddForceAtPosition(lift * -transform.up, transform.position);
+        var lift = Car.Stats.Downforce * Car.CurrentSpeedRatio;
+        Car.Rigidbody.AddForceAtPosition(lift * -transform.up, Car.CenterOfMass.position);
     }
 }

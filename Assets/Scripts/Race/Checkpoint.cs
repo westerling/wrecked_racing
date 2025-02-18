@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Checkpoint : MonoBehaviour
 {
     public event Action<Checkpoint> CheckpointPassed;

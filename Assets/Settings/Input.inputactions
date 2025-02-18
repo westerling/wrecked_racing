@@ -249,7 +249,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Menu",
+                    "name": "GoBackMenu",
                     "type": "Button",
                     "id": "9dbf5c12-a2c4-469a-8220-2f1a0ca4753a",
                     "expectedControlType": "Button",
@@ -258,18 +258,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Enter",
+                    "name": "EnterMenu",
                     "type": "Button",
                     "id": "884cd27d-1dda-4ab0-bb01-126859a1897c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Back",
-                    "type": "Button",
-                    "id": "8ecfb370-551f-4d61-9cbd-b9fb63d5cce7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -368,22 +359,33 @@
                 {
                     "name": "",
                     "id": "37507298-d3ca-4048-be5b-eae13d2f7242",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GoBackMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c54132db-2e9d-45ac-b4c6-baef6fa45c12",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Menu",
+                    "action": "GoBackMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "fcbdfd53-1007-49db-bf8c-c339ba17a971",
-                    "path": "<XInputController>/start",
+                    "path": "<XInputController>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Menu",
+                    "action": "GoBackMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -394,7 +396,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Enter",
+                    "action": "EnterMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -405,29 +407,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Enter",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "62f2ac7d-4c27-4fc9-a847-8c5d40e70ffe",
-                    "path": "<Keyboard>/backspace",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Back",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "01d52498-f495-40ed-b8f7-6046a9ef1ca4",
-                    "path": "<XInputController>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Back",
+                    "action": "EnterMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

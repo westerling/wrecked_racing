@@ -1,123 +1,64 @@
-using System;
 using UnityEngine;
 
-public class Wheel : CarComponent
+public class Wheel : MonoBehaviour
 {
+    [SerializeField]
+    private WheelCollider m_WheelCollider;
+
+    [SerializeField]
+    private Transform m_GraphicsTransform;
+
     [SerializeField]
     private WheelPlacement m_WheelPlacement;
 
-    [SerializeField]
-    private GameObject m_WheelMesh;
-
-    [SerializeField]
-    private Transform m_WheelOuterEdge;
-
-    [SerializeField]
-    private TrailRenderer m_SkidMark;
-
     private float m_SteerAngle;
-    private float m_GripFactor;
+    private float m_MotorTorque;
+    private float m_BrakeTorque;
 
-    private bool m_IsGrounded;
+    public WheelCollider WheelCollider 
+    {
+        get => m_WheelCollider;  
+    }
 
-    private Vector3 m_LastSteeringDirection;
-
-    private AnimationCurve m_TireGripCurve;
-
-    public WheelPlacement WheelPlacement 
+    public WheelPlacement WheelPlacement
     {
         get => m_WheelPlacement;
     }
-    
-    public float SteerAngle 
+
+    public Transform GraphicsTransform
+    {
+        get => m_GraphicsTransform;
+    }
+
+    public float SteerAngle
     {
         get => m_SteerAngle;
         set => m_SteerAngle = value;
     }
-    
-    private void Start()
+
+    public float MotorTorque
     {
-        SetGripCurve();
+        get => m_MotorTorque;
+        set => m_MotorTorque = value;
     }
 
-    public float CalculateWheelRadius()
+    public float BrakeTorque
     {
-        return Vector3.Distance(transform.position, m_WheelOuterEdge.position);
-    }
-
-    private void SetGripCurve()
-    {
-        m_TireGripCurve =
-            WheelPlacement == WheelPlacement.FrontLeft ||
-            WheelPlacement == WheelPlacement.FrontRight ?
-            Car.Stats.FrontTireGrip : Car.Stats.RearTireGrip;
+        get => m_BrakeTorque;
+        set => m_BrakeTorque = value;
     }
 
     private void Update()
     {
-        transform.localRotation = Quaternion.Euler(transform.localRotation.x, transform.localRotation.y + SteerAngle, transform.localRotation.z);
-        UpdateMesh();
-        CheckSkidMark();
+        WheelCollider.GetWorldPose(out Vector3 position, out Quaternion rotation);
+        GraphicsTransform.position = position;
+        GraphicsTransform.rotation = rotation;
     }
 
-    private void CheckSkidMark()
+    private void FixedUpdate()
     {
-        m_SkidMark.emitting = m_GripFactor < 0.5 && m_IsGrounded;
-    }
-
-    private void FixedUpdate()  
-    {
-        CalculateFriction();
-    }
-
-    public void ApplyAccelerationForce(float force, Vector3 direction, Vector3 position)
-    {
-        if (Physics.Raycast(transform.position, -transform.up, Car.Stats.SuspensionRestDistance))
-        {
-            Car.Rigidbody.AddForceAtPosition(direction * force, position);
-        }
-    }
-
-    private void CalculateFriction()
-    {
-        if (Physics.Raycast(transform.position, -transform.up, out var hit, Car.Stats.SuspensionRestDistance))
-        {
-            m_IsGrounded = true;
-
-            var tireLocalVelocity = Car.Rigidbody.GetRelativePointVelocity(transform.position).z;
-            var steeringDirection = tireLocalVelocity < 0 ? transform.right : -transform.right;
-            var tireWorldVelocity = Car.Rigidbody.GetPointVelocity(transform.position);
-            var steeringVelocity = Vector3.Dot(steeringDirection, tireWorldVelocity);
-           
-            m_GripFactor = m_TireGripCurve.Evaluate(steeringVelocity / tireWorldVelocity.magnitude);
-
-            var desiredVelocityChange = -steeringVelocity * m_GripFactor;
-            var desiredAcceleration = desiredVelocityChange / Time.fixedDeltaTime;
-            var force = steeringDirection * Car.Stats.TireMass * desiredAcceleration;
-
-            Car.Rigidbody.AddForceAtPosition(force, hit.point);
-        }
-
-        m_IsGrounded = false;
-    }
-
-    private void UpdateMesh()
-    {
-        UpdatePosition();
-        UpdateRotation();
-    }
-
-    private void UpdatePosition()
-    {
-        m_WheelMesh.transform.position = transform.position;
-    }
-
-    private void UpdateRotation()
-    {
-        var carSpeed = Vector3.Dot(Car.transform.forward, Car.Rigidbody.velocity);
-        var distanceTraveled = carSpeed * Time.deltaTime;
-        var rotationInRadians = distanceTraveled / 0.33f;
-        var rotationInDegrees = rotationInRadians * Mathf.Rad2Deg;
-        m_WheelMesh.transform.Rotate(rotationInDegrees, 0, 0);
+        WheelCollider.steerAngle = SteerAngle;
+        WheelCollider.motorTorque = MotorTorque;
+        WheelCollider.brakeTorque = BrakeTorque;
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Button : MonoBehaviour
+public class CustomButton : MonoBehaviour
 {
     [SerializeField]
     private UnityEvent m_ButtonSelectedEvent;
