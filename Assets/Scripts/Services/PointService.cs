@@ -23,10 +23,10 @@ public class PointService : IPointService
     {
         switch (position)
         {
-            case 0:
-                return currentPoints == 0 ? 0 : -1;
             case 1:
                 return 1;
+            case 2:
+                return currentPoints == 0 ? 0 : -1;
         }
 
         return 0;
@@ -36,12 +36,12 @@ public class PointService : IPointService
     {
         switch (position)
         {
-            case 0:
-                return currentPoints == 0 ? 0 : -1;
             case 1:
-                return 0;
-            case 2:
                 return 1;
+            case 2:
+                return 0;
+            case 3:
+                return currentPoints == 0 ? 0 : -1;
         }
 
         return 0;
@@ -51,7 +51,13 @@ public class PointService : IPointService
     {
         switch (position)
         {
-            case 0:
+            case 1:
+                return currentPoints == 9 ? 1 : 2;
+            case 2:
+                return currentPoints == 9 ? 0 : 1;
+            case 3:
+                return currentPoints == 0 ? 0 : -1;
+            case 4:
                 switch (currentPoints)
                 {
                     case 0:
@@ -60,12 +66,6 @@ public class PointService : IPointService
                         return -1;
                 }
                 return -2;
-            case 1:
-                return currentPoints == 0 ? 0 : -1;
-            case 2:
-                return currentPoints == 9 ? 0 : 1;
-            case 3:
-                return currentPoints == 9 ? 1 : 2;
         }
 
         return 0;

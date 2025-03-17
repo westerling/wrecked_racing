@@ -5,6 +5,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Current;
 
+    [SerializeField]
+    private Sprite[] m_Sprites;
+
     [Header("Screens")]
     [SerializeField]
     private GameObject m_SplashScreen;
@@ -17,6 +20,28 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject m_PointScreen;
+
+    public Sprite[] Sprites
+    {
+        get => m_Sprites;
+    }
+
+    public Sprite GetSprite(PlayerColor color)
+    {
+        switch (color)
+        {
+            case PlayerColor.Green:
+                return Sprites[0];
+            case PlayerColor.Red:
+                return Sprites[1];
+            case PlayerColor.Blyue:
+                return Sprites[2];
+            case PlayerColor.Yellow:
+                return Sprites[3];
+            default:
+                return Sprites[0];
+        }
+    }
 
     public void SetScreenActive(Screens screen, bool active)
     {

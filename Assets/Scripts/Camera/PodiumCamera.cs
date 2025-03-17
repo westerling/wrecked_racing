@@ -1,21 +1,21 @@
-using Cinemachine;
 using UnityEngine;
 
-public class PodiumCamera : MonoBehaviour
+public class PodiumCamera : BaseCamera
 {
-    private CinemachineVirtualCamera m_PodiumCamera;
-
-    private void Awake()
+    protected override void Awake()
     {
-        if (gameObject.TryGetComponent(out CameraControl cameraControl))
-        {
-            m_PodiumCamera = cameraControl.PodiumCamera;
-        }
+        base.Awake();
+        m_CameraControl.TargetChanged += OnTargetChanged;
     }
 
-    public void SetTarget(GameObject podium)
+    private void OnTargetChanged(GameObject target)
     {
-        m_PodiumCamera.Follow = podium.transform;
-        m_PodiumCamera.LookAt = podium.transform;
+        m_Camera.Follow = target.transform;
+        m_Camera.LookAt = target.transform;
+    }
+
+    private void OnDestroy()
+    {
+        m_CameraControl.TargetChanged -= OnTargetChanged;
     }
 }

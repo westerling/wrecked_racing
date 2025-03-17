@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public event Action<Car, bool> CarActive;
+    public event Action<Car, bool> CarStatus;
 
     [SerializeField]
     private Rigidbody m_Rigidbody;
@@ -186,7 +186,7 @@ public class Car : MonoBehaviour
 
     private void OnCarActive(bool active)
     {
-        CarActive?.Invoke(this, active);
+        CarStatus?.Invoke(this, active);
     }
 
     private void AddListeners()

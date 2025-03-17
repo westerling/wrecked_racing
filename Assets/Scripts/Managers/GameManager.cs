@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GameManager : MonoBehaviour
 {
@@ -76,7 +78,7 @@ public class GameManager : MonoBehaviour
     {
         get => m_TargetGroup;
     }
-
+    
     private void Awake()
     {
         Current = this;
@@ -128,10 +130,28 @@ public class GameManager : MonoBehaviour
         {
             if (!Players.Contains(player))
             {
+                var availableColor = GivePlayerColor();
+
+                if (!Enum.IsDefined(typeof(PlayerColor), availableColor))
+                {
+                    Console.WriteLine("No available colors!");
+                    return;
+                }
+
+                player.Color = availableColor;
+
                 Players.Add(player);
                 PlayerStatusChanged?.Invoke(player, true);
             }
         }
+    }
+
+    private PlayerColor GivePlayerColor()
+    {
+        var allColors = Enum.GetValues(typeof(PlayerColor)).Cast<PlayerColor>();
+        var takenColors = Players.Select(p => p.Color).ToHashSet();
+
+        return allColors.FirstOrDefault(color => !takenColors.Contains(color));
     }
 
     private void OnPlayerLeft(PlayerInput playerInput)

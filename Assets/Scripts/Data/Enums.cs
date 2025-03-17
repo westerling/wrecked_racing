@@ -1,5 +1,3 @@
-using System;
-
 public enum WheelPlacement
 {
     FrontLeft = 0,
@@ -92,4 +90,12 @@ public enum Screens
     LoadingScreen = 1,
     PauseScreen = 2,
     PointScreen = 3
+}
+
+public enum PlayerColor
+{
+    Green = 0,
+    Red = 1,
+    Blyue = 2,
+    Yellow = 3
 }

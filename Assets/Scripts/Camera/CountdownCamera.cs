@@ -1,21 +1,21 @@
-using Cinemachine;
 using UnityEngine;
 
-public class CountdownCamera : MonoBehaviour
+public class CountdownCamera : BaseCamera
 {
-    private CinemachineVirtualCamera m_CountdownCamera;
-
-    private void Awake()
+    protected override void Awake()
     {
-        if (gameObject.TryGetComponent(out CameraControl cameraControl))
-        {
-            m_CountdownCamera = cameraControl.CountdownCamera;
-        }
+        base.Awake();
+        m_CameraControl.TargetChanged += OnTargetChanged;
     }
 
-    public void SetTarget(GameObject target)
+    private void OnTargetChanged(GameObject target)
     {
-        m_CountdownCamera.Follow = target.transform;
-        m_CountdownCamera.LookAt = target.transform;
+        m_Camera.Follow = target.transform;
+        m_Camera.LookAt = target.transform;
+    }
+
+    private void OnDestroy()
+    {
+        m_CameraControl.TargetChanged -= OnTargetChanged;
     }
 }

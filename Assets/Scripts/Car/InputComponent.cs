@@ -5,12 +5,12 @@ public abstract class InputComponent : CarComponent
     protected abstract void AddListeners();
     protected abstract void RemoveListeners();
 
-    private void Start()
+    protected virtual void Start()
     {
         AddListeners();
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         RemoveListeners();
     }
