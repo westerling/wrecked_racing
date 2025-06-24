@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 9079911996842142191}
   - component: {fileID: 623595731251445111}
   - component: {fileID: 9132421651695277704}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: StartCheckpoint_Large
   m_TagString: Untagged
   m_Icon: {fileID: 0}

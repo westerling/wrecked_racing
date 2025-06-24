@@ -22,13 +22,16 @@ public enum CarDirection
 
 public enum WeaponType
 {
-    Missile = 0,
+    RocketLauncher = 0,
     Mine = 1,
-    DrumBomb = 2,
+    DrumBombs = 2,
     Rifle = 3,
     Shotgun = 4,
-    Oil = 5,
-    Boost = 6
+    OilSlick = 5,
+    Boost = 6,
+    Flamethrower = 7,
+    Mortar = 8,
+    Barricades = 9,
 }
 
 public enum Stat
@@ -84,6 +87,12 @@ public enum PlayerStatus
     Empty = 2
 }
 
+public enum CarStatus
+{
+    Inactive = 0,
+    Active = 1
+}
+
 public enum Screens
 {
     SplashScreen = 0,
@@ -98,4 +107,17 @@ public enum PlayerColor
     Red = 1,
     Blyue = 2,
     Yellow = 3
+}
+
+public enum ParticleType
+{
+    Explosion_s = 0,
+    Explosion_m = 1,
+    Explosion_l = 2,
+    Fire = 3,
+    Smoke = 4,
+    SkidMarks = 5,
+    RifleTrail = 6,
+    MuzzleFlash = 7,
+    HitEffect = 8
 }

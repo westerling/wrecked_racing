@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public event Action<Car, bool> CarStatus;
+    public event Action<Car, CarStatus> CarStatusChanged;
 
     [SerializeField]
     private Rigidbody m_Rigidbody;
+
+    [SerializeField]
+    private Transform m_WeaponTransform;
 
     [SerializeField]
     private Transform m_CenterOfMass;
@@ -17,25 +20,31 @@ public class Car : MonoBehaviour
     private CarStatsManager m_StatusManager;
 
     [SerializeField]
+    private WeaponManager m_WeaponManager;
+
+    [SerializeField]
     private Health m_Health;
+
+    [SerializeField]
+    private Targeter m_Targeter;
+
+    [SerializeField]
+    private Transmission m_Transmission;
 
     [SerializeField]
     private Stats m_Stats;
 
-    [SerializeField]
-    private Wheel[] m_Wheels;
-
-    private List<Wheel> m_DriveWheels = new List<Wheel>();
+    private List<Wheel> m_Wheels = new List<Wheel>();
     private List<Wheel> m_SteeringWheels = new List<Wheel>();
     
     private Player m_Player;
     private InputManager m_InputManager;
-
+    
     private float m_CurrentSpeedRatio = 0f;
     private float m_CurrentSpeed = 0f;
 
+    private CarStatus m_CarStatus = global::CarStatus.Inactive;
     private CarDirection m_HeadingDirection = CarDirection.Stationary;
-
 
     public Rigidbody Rigidbody
     {
@@ -53,7 +62,7 @@ public class Car : MonoBehaviour
         set => m_InputManager = value;
     }
 
-    public Wheel[] Wheels
+    public List<Wheel> Wheels
     {
         get => m_Wheels;
     }
@@ -86,74 +95,62 @@ public class Car : MonoBehaviour
         private set => m_CurrentSpeed = value;
     }
     
-    public List<Wheel> DriveWheels 
-    { 
-        get => m_DriveWheels; 
-        private set => m_DriveWheels = value; 
-    }
-
-    public List<Wheel> SteeringWheels
-    {
-        get => m_SteeringWheels;
-        private set => m_SteeringWheels = value;
-    }
-
     public CarDirection HeadingDirection
     {
         get => m_HeadingDirection;
         private set => m_HeadingDirection = value;
     }
 
-    public void ResetCar()
+    public Transmission Transmission
     {
-        foreach (var wheel in m_Wheels)
-        {
-            wheel.MotorTorque = 0f;
-        }
+        get => m_Transmission;
+    }
 
-        Rigidbody.angularVelocity = Vector3.zero;
+    public Targeter Targeter
+    {
+        get => m_Targeter;
+    }
+
+    public WeaponManager WeaponManager
+    {
+        get => m_WeaponManager;
+    }
+
+    public Transform WeaponTransform
+    {
+        get => m_WeaponTransform;
     }
 
     private void Awake()
     {
         Rigidbody.centerOfMass = m_CenterOfMass.localPosition;
 
-        SetDriveWheels();
-        SetSteeringWheels();
-    }
-
-    private void SetDriveWheels()
-    {
-        switch (Stats.DriveTrain)
-        {
-            case Drivetrain.FWD:
-                DriveWheels.AddRange(Wheels.Where(
-                    x => x.WheelPlacement == WheelPlacement.FrontLeft ||
-                    x.WheelPlacement == WheelPlacement.FrontRight));
-                break;
-            case Drivetrain.RWD:
-                DriveWheels.AddRange(Wheels.Where(
-                    x => x.WheelPlacement == WheelPlacement.RearLeft ||
-                    x.WheelPlacement == WheelPlacement.RearRight));
-                break;
-            case Drivetrain.AWD:
-                DriveWheels.AddRange(Wheels);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void Start()
-    {
+        GetWheels();
         AddListeners();
     }
 
-    private void SetSteeringWheels()
+    private void GetWheels()
     {
-        SteeringWheels.AddRange(Wheels.Where(
-            x => x.WheelPlacement == WheelPlacement.FrontLeft ||
-            x.WheelPlacement == WheelPlacement.FrontRight));
+        Wheels.Add(Transmission.FrontDifferential.LeftWheel);
+        Wheels.Add(Transmission.FrontDifferential.RightWheel);
+        Wheels.Add(Transmission.RearDifferential.LeftWheel);
+        Wheels.Add(Transmission.RearDifferential.RightWheel);
+    }
+
+    public void SetCarStationary(Vector3 position, Quaternion rotation)
+    {
+        foreach (var wheel in Wheels)
+        {
+            wheel.MotorTorque = 0f;
+        }
+
+        transform.SetPositionAndRotation(position, rotation);
+
+        Rigidbody.angularVelocity = Vector3.zero;
+        Rigidbody.linearVelocity = Vector3.zero;
+        Rigidbody.position = position;
+        Rigidbody.rotation = rotation;
+        Rigidbody.Sleep();
     }
 
     private void FixedUpdate()
@@ -184,9 +181,15 @@ public class Car : MonoBehaviour
         CurrentSpeedRatio = CurrentSpeed / Stats.TopSpeed;
     }
 
-    private void OnCarActive(bool active)
+    private void OnCarActive(CarStatus carStatus)
     {
-        CarStatus?.Invoke(this, active);
+        if (carStatus == m_CarStatus)
+        {
+            return;
+        }
+
+        m_CarStatus = carStatus;
+        CarStatusChanged?.Invoke(this, carStatus);
     }
 
     private void AddListeners()

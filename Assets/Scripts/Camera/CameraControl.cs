@@ -2,6 +2,7 @@ using Unity.Cinemachine;
 using System;
 using UnityEngine;
 using static Unity.Cinemachine.CinemachineBlendDefinition;
+using System.Collections;
 
 public class CameraControl : MonoBehaviour
 {
@@ -23,7 +24,9 @@ public class CameraControl : MonoBehaviour
     [SerializeField]
     private CinemachineCamera m_DollyCamera;
 
+    [SerializeField]
     private CinemachineTargetGroup m_TargetGroup;
+    
     private GameObject m_Podium;
     private GameObject m_Leader;
 
@@ -68,6 +71,13 @@ public class CameraControl : MonoBehaviour
     private void Awake()
     {
         AddListeners();
+
+        m_Brain.enabled = false;
+
+        DollyCamera.Priority = 0;
+        PodiumCamera.Priority = 0;
+        FinishedCamera.Priority = 0;
+        CountdownCamera.Priority = 0;
     }
 
     public void SetTarget(GameObject target)
@@ -75,15 +85,9 @@ public class CameraControl : MonoBehaviour
         TargetChanged?.Invoke(target);
     }
 
-    public void SetTargetGroup()
+    public void SetTargetGroup(CinemachineTargetGroup targetGroup)
     {
-        if (!Instantiate(GameManager.Current.TargetGroup).TryGetComponent(out CinemachineTargetGroup targetGroup))
-        {
-            return;
-        }
-
         TargetGroup = targetGroup;
-
         TargetGroupChanged?.Invoke(TargetGroup);
     }
 
@@ -104,6 +108,16 @@ public class CameraControl : MonoBehaviour
 
         TargetGroup.AddMember(newTarget.transform, weight, radius);
         TargetGroupChanged?.Invoke(TargetGroup);
+    }
+
+    public void InitializeAndStartRaceCamera()
+    {
+        if (TargetGroup == null || TargetGroup.Targets.Count == 0)
+        {
+            return;
+        }
+
+        m_Brain.enabled = true;
     }
 
     public void RemoveFromTargetGroup(GameObject oldTarget)
@@ -154,15 +168,13 @@ public class CameraControl : MonoBehaviour
         {
             case RaceStatus.Countdown:
                 SetBlend(Styles.HardIn, 1);
-
-                DollyCamera.Priority = 0;
+                DollyCamera.Priority = 1;
                 PodiumCamera.Priority = 0;
                 FinishedCamera.Priority = 0;
-                CountdownCamera.Priority = 1;
+                CountdownCamera.Priority = 0;
                 break;
             case RaceStatus.Race:
                 SetBlend(Styles.EaseOut, 3);
-
                 DollyCamera.Priority = 1;
                 PodiumCamera.Priority = 0;
                 FinishedCamera.Priority = 0;
@@ -170,7 +182,6 @@ public class CameraControl : MonoBehaviour
                 break;
             case RaceStatus.HeatEnd:
                 SetBlend(Styles.HardIn, 1);
-
                 DollyCamera.Priority = 0;
                 PodiumCamera.Priority = 1;
                 FinishedCamera.Priority = 0;
@@ -178,7 +189,6 @@ public class CameraControl : MonoBehaviour
                 break;
             case RaceStatus.Finished:
                 SetBlend(Styles.HardIn, 1);
-
                 DollyCamera.Priority = 0;
                 PodiumCamera.Priority = 0;
                 FinishedCamera.Priority = 1;

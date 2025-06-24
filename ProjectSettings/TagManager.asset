@@ -15,9 +15,9 @@ TagManager:
   - Car
   - Driveable
   - WheelCollider
-  - 
-  - 
-  - 
+  - Checkpoint
+  - SpawnPoints
+  - Weapons
   - 
   - 
   - 

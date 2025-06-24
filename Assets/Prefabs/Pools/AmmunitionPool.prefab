@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2254287210166831075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3821472641248757935}
+  - component: {fileID: 2099394991241251975}
+  m_Layer: 0
+  m_Name: AmmunitionPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3821472641248757935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254287210166831075}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2099394991241251975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254287210166831075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cb0a495840f77c4ebcc7ad81536da71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ObjectsToPool:
+  - m_ObjectToPool: {fileID: 6274714687988825553, guid: ce5ed17a03f072649bfc8574a42dd671, type: 3}
+    m_Amount: 20
+  - m_ObjectToPool: {fileID: 3723895166953585792, guid: 990b4429b79f1f142b7aec4b93670e9b, type: 3}
+    m_Amount: 40
+  - m_ObjectToPool: {fileID: 1196141135085866875, guid: 5ba372c4f0464f7458cd53aead77fe19, type: 3}
+    m_Amount: 6

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 [Serializable]
 public class Stats
@@ -22,9 +21,17 @@ public class Stats
     [SerializeField]
     private AnimationCurve m_BrakeStrength;
 
-    [Header("Steering")]
+    [Header("Handling")]
     [SerializeField]
     private AnimationCurve m_TurningCurve;
+
+    [Header("Handling")]
+    [SerializeField]
+    private AnimationCurve m_SlipCurveFront;
+
+    [Header("Handling")]
+    [SerializeField]
+    private AnimationCurve m_SlipCurveRear;
 
     [Header("Chassi")]
     [SerializeField]
@@ -81,5 +88,15 @@ public class Stats
     public AnimationCurve MotorTorque
     {
         get => m_MotorTorque;
+    }
+
+    public AnimationCurve SlipCurveFront
+    {
+        get => m_SlipCurveFront;
+    }
+
+    public AnimationCurve SlipCurveRear
+    {
+        get => m_SlipCurveRear;
     }
 }

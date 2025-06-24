@@ -10,7 +10,7 @@ public abstract class CarComponent : MonoBehaviour
         set => m_Car = value;
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         m_Car = GetComponentInParent<Car>();
     }

@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class Wheel : MonoBehaviour
+public class Wheel : CarComponent
 {
     [SerializeField]
     private WheelCollider m_WheelCollider;
@@ -9,11 +10,22 @@ public class Wheel : MonoBehaviour
     private Transform m_GraphicsTransform;
 
     [SerializeField]
+    private Transform m_FxOrigin;
+
+    [SerializeField]
+    private TrailRenderer m_TrailRenderer;
+
+    [SerializeField]
     private WheelPlacement m_WheelPlacement;
+
+    private AnimationCurve m_AnimationCurve;
+    
+    private CarStatus m_CarStatus;
 
     private float m_SteerAngle;
     private float m_MotorTorque;
     private float m_BrakeTorque;
+    private float m_WheelRpm;
 
     public WheelCollider WheelCollider 
     {
@@ -28,6 +40,12 @@ public class Wheel : MonoBehaviour
     public Transform GraphicsTransform
     {
         get => m_GraphicsTransform;
+    }
+
+    public float WheelRpm
+    {
+        get => m_WheelRpm;
+        private set => m_WheelRpm = value;
     }
 
     public float SteerAngle
@@ -48,11 +66,62 @@ public class Wheel : MonoBehaviour
         set => m_BrakeTorque = value;
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        AddListeners();
+
+        if (WheelPlacement == WheelPlacement.FrontLeft || WheelPlacement == WheelPlacement.FrontRight)
+        {
+            m_AnimationCurve = Car.Stats.SlipCurveFront;
+        }
+        else if (WheelPlacement == WheelPlacement.RearLeft || WheelPlacement == WheelPlacement.RearRight)
+        {
+            m_AnimationCurve = Car.Stats.SlipCurveRear;
+        }
+    }
+
     private void Update()
     {
+        AddSkidmarks();
+
+        WheelRpm = m_WheelCollider.rpm;
         WheelCollider.GetWorldPose(out Vector3 position, out Quaternion rotation);
         GraphicsTransform.position = position;
         GraphicsTransform.rotation = rotation;
+    }
+
+    private void AddListeners()
+    {
+        Car.CarStatusChanged += OnCarStatusChanged;
+    }
+
+    private void OnCarStatusChanged(Car car, CarStatus carStatus)
+    {
+        m_CarStatus = carStatus;
+    }
+
+    private void RemoveListeners()
+    {
+        Car.CarStatusChanged -= OnCarStatusChanged;
+    }
+
+    private void AddSkidmarks()
+    {
+        if (m_CarStatus == CarStatus.Active)
+        {
+            if (m_WheelCollider.GetGroundHit(out var hit))
+            {
+                var combinedSlip = Mathf.Sqrt(hit.forwardSlip * hit.forwardSlip + hit.sidewaysSlip * hit.sidewaysSlip);
+
+                m_TrailRenderer.emitting = Mathf.Abs(combinedSlip) > m_AnimationCurve.Evaluate(Car.CurrentSpeedRatio);
+            }
+        }
+        else
+        {
+            m_TrailRenderer.emitting = false;
+        }
     }
 
     private void FixedUpdate()
@@ -60,5 +129,10 @@ public class Wheel : MonoBehaviour
         WheelCollider.steerAngle = SteerAngle;
         WheelCollider.motorTorque = MotorTorque;
         WheelCollider.brakeTorque = BrakeTorque;
+    }
+
+    private void OnDestroy()
+    {
+        RemoveListeners();
     }
 }

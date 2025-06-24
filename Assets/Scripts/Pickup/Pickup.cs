@@ -15,19 +15,21 @@ public class Pickup : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(0f, 16 * Time.deltaTime, 0f, Space.Self);
+        transform.Rotate(0f, 64 * Time.deltaTime, 0f, Space.Self);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out WeaponManager weaponManager))
         {
-            if (weaponManager.HasWeapon())
+            if (weaponManager.Weapon != null)
             {
                 return;
             }
 
             weaponManager.AddWeapon(m_WeaponType);
+            gameObject.SetActive(false);
+            Spawner.SpawnPickupDelayed(5);
         }
     }
 }

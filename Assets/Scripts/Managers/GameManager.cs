@@ -15,19 +15,22 @@ public class GameManager : MonoBehaviour
     public event Action<GameState> GameStateChanged;
 
     [SerializeField]
+    private bool m_DebugMode = false;
+
+    [SerializeField]
     private GameObject m_RaceCamera;
 
     [SerializeField]
     private GameObject m_FollowCamera;
 
     [SerializeField]
-    private GameObject m_TargetGroup;
-
-    [SerializeField]
     private List<GameObject> m_Cars = new List<GameObject>();
 
     [SerializeField]
     private List<TrackInfo> m_Tracks = new List<TrackInfo>();
+
+    [SerializeField]
+    private GameObject[] m_Pools;
 
     private int m_CurrentLoadedScene;
     private float m_TotalSceneProgress;
@@ -74,11 +77,17 @@ public class GameManager : MonoBehaviour
     {
         get => m_Tracks; 
     }
-    public GameObject TargetGroup
+
+    public GameObject[] Pools
     {
-        get => m_TargetGroup;
+        get => m_Pools;
     }
-    
+
+    public bool DebugMode
+    {
+        get => m_DebugMode;
+    }
+
     private void Awake()
     {
         Current = this;

@@ -1,12 +1,18 @@
-using Unity.VisualScripting;
-
 public class TimedModifier : StatModifier
 {
     private float m_TimeRemaining;
+    private float m_Value;
 
-    public TimedModifier(Stat stat, float value, float duration) : base(stat, value)
+    public float Value
+    {
+        get => m_Value;
+        private set => m_Value = value;
+    }
+
+    public TimedModifier(Stat stat, float value, float duration) : base(stat)
     {
         m_TimeRemaining = duration;
+        Value = value;
     }
 
     public void SetTime(float time)

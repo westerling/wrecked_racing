@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,7 +30,7 @@ public class CarStatsManager : CarComponent
         m_ActiveModifiers.Add(new TimedModifier(stat, modifierValue, duration));
     }
 
-    public void AddConditionalModifier(Stat stat, float modifierValue, System.Func<bool> condition)
+    public void AddConditionalModifier(Stat stat, Func<float> modifierValue, Func<bool> condition)
     {
         m_ActiveModifiers.Add(new ConditionalModifier(stat, modifierValue, condition));
     }
@@ -44,7 +45,14 @@ public class CarStatsManager : CarComponent
 
             foreach (var modifier in modifiers)
             {
-                modifierValue *= modifier.Value;
+                if (modifier is TimedModifier timedModifier)
+                {
+                    modifierValue *= timedModifier.Value;
+                }
+                else if (modifier is ConditionalModifier conditionalModifier)
+                {
+                    modifierValue *= conditionalModifier.GetValue();
+                }
             }
         }
 

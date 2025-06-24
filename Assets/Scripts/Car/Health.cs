@@ -1,13 +1,16 @@
 using System;
+using UnityEngine;
 
 public class Health : CarComponent
 {
-    public event Action<bool> CarActive;
+    public event Action<CarStatus> CarActive;
 
     private float m_Health;
-    
-    void Start()
+
+    protected override void Awake()
     {
+        base.Awake();
+
         AddListeners();
     }
 
@@ -26,14 +29,14 @@ public class Health : CarComponent
     private void ResetHealth()
     {
         m_Health = Car.Stats.Health;
-        CarActive?.Invoke(true);
+        CarActive?.Invoke(CarStatus.Active);
     }
 
     private void CheckDamage()
     {
         if (m_Health <= 0)
         {
-            CarActive?.Invoke(false);
+            CarActive?.Invoke(CarStatus.Inactive);
         }
     }
 

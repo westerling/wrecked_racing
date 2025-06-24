@@ -1,10 +1,20 @@
+using System;
+
 public class ConditionalModifier : StatModifier
 {
-    private System.Func<bool> m_Condition;
+    private Func<float> m_GetValue;
+    private Func<bool> m_Condition;
 
-    public ConditionalModifier(Stat stat, float value, System.Func<bool> condition) : base(stat, value)
+    public ConditionalModifier(Stat stat, Func<float> getValue, Func<bool> condition) : base(stat)
     {
         m_Condition = condition;
+        GetValue = getValue;
+    }
+
+    public Func<float> GetValue
+    {
+        get => m_GetValue;
+        set => m_GetValue = value;
     }
 
     public override bool IsExpired()

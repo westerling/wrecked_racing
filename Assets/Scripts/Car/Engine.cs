@@ -1,5 +1,4 @@
-using System;
-using System.Diagnostics;
+using UnityEngine;
 
 public class Engine : InputComponent
 {
@@ -37,7 +36,7 @@ public class Engine : InputComponent
         if (m_CurrentAccelerationInput > 0)
         {
             motorTorque = Car.CurrentSpeed < (Car.Stats.TopSpeed * Car.StatusManager.GetModifierAmount(Stat.Speed)) ?
-            (m_CurrentAccelerationInput * Car.Stats.MotorTorque.Evaluate(Car.CurrentSpeedRatio) * Car.StatusManager.GetModifierAmount(Stat.Acceleration) / Car.DriveWheels.Count)
+            (m_CurrentAccelerationInput * Car.Stats.MotorTorque.Evaluate(Car.CurrentSpeedRatio) * Car.StatusManager.GetModifierAmount(Stat.Acceleration))
             : 0;
         }
 
@@ -46,15 +45,12 @@ public class Engine : InputComponent
             if (Car.HeadingDirection != CarDirection.Forward)
             {
                 motorTorque = -(Car.CurrentSpeed > -(Car.Stats.TopSpeed / 8) ?
-                (m_CurrentBrakeInput * Car.Stats.MotorTorque.Evaluate(Car.CurrentSpeedRatio) / Car.DriveWheels.Count)
+                (m_CurrentBrakeInput * Car.Stats.MotorTorque.Evaluate(Car.CurrentSpeedRatio))
                 : 0);
             }       
         }
 
-        foreach (var wheel in Car.DriveWheels)
-        {
-            wheel.MotorTorque = motorTorque;
-        }
+        Car.Transmission.MotorTorque = motorTorque;
     }
 
     private void OnRaceStateChanged(RaceStatus obj)

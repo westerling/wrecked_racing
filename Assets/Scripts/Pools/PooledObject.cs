@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 
-[SerializeField]
-public class PooledObject : MonoBehaviour
+[Serializable]
+public class PooledObject
 {
     [SerializeField]
     private GameObject m_ObjectToPool;

@@ -7,7 +7,8 @@ public class InputManager : MonoBehaviour
     public event Action<float> Accelerate;
     public event Action<float> Brake;
     public event Action<float> Steer;
-    public event Action Fire;
+    public event Action FireStarted;
+    public event Action FireStopped;
 
     public event Action<Player, MenuNavigation> NavigateMenu;
     public event Action<Player> BackMenu;
@@ -90,7 +91,7 @@ public class InputManager : MonoBehaviour
         m_Controls.actions["Steer"].performed += SteerPerformed;
         m_Controls.actions["Steer"].canceled += SteerPerformed;
         m_Controls.actions["Fire"].performed += FirePerfomed;
-        m_Controls.actions["Fire"].canceled += FirePerfomed;
+        m_Controls.actions["Fire"].canceled += FireStoppedPerformed;
     }
 
     private void SteerPerformed(InputAction.CallbackContext obj)
@@ -110,7 +111,12 @@ public class InputManager : MonoBehaviour
 
     private void FirePerfomed(InputAction.CallbackContext obj)
     {
-        Fire?.Invoke();
+        FireStarted?.Invoke();
+    }
+
+    private void FireStoppedPerformed(InputAction.CallbackContext obj)
+    {
+        FireStopped?.Invoke();
     }
 
     private void NavigateRightPerformed(InputAction.CallbackContext obj)
@@ -152,7 +158,7 @@ public class InputManager : MonoBehaviour
         m_Controls.actions["Steer"].performed -= SteerPerformed;
         m_Controls.actions["Steer"].canceled -= SteerPerformed;
         m_Controls.actions["Fire"].performed -= FirePerfomed;
-        m_Controls.actions["Fire"].canceled -= FirePerfomed;
+        m_Controls.actions["Fire"].canceled -= FireStoppedPerformed;
     }
 
     private void RemoveMenuListeners()

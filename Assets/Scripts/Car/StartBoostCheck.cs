@@ -13,10 +13,8 @@ public class StartBoostCheck : InputComponent
 
         if (RaceManager.Current.RaceStatus == RaceStatus.Race && RaceManager.Current.RaceTimer < 0.5)
         {
-            Car.StatusManager.AddTimedModifier(Stat.Acceleration, 100f, 3f);
-            Car.StatusManager.AddTimedModifier(Stat.Speed, 100f, 3f);
-
-            Debug.Log("faaaaast");
+            Car.StatusManager.AddTimedModifier(Stat.Acceleration, 5f, 0.1f);
+            Car.StatusManager.AddTimedModifier(Stat.Speed, 3f, 0.1f);
         }
 
         m_HasAccelerated = true;
