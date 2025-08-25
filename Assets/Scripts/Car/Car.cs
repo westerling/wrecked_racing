@@ -26,6 +26,9 @@ public class Car : MonoBehaviour
     private Health m_Health;
 
     [SerializeField]
+    private CarPart[] m_CarParts;
+
+    [SerializeField]
     private Targeter m_Targeter;
 
     [SerializeField]
@@ -119,6 +122,11 @@ public class Car : MonoBehaviour
     public Transform WeaponTransform
     {
         get => m_WeaponTransform;
+    }
+
+    public CarPart[] CarParts
+    {
+        get => m_CarParts;
     }
 
     private void Awake()

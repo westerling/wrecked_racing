@@ -26,14 +26,17 @@ public class CountdnownLight : MonoBehaviour
         {
             case CountdownEvents.RedLights:
                 SwitchLights(m_RedLights, true);
+                SoundFxManager.Current.PlaySoundClip(SoundFxType.Start_Stay, transform, 75f);
                 break;
             case CountdownEvents.YellowLights:
                 SwitchLights(m_OrangeLights, true);
+                SoundFxManager.Current.PlaySoundClip(SoundFxType.Start_Stay, transform, 75f);
                 break;
             case CountdownEvents.Start:
                 SwitchLights(m_RedLights, false);
                 SwitchLights(m_OrangeLights, false);
                 SwitchLights(m_GreenLights, true);
+                SoundFxManager.Current.PlaySoundClip(SoundFxType.Start_Go, transform, 75f);
                 break;
             case CountdownEvents.LightsOut:
                 TurnOffAllLights();

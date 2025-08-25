@@ -10,8 +10,8 @@ public class AmmunitionPool : ObjectPool
         Current = this;
     }
 
-    public GameObject GetPooledObjectOfType(WeaponType weaponType)
+    public GameObject GetPooledObjectOfType(AmmunitionType ammunitionType)
     {
-        return PooledObjects.First(x => !(x.activeInHierarchy) && x.GetComponent<Ammunition>().WeaponType == weaponType);
+        return PooledObjects.First(x => !(x.activeInHierarchy) && x.GetComponent<Ammunition>().AmmunitionType == ammunitionType);
     }
 }

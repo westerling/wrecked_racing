@@ -76,7 +76,7 @@ public class PointsPanel : MonoBehaviour
 
     private void AddListeners()
     {
-        RaceManager.Current.OnRaceStatus += OnRaceState;
+        RaceManager.Current.RaceStatusChanged += OnRaceState;
     }
 
     private void OnRaceState(RaceStatus raceState)
@@ -118,7 +118,7 @@ public class PointsPanel : MonoBehaviour
 
     private void RemoveListeners()
     {
-        RaceManager.Current.OnRaceStatus -= OnRaceState;
+        RaceManager.Current.RaceStatusChanged -= OnRaceState;
     }
 
     private void OnDestroy()

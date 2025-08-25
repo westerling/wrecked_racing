@@ -45,9 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ObjectsToPool:
-  - m_ObjectToPool: {fileID: 6274714687988825553, guid: ce5ed17a03f072649bfc8574a42dd671, type: 3}
+  - m_ObjectToPool: {fileID: 8681617758457269710, guid: f423d055db3ae99479df329694cdc876, type: 3}
     m_Amount: 20
   - m_ObjectToPool: {fileID: 3723895166953585792, guid: 990b4429b79f1f142b7aec4b93670e9b, type: 3}
     m_Amount: 40
   - m_ObjectToPool: {fileID: 1196141135085866875, guid: 5ba372c4f0464f7458cd53aead77fe19, type: 3}
+    m_Amount: 6
+  - m_ObjectToPool: {fileID: 1196141135085866875, guid: 2c692846cd5f4564c84fc44bee279c54, type: 3}
+    m_Amount: 6
+  - m_ObjectToPool: {fileID: 3314393268512937723, guid: 3e0950c8a60a5eb48b53104db8530848, type: 3}
     m_Amount: 6

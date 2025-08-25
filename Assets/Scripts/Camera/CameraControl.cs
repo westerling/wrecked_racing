@@ -2,12 +2,10 @@ using Unity.Cinemachine;
 using System;
 using UnityEngine;
 using static Unity.Cinemachine.CinemachineBlendDefinition;
-using System.Collections;
 
 public class CameraControl : MonoBehaviour
 {
     public event Action<CinemachineTargetGroup> TargetGroupChanged;
-    public event Action<GameObject> TargetChanged;
 
     [SerializeField]
     private CinemachineBrain m_Brain;
@@ -19,14 +17,12 @@ public class CameraControl : MonoBehaviour
     private CinemachineCamera m_FinishedCamera;    
     
     [SerializeField]
-    private CinemachineCamera m_CountdownCamera;
-
-    [SerializeField]
     private CinemachineCamera m_DollyCamera;
 
     [SerializeField]
+    private GameObject m_AudioListener;
+
     private CinemachineTargetGroup m_TargetGroup;
-    
     private GameObject m_Podium;
     private GameObject m_Leader;
 
@@ -38,11 +34,6 @@ public class CameraControl : MonoBehaviour
     public CinemachineCamera PodiumCamera
     {
         get => m_PodiumCamera;
-    }
-
-    public CinemachineCamera CountdownCamera
-    {
-        get => m_CountdownCamera;
     }
 
     public CinemachineCamera FinishedCamera
@@ -71,18 +62,21 @@ public class CameraControl : MonoBehaviour
     private void Awake()
     {
         AddListeners();
-
-        m_Brain.enabled = false;
-
-        DollyCamera.Priority = 0;
-        PodiumCamera.Priority = 0;
-        FinishedCamera.Priority = 0;
-        CountdownCamera.Priority = 0;
     }
 
-    public void SetTarget(GameObject target)
+    private void LateUpdate()
     {
-        TargetChanged?.Invoke(target);
+        SetAudioListener();
+    }
+
+    private void SetAudioListener()
+    {
+        var groupCenter = TargetGroup.transform.position;
+        var cameraEuler = DollyCamera.transform.eulerAngles;
+
+        m_AudioListener.transform.SetPositionAndRotation(
+            groupCenter + Vector3.up * 1f,
+            Quaternion.Euler(0, cameraEuler.y, 0));
     }
 
     public void SetTargetGroup(CinemachineTargetGroup targetGroup)
@@ -108,16 +102,6 @@ public class CameraControl : MonoBehaviour
 
         TargetGroup.AddMember(newTarget.transform, weight, radius);
         TargetGroupChanged?.Invoke(TargetGroup);
-    }
-
-    public void InitializeAndStartRaceCamera()
-    {
-        if (TargetGroup == null || TargetGroup.Targets.Count == 0)
-        {
-            return;
-        }
-
-        m_Brain.enabled = true;
     }
 
     public void RemoveFromTargetGroup(GameObject oldTarget)
@@ -159,7 +143,7 @@ public class CameraControl : MonoBehaviour
 
     private void AddListeners()
     {
-        RaceManager.Current.OnRaceStatus += OnRaceStatusChanged;
+        RaceManager.Current.RaceStatusChanged += OnRaceStatusChanged;
     }
 
     private void OnRaceStatusChanged(RaceStatus raceStatus)
@@ -167,32 +151,25 @@ public class CameraControl : MonoBehaviour
         switch (raceStatus)
         {
             case RaceStatus.Countdown:
-                SetBlend(Styles.HardIn, 1);
-                DollyCamera.Priority = 1;
-                PodiumCamera.Priority = 0;
-                FinishedCamera.Priority = 0;
-                CountdownCamera.Priority = 0;
-                break;
             case RaceStatus.Race:
-                SetBlend(Styles.EaseOut, 3);
+                SetBlend(Styles.Cut, 0.5f);
+                //SetBlend(Styles.EaseOut, 3);
                 DollyCamera.Priority = 1;
                 PodiumCamera.Priority = 0;
                 FinishedCamera.Priority = 0;
-                CountdownCamera.Priority = 0;
+
                 break;
             case RaceStatus.HeatEnd:
-                SetBlend(Styles.HardIn, 1);
+                SetBlend(Styles.Cut, 0.5f);
                 DollyCamera.Priority = 0;
                 PodiumCamera.Priority = 1;
                 FinishedCamera.Priority = 0;
-                CountdownCamera.Priority = 0;
                 break;
             case RaceStatus.Finished:
-                SetBlend(Styles.HardIn, 1);
+                SetBlend(Styles.Cut, 0.5f);
                 DollyCamera.Priority = 0;
                 PodiumCamera.Priority = 0;
                 FinishedCamera.Priority = 1;
-                CountdownCamera.Priority = 0;
                 break;
             default:
                 break;
@@ -206,7 +183,7 @@ public class CameraControl : MonoBehaviour
 
     private void RemoveListeners()
     {
-        RaceManager.Current.OnRaceStatus -= OnRaceStatusChanged;
+        RaceManager.Current.RaceStatusChanged -= OnRaceStatusChanged;
     }
 
     private void OnDestroy()

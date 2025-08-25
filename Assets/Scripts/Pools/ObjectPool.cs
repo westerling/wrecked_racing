@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class ObjectPool : MonoBehaviour
 {
     [SerializeField]
-    private List<PooledObject> m_ObjectsToPool;
+    protected List<PooledObject> m_ObjectsToPool = new();
 
     private List<GameObject> m_PooledObjects;
 
@@ -22,7 +22,7 @@ public abstract class ObjectPool : MonoBehaviour
 
     public abstract void CreateInstance();
 
-    public void InstantiateObjects()
+    protected virtual void InstantiateObjects()
     {
         PooledObjects = new List<GameObject>();
         GameObject temp;
@@ -36,5 +36,11 @@ public abstract class ObjectPool : MonoBehaviour
                 PooledObjects.Add(temp);
             }
         }
+    }
+
+    public virtual void ReturnObjectToPool(GameObject objectToReturn)
+    {
+        objectToReturn.SetActive(false);
+        objectToReturn.transform.SetParent(transform);
     }
 }

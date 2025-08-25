@@ -24,10 +24,12 @@ public class WeaponManager : CarComponent
         {
             weaponToActivate.SetActive(true);
             weaponToActivate.transform.parent = transform;
-            weaponToActivate.transform.position = Car.WeaponTransform.position;
-            weaponToActivate.transform.rotation = Car.WeaponTransform.rotation;
+            weaponToActivate.transform.SetPositionAndRotation(
+                Car.WeaponTransform.position, 
+                Car.WeaponTransform.rotation);
 
-            weapon.ParentTransform = transform;
+            weapon.PickupWeapon(Car);
+
             Weapon = weapon;
             Weapon.WeaponDepleated += OnWeaponDepleated;
             SetTargeterStatus();
@@ -41,9 +43,8 @@ public class WeaponManager : CarComponent
 
     public void RemoveWeapon()
     {
-        Weapon.ParentTransform = null;
-        Weapon.gameObject.SetActive(false);
-        Weapon.gameObject.transform.parent = WeaponPool.Current.transform;
+        Weapon.ReleaseWeapon();
+        WeaponPool.Current?.ReturnObjectToPool(Weapon.gameObject);
         Weapon.WeaponDepleated -= OnWeaponDepleated;
         Weapon = null;
         SetTargeterStatus();

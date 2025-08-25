@@ -72,14 +72,14 @@ public class Brakes : InputComponent
     {
         Car.InputManager.Brake += OnBrakePerformed;
         Car.InputManager.Accelerate += OnAccelerationPerformed;
-        RaceManager.Current.OnRaceStatus += OnRaceStateChanged;
+        RaceManager.Current.RaceStatusChanged += OnRaceStateChanged;
     }
 
     protected override void RemoveListeners()
     {
         Car.InputManager.Brake -= OnBrakePerformed;
         Car.InputManager.Accelerate -= OnAccelerationPerformed;
-        RaceManager.Current.OnRaceStatus -= OnRaceStateChanged;
+        RaceManager.Current.RaceStatusChanged -= OnRaceStateChanged;
     }
 
     protected override void OnDestroy()

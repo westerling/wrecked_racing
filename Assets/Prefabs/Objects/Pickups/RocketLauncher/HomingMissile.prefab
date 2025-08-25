@@ -95,16 +95,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0191d3f781ef91488ea5b805ac988f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RigidBody: {fileID: 8439699290866381125}
-  m_Radius: 1
-  m_Power: 1
-  m_Speed: 30
+  m_Rigidbody: {fileID: 8439699290866381125}
+  m_Radius: 5
+  m_Power: 100000
   m_RotateSpeed: 95
-  _maxDistancePredict: 100
-  _minDistancePredict: 5
-  _maxTimePrediction: 5
-  _deviationAmount: 40
-  _deviationSpeed: 2
+  m_MaxDistancePredict: 100
+  m_MinDistancePredict: 5
+  m_MaxTimePrediction: 5
+  m_DeviationAmount: 50
+  m_DeviationSpeed: 2
 --- !u!1 &7125247292912405865
 GameObject:
   m_ObjectHideFlags: 0

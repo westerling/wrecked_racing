@@ -16,6 +16,8 @@ public class Health : CarComponent
 
     public void Damage(float amount)
     {
+        Debug.Log("Fuck with " + amount + " amount.");
+
         m_Health -= amount;
         CheckDamage();
     }
@@ -32,11 +34,30 @@ public class Health : CarComponent
         CarActive?.Invoke(CarStatus.Active);
     }
 
+    private void ResetCarParts()
+    {
+        foreach (var carPart in Car.CarParts)
+        {
+            carPart.ResetTransformAndPosition();
+        }
+    }
+
     private void CheckDamage()
     {
         if (m_Health <= 0)
         {
             CarActive?.Invoke(CarStatus.Inactive);
+        }
+
+        foreach (var carPart in Car.CarParts)
+        {
+            if (!carPart.Detached)
+            {
+                if (m_Health < carPart.Threshold)
+                {
+                    carPart.SeperateComponent(true);
+                }
+            }
         }
     }
 
@@ -45,17 +66,19 @@ public class Health : CarComponent
         if (raceState == RaceStatus.Countdown)
         {
             ResetHealth();
+            ResetCarParts();
         }
     }
 
+
     private void AddListeners()
     {
-        RaceManager.Current.OnRaceStatus += OnRaceStateChanged;
+        RaceManager.Current.RaceStatusChanged += OnRaceStateChanged;
     }
 
     private void RemoveListeners()
     {
-        RaceManager.Current.OnRaceStatus -= OnRaceStateChanged;
+        RaceManager.Current.RaceStatusChanged -= OnRaceStateChanged;
     }
 
     private void OnDestroy()

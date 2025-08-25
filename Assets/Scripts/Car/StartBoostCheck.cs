@@ -31,12 +31,12 @@ public class StartBoostCheck : InputComponent
     protected override void AddListeners()
     {
         Car.InputManager.Accelerate += OnAccelerationPerformed;
-        RaceManager.Current.OnRaceStatus += OnRaceStateChanged;
+        RaceManager.Current.RaceStatusChanged += OnRaceStateChanged;
     }
 
     protected override void RemoveListeners()
     {
         Car.InputManager.Accelerate -= OnAccelerationPerformed;
-        RaceManager.Current.OnRaceStatus -= OnRaceStateChanged;
+        RaceManager.Current.RaceStatusChanged -= OnRaceStateChanged;
     }
 }

@@ -2,6 +2,15 @@ using UnityEngine;
 
 public abstract class Menu : MonoBehaviour
 {
+    [SerializeField]
+    private AudioClip[] m_MenuMusic;
+
+    private void Start()
+    {
+        MusicManager.Current.AddToQueue(m_MenuMusic, true);
+        MusicManager.Current.Play();
+    }
+
     public abstract void EnterMenuPerformed(Player player);
     public abstract void LeaveMenuPerformed(Player player);
 

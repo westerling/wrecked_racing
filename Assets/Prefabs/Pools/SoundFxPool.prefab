@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7284517552000098085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3505298571914369023}
+  - component: {fileID: 7610969619064626154}
+  m_Layer: 0
+  m_Name: SoundFxPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3505298571914369023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7284517552000098085}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7610969619064626154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7284517552000098085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc4f5ea6eab11f4389f922166037cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ObjectsToPool: []
+  m_FxObjectsToPool:
+  - m_ObjectToPool: {fileID: 8300000, guid: 29a750193d7adae4dbc274fc0163e73b, type: 3}
+    m_SoundFxType: 0
+    m_Amount: 4
+  - m_ObjectToPool: {fileID: 8300000, guid: 089dfb2d1de431c4d8073b055e261654, type: 3}
+    m_SoundFxType: 2
+    m_Amount: 4
+  - m_ObjectToPool: {fileID: 8300000, guid: 7bc8f396a7a0c214c8cc3c416f214728, type: 3}
+    m_SoundFxType: 3
+    m_Amount: 4
+  - m_ObjectToPool: {fileID: 8300000, guid: ac8ff48646724384c9005590983dd79d, type: 3}
+    m_SoundFxType: 4
+    m_Amount: 8
+  - m_ObjectToPool: {fileID: 8300000, guid: 985e9cb7091ed0e4faf9659b866928e5, type: 3}
+    m_SoundFxType: 5
+    m_Amount: 20

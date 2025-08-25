@@ -13,7 +13,7 @@ public class Bullet : Ammunition
 
     private void Awake()
     {
-        WeaponType = WeaponType.Rifle;
+        AmmunitionType = AmmunitionType.Bullet;
     }
 
     private void OnEnable()

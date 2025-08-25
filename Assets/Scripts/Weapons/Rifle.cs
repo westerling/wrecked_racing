@@ -9,6 +9,7 @@ public class Rifle : TargetWeapon
     {
         AddMuzzleFlash();
         AddImpact();
+        SoundFxManager.Current.PlaySoundClip(SoundFxType.Rifle, transform, 80f);
     }
 
     private void AddImpact()
@@ -17,7 +18,7 @@ public class Rifle : TargetWeapon
         {
             AddHitEffect(hit);
 
-            if (hit.rigidbody != null && hit.transform != ParentTransform)
+            if (hit.rigidbody != null && hit.transform != ParentCar.transform)
             {
                 ApplyImpactForce(hit.rigidbody, m_BulletOrigin.forward, 10000f, 1000f);
             }

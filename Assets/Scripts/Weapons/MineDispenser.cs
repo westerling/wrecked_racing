@@ -16,11 +16,11 @@ public class MineDispenser : Weapon
 
     private void DropMine()
     {
-        var pooledObject = AmmunitionPool.Current.GetPooledObjectOfType(WeaponType.Mine);
+        var pooledObject = AmmunitionPool.Current.GetPooledObjectOfType(AmmunitionType.Mine);
 
         if (pooledObject != null)
         {
-            if (Physics.Raycast(transform.position, Vector3.down, out var hit, 5f, LayerMasks.Driveable))
+            if (Physics.Raycast(transform.position, Vector3.down, out var hit, 5f, LayerMasks.DriveableLayerMask))
             {
                 pooledObject.transform.position = hit.point;
                 pooledObject.transform.rotation = transform.rotation;

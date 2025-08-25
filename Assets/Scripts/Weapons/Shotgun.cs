@@ -9,6 +9,7 @@ public class Shotgun : Weapon
     {
         AddMuzzleFlash();
         AddImpact();
+        SoundFxManager.Current.PlaySoundClip(SoundFxType.Shotgun, transform, 80f);
     }
 
     private void AddImpact()
@@ -20,7 +21,7 @@ public class Shotgun : Weapon
             {
                 AddHitEffect(hit, bulletOrigin.position);
 
-                if (hit.rigidbody != null && hit.transform != ParentTransform)
+                if (hit.rigidbody != null && hit.transform != ParentCar.transform)
                 {
                     ApplyImpactForce(hit.rigidbody, bulletOrigin.forward, 10000f, 1000f);
                 }

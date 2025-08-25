@@ -4,29 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Splines;
 
 public class RaceManager : MonoBehaviour
 {
     public static RaceManager Current;
 
-    public event Action<RaceStatus> OnRaceStatus;
+    public event Action<RaceStatus> RaceStatusChanged;
     public event Action<GameObject> LeaderChanged;
 
     [SerializeField]
     private Countdown m_Countdown;
 
     [SerializeField]
-    private Checkpoint[] m_Checkpoints;
-
-    [SerializeField]
-    private GameObject m_ScoreBoard;
-
-    [SerializeField]
-    private SplineContainer m_DollyTrack;
-
-    [SerializeField]
     private CinemachineTargetGroup m_TargetGroup;
+
+    [SerializeField]
+    private Transform m_CarTransform;
+
+    [SerializeField]
+    private Transform m_CameraTransform;
+
+    [SerializeField]
+    private Transform m_PoolTransform;
 
     private float m_RaceTimer = 0f;
     
@@ -55,7 +54,11 @@ public class RaceManager : MonoBehaviour
     public GameObject Leader
     {
         get => m_Leader;
-        set => m_Leader = value;
+        private set
+        {
+            m_Leader = value;
+            LeaderChanged?.Invoke(value);
+        }
     }
 
     public RaceStatus RaceStatus
@@ -64,7 +67,7 @@ public class RaceManager : MonoBehaviour
         private set
         {
             m_RaceStatus = value;
-            OnRaceStatus?.Invoke(value);
+            RaceStatusChanged?.Invoke(value);
         }
     }
 
@@ -78,11 +81,6 @@ public class RaceManager : MonoBehaviour
     {
         get => m_Countdown;
         set => m_Countdown = value;
-    }
-
-    public SplineContainer DollyTrack
-    {
-        get => m_DollyTrack;
     }
 
     public CinemachineTargetGroup TargetGroup
@@ -119,9 +117,9 @@ public class RaceManager : MonoBehaviour
 
     private void SetupCamera()
     {
-        Instantiate(GameManager.Current.FollowCamera);
+        Instantiate(GameManager.Current.FollowCamera, m_CameraTransform);
 
-        m_Camera = Instantiate(GameManager.Current.RaceCamera);
+        m_Camera = Instantiate(GameManager.Current.RaceCamera, m_CameraTransform);
 
         if (m_Camera.TryGetComponent(out CameraControl cameraControl))
         {
@@ -133,7 +131,7 @@ public class RaceManager : MonoBehaviour
     {
         foreach (var pool in GameManager.Current.Pools)
         {
-            Instantiate(pool);
+            Instantiate(pool, m_PoolTransform);
         }
     }
    
@@ -158,11 +156,30 @@ public class RaceManager : MonoBehaviour
     private void RaceFinished()
     {
         RaceStatus = RaceStatus.HeatEnd;
-        SetCameraTarget(m_ScoreBoard);
+        StopCurrentSong();
         ClearTargetGroup();
+        AddGameobjectToTargetGroup(GetClosestScoreBoard(), 1, 1);
         GivePoints();
         CheckForWinner();
         StartCoroutine(StartPauseEnumerator(5));
+    }
+
+    private GameObject GetClosestScoreBoard()
+    {
+        if (Leader != null)
+        {
+            if (TrackInformationManager.Current.ScoreBoards.Count() > 0)
+            {
+                var scoreBoard = TrackInformationManager.Current.ScoreBoards.OrderBy(
+                    scoreBoard =>
+                    (scoreBoard.transform.position - Leader.transform.position)
+                    .sqrMagnitude).FirstOrDefault().gameObject;
+
+                return scoreBoard;
+            }
+        }
+
+        return null;
     }
 
     private void GivePoints()
@@ -193,21 +210,31 @@ public class RaceManager : MonoBehaviour
 
     private void AddObjectsToTargetGroup()
     {
-        switch (RaceStatus)
+        foreach (var car in m_ActiveCars)
         {
-            case RaceStatus.HeatEnd:
-            case RaceStatus.Finished:
-                break;
-            case RaceStatus.Countdown:
-            case RaceStatus.Race:
-                foreach (var car in m_ActiveCars)
-                {
-                    AddGameobjectToTargetGroup(car.gameObject, 1f, 1f);
-                }
-
-                EnableCamera();
-                break;
+            AddGameobjectToTargetGroup(car.gameObject, 1f, 1f);
         }
+    }
+
+    private void PlayNextSong()
+    {
+        MusicManager.Current.AddToQueue(TrackInformationManager.Current.SongList, true);
+        MusicManager.Current.Play();
+    }
+
+    private void ResumeMusic()
+    {
+        MusicManager.Current.ResumeMusic();
+    }
+
+    private void PauseMusic()
+    {
+        MusicManager.Current.PauseMusic();
+    }
+
+    private void StopCurrentSong()
+    {
+        MusicManager.Current.StopMusic();
     }
 
     private void CheckForWinner()
@@ -241,7 +268,6 @@ public class RaceManager : MonoBehaviour
             }
 
             Leader = newLeader;
-            LeaderChanged?.Invoke(newLeader);
         }
     }
 
@@ -310,6 +336,7 @@ public class RaceManager : MonoBehaviour
         if (countdownEvent == CountdownEvents.Start)
         {
             RaceStatus = RaceStatus.Race;
+            ResumeMusic();
         }
     }
 
@@ -343,13 +370,9 @@ public class RaceManager : MonoBehaviour
         ResetCars();
         StartCountdown();
         ClearTargetGroup();
-        StartCoroutine(DelayedAddObjectsToTargetGroup());
-    }
-
-    private IEnumerator DelayedAddObjectsToTargetGroup()
-    {
-        yield return null;
         AddObjectsToTargetGroup();
+        PlayNextSong();
+        PauseMusic();
     }
 
     private void ResetCarLists()
@@ -390,13 +413,18 @@ public class RaceManager : MonoBehaviour
                     startCheckpoint.StartPositions[i].transform.rotation);
             }
         }
+
+        if (Cars.Count > 0)
+        {
+            Leader = Cars[0].gameObject;
+        }
     }
 
     private void SpawnCars()
     {
         foreach (var player in GameManager.Current.Players)
         {
-            var carGameObject = Instantiate(m_RaceSettings.Car);
+            var carGameObject = Instantiate(m_RaceSettings.Car, m_CarTransform);
 
             if (carGameObject.TryGetComponent(out Car car))
             {
@@ -408,22 +436,6 @@ public class RaceManager : MonoBehaviour
                     car.InputManager = inputManager;
                 }
             }
-        }
-    }
-
-    private void EnableCamera()
-    {
-        if (m_Camera.TryGetComponent(out CameraControl cameraControl))
-        {
-            cameraControl.InitializeAndStartRaceCamera();
-        }
-    }
-
-    private void SetCameraTarget(GameObject gameObject)
-    {
-        if (m_Camera.TryGetComponent(out CameraControl cameraControl))
-        {
-            cameraControl.SetTarget(gameObject);
         }
     }
 
@@ -481,21 +493,23 @@ public class RaceManager : MonoBehaviour
 
     private void FindNextCheckpoint()
     {
+        var checkpoints = TrackInformationManager.Current.Checkpoints;
+
         if (m_LastCheckpoint == null)
         {
-            m_LastCheckpoint = m_Checkpoints[0];
+            m_LastCheckpoint = checkpoints[0];
         }
 
-        var index = Array.IndexOf(m_Checkpoints, m_LastCheckpoint);
+        var index = Array.IndexOf(checkpoints, m_LastCheckpoint);
 
-        if (index < m_Checkpoints.Length - 1)
+        if (index < checkpoints.Length - 1)
         {
             index++;
-            m_NextCheckpoint = m_Checkpoints[index];
+            m_NextCheckpoint = checkpoints[index];
         }
         else
         {
-            m_NextCheckpoint = m_Checkpoints[0];
+            m_NextCheckpoint = checkpoints[0];
         }
 
         m_NextCheckpoint.gameObject.SetActive(true);
@@ -503,11 +517,13 @@ public class RaceManager : MonoBehaviour
 
     private void FindPreviousStartCheckpoint()
     {
-        for (var i = m_Checkpoints.Length - 1; i >= 0; i--)
+        var checkpoints = TrackInformationManager.Current.Checkpoints;
+
+        for (var i = checkpoints.Length - 1; i >= 0; i--)
         {
-            if (m_Checkpoints[i].TryGetComponent(out StartCheckpoint _))
+            if (checkpoints[i].TryGetComponent(out StartCheckpoint _))
             {
-                m_LastCheckpoint = m_Checkpoints[i];
+                m_LastCheckpoint = checkpoints[i];
                 return;
             }
         }
@@ -515,39 +531,39 @@ public class RaceManager : MonoBehaviour
         Application.Quit();
     }
 
-    private void FindPreviousStartCheckpointOld()
-    {
-        if (m_LastCheckpoint == null)
-        {
-            m_LastCheckpoint = m_Checkpoints[0];
-        }
+    //private void FindPreviousStartCheckpointOld()
+    //{
+    //    if (m_LastCheckpoint == null)
+    //    {
+    //        m_LastCheckpoint = m_Checkpoints[0];
+    //    }
 
-        var startingCheckpoints = m_Checkpoints.Where(x => x.TryGetComponent(out StartCheckpoint startCheckpoint)).ToList();
+    //    var startingCheckpoints = m_Checkpoints.Where(x => x.TryGetComponent(out StartCheckpoint startCheckpoint)).ToList();
 
-        if (startingCheckpoints.Count == 0)
-        {
-            Application.Quit();
-        }
+    //    if (startingCheckpoints.Count == 0)
+    //    {
+    //        Application.Quit();
+    //    }
 
-        var index = Array.IndexOf(m_Checkpoints, m_LastCheckpoint);
+    //    var index = Array.IndexOf(m_Checkpoints, m_LastCheckpoint);
 
-        while (m_LastCheckpoint == null)
-        {
-            if (startingCheckpoints.Contains(m_Checkpoints[index]))
-            {
-                m_LastCheckpoint = m_Checkpoints[index];
-            }
-            else
-            {
-                index--;
+    //    while (m_LastCheckpoint == null)
+    //    {
+    //        if (startingCheckpoints.Contains(m_Checkpoints[index]))
+    //        {
+    //            m_LastCheckpoint = m_Checkpoints[index];
+    //        }
+    //        else
+    //        {
+    //            index--;
 
-                if (index < 0)
-                {
-                    index = m_Checkpoints.Length - 1;
-                }
-            }
-        }
-    }
+    //            if (index < 0)
+    //            {
+    //                index = m_Checkpoints.Length - 1;
+    //            }
+    //        }
+    //    }
+    //}
 
     private void AddCheckpointListener()
     {

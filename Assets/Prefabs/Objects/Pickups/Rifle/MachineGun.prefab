@@ -115,13 +115,9 @@ MonoBehaviour:
   m_FireRate: 0.1
   m_StartAmmunition: 15
   m_IsAutomatic: 1
-  m_LaserTransform: {fileID: 4688125180427715129}
+  m_LaserOrigin: {fileID: 4688125180427715129}
   m_MovingObject: {fileID: 3452169632203231518}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 912
   m_BulletOrigin: {fileID: 1901781060797269555}
-  m_TrailRenderer: {fileID: 4790765012211178481, guid: 2baf27b7c024a89439661cf2f4ba5a6c, type: 3}
 --- !u!1 &5955963108564827987
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1784774216647445062}
   - component: {fileID: 3548475654178763647}
   - component: {fileID: 3737338027266032421}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PickupMines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,6 +123,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8328671c9d87e504f9abb882d1ebb55f, type: 3}
       propertyPath: m_Name
       value: PickupMines
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8328671c9d87e504f9abb882d1ebb55f, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

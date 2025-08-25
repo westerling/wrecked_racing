@@ -11,14 +11,14 @@ public class Engine : InputComponent
     {
         Car.InputManager.Accelerate += OnAccelerationPerformed;
         Car.InputManager.Brake += OnBrakePerformed;
-        RaceManager.Current.OnRaceStatus += OnRaceStateChanged;
+        RaceManager.Current.RaceStatusChanged += OnRaceStateChanged;
     }
 
     protected override void RemoveListeners()
     {
         Car.InputManager.Accelerate -= OnAccelerationPerformed;
         Car.InputManager.Brake -= OnBrakePerformed;
-        RaceManager.Current.OnRaceStatus -= OnRaceStateChanged;
+        RaceManager.Current.RaceStatusChanged -= OnRaceStateChanged;
     }
 
     private void Update()

@@ -13,10 +13,12 @@ public class PooledObject
     public GameObject ObjectToPool
     {
         get => m_ObjectToPool;
+        set => m_ObjectToPool = value;
     }
 
     public int Amount
     {
         get => m_Amount;
+        set => m_Amount = value;
     }
 }

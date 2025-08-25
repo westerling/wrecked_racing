@@ -16,5 +16,6 @@ public static class LayerMasks
     public static readonly int CheckpointsLayerMask = CheckPointLayer | SpawnPointsLayer;
     public static readonly int WheelLayerMask = WheelColliderLayer;
     public static readonly int ShootableLayerMask = DefaultLayer | WaterLayer | CarLayer | DriveableLayer | WheelColliderLayer;
-    public static readonly int Driveable = DriveableLayer;
+    public static readonly int DriveableLayerMask = DriveableLayer;
+    public static readonly int ExplosionLayerMask = DriveableLayer;
 }

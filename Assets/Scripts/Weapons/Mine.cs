@@ -4,14 +4,13 @@ using UnityEngine;
 public class Mine : Ammunition
 {
     private float m_Radius = 10f;
-    private float m_Power = 250000f;
     private float m_SafeTimer = 2f;
 
     private bool m_Active = false;
 
     private void Awake()
     {
-        WeaponType = WeaponType.Mine;
+        AmmunitionType = AmmunitionType.Mine;
     }
 
     public void PlaceMine()
@@ -56,11 +55,23 @@ public class Mine : Ammunition
         {
             if (hit.TryGetComponent(out Rigidbody hitRigidBody))
             {
-                hitRigidBody.AddExplosionForce(m_Power, explosionPos, m_Radius, 20000f);
+                hitRigidBody.AddExplosionForce(75000f, explosionPos, m_Radius, 17000f);
+
+                var randomTorque = new Vector3(
+                    Random.Range(-200f, 200f),
+                    Random.Range(-500f, 500f), 
+                    Random.Range(-200f, 200f));
+
+                hitRigidBody.AddTorque(randomTorque);
             }
 
+            if (hit.TryGetComponent(out Health health))
+            {
+                health.Damage(40f);
+            }
         }
 
+        SoundFxManager.Current.PlaySoundClip(SoundFxType.Explosion, transform, 80f);
         Deactivate();
     }
 }

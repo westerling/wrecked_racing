@@ -53,12 +53,12 @@ public class PointScreen : MonoBehaviour
 
     private void AddListeners()
     {
-        RaceManager.Current.OnRaceStatus += OnRaceState;
+        RaceManager.Current.RaceStatusChanged += OnRaceState;
     }
 
     private void RemoveListeners()
     {
-        RaceManager.Current.OnRaceStatus -= OnRaceState;
+        RaceManager.Current.RaceStatusChanged -= OnRaceState;
     }
 
     private void OnDestroy()

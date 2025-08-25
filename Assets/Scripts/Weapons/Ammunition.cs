@@ -2,12 +2,12 @@ using UnityEngine;
 
 public abstract class Ammunition : MonoBehaviour
 {
-    private WeaponType m_WeaponType;
+    private AmmunitionType m_AmmunitionType;
 
-    public WeaponType WeaponType
+    public AmmunitionType AmmunitionType
     {
-        get => m_WeaponType;
-        protected set => m_WeaponType = value;
+        get => m_AmmunitionType;
+        protected set => m_AmmunitionType = value;
     }
 
     protected void Deactivate()

@@ -34,6 +34,19 @@ public enum WeaponType
     Barricades = 9,
 }
 
+public enum AmmunitionType
+{
+    HomingMissile = 0,
+    DummyMissile = 1,
+    Mine = 2,
+    Drumbomb = 3,
+    Oil = 4,
+    Flames = 5,
+    Mortar = 6,
+    Barricades = 7,
+    Bullet = 8
+}
+
 public enum Stat
 {
     Speed = 0,
@@ -120,4 +133,14 @@ public enum ParticleType
     RifleTrail = 6,
     MuzzleFlash = 7,
     HitEffect = 8
+}
+
+public enum SoundFxType
+{
+    Explosion = 0,
+    Fire = 1,
+    Start_Stay = 2,
+    Start_Go = 3,
+    Shotgun = 4,
+    Rifle = 5
 }

@@ -20,14 +20,14 @@ public abstract class Weapon : MonoBehaviour
     private bool m_IsFiring = false;
     private int m_Ammunition;
 
-    private Transform m_ParentTransform;
+    private Car m_ParentCar;
     
     protected float m_LastFireTime = -Mathf.Infinity;
 
-    public Transform ParentTransform
+    protected Car ParentCar
     {
-        get => m_ParentTransform;
-        set => m_ParentTransform = value;
+        get => m_ParentCar;
+        private set => m_ParentCar = value; 
     }
 
     public WeaponType WeaponType 
@@ -40,6 +40,16 @@ public abstract class Weapon : MonoBehaviour
     {
         get => m_IsFiring;
         set => m_IsFiring = value;
+    }
+
+    public virtual void PickupWeapon(Car car)
+    {
+        ParentCar = car;
+    }
+
+    public virtual void ReleaseWeapon()
+    {
+        ParentCar = null;
     }
 
     protected abstract void Fire();

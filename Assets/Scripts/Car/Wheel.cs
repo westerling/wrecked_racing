@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Wheel : CarComponent
@@ -116,6 +115,10 @@ public class Wheel : CarComponent
                 var combinedSlip = Mathf.Sqrt(hit.forwardSlip * hit.forwardSlip + hit.sidewaysSlip * hit.sidewaysSlip);
 
                 m_TrailRenderer.emitting = Mathf.Abs(combinedSlip) > m_AnimationCurve.Evaluate(Car.CurrentSpeedRatio);
+            }
+            else
+            {
+                m_TrailRenderer.emitting = false;
             }
         }
         else

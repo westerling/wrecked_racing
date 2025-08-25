@@ -55,7 +55,7 @@ public class DollyCamera : BaseCamera
 
     private void SetupDolly()
     {
-        var spline = RaceManager.Current.DollyTrack;
+        var spline = TrackInformationManager.Current.DollyTrack;
 
         if (TryGetComponent(out CinemachineSplineDolly splineDolly))
         {
@@ -113,8 +113,8 @@ public class DollyCamera : BaseCamera
     {
         m_TargetGroup = targetGroup;
 
-        m_Camera.Follow = targetGroup.transform;
-        m_Camera.LookAt = targetGroup.transform;
+        m_Camera.Follow = m_TargetGroup.transform;
+        m_Camera.LookAt = m_TargetGroup.transform;
     }
 
     private void OnLeaderChanged(GameObject newLeader)
