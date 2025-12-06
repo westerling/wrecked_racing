@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MainMenu/PlayerMenu.uss?fileID=7433441132597879392&amp;guid=067e42e5d8f483f4d89277dd2717a336&amp;type=3#PlayerMenu" />
+    <ui:VisualElement name="PlayerContainer" class="playerContainer" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Images/Background/Background_1.png?fileID=2800000&amp;guid=7e765e38b63c5434bb748f58ba797115&amp;type=3#Background_1&quot;);">
+        <ui:VisualElement name="PlayerCard" class="playerCard" style="flex-grow: 1;" />
+        <ui:VisualElement name="PlayerCard" class="playerCard" style="flex-grow: 1;" />
+        <ui:VisualElement name="PlayerCard" class="playerCard" style="flex-grow: 1;" />
+        <ui:VisualElement name="PlayerCard" class="playerCard" style="flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

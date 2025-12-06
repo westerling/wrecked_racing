@@ -12,32 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 15003, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Standard
   m_EditorClassIdentifier: 
+  m_AssetVersion: 1
   m_BuildTarget: 19
   m_Subtarget: 2
   m_PlatformId: 4e3c793746204150860bf175a9a41a05
   m_PlatformBuildProfile:
     rid: 8699715361009303552
+  m_OverrideGlobalSceneList: 0
   m_Scenes:
   - m_enabled: 1
     m_path: Assets/Scenes/PersistentScene.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/StartMenu.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/Tracks/02_Farm.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/Tracks/03_Parking.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/Tracks/04_City_Highway.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/Tracks/05_Downtown.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/Tracks/06_Disco.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/Tracks/07_Frozen_Harbour.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/Tracks/08_Birch_Raceway.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/Tracks/09_Station.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings:
@@ -863,6 +847,8 @@ MonoBehaviour:
         m_ExplicitArrayBoundsChecks: 0
         m_CompressionType: 0
         m_InstallInBuildFolder: 0
+        m_InsightsSettingsContainer:
+          m_BuildProfileEngineDiagnosticsState: 2
         m_WindowsBuildAndRunDeployTarget: 0
         m_Architecture: 0
         m_CreateSolution: 0

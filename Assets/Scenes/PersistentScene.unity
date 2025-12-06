@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -118,6 +119,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &60686335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 60686337}
+  - component: {fileID: 60686336}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &60686336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60686335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: ada12b665e309c141a80f0ec423ec017, type: 2}
+--- !u!4 &60686337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60686335}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &202057120
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +531,7 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!1 &1096416279
 GameObject:
   m_ObjectHideFlags: 0
@@ -2705,38 +2756,14 @@ MonoBehaviour:
   m_Cars:
   - {fileID: 8323597071206408131, guid: 75aff2ab966b8f641960a9eb45a490de, type: 3}
   m_Tracks:
-  - m_TrackName: Farm
-    m_TrackDescription: Watch out for the cows!
-    m_TrackImage: {fileID: 21300000, guid: 14c19ed61ce0d4d46bbd66eb58e0520d, type: 3}
-    m_SceneIndex: 2
-  - m_TrackName: Parking
-    m_TrackDescription: There is a great evil that never sleeps
-    m_TrackImage: {fileID: 21300000, guid: 14c19ed61ce0d4d46bbd66eb58e0520d, type: 3}
-    m_SceneIndex: 3
-  - m_TrackName: City Highway
-    m_TrackDescription: On a dark dessert highway
-    m_TrackImage: {fileID: 21300000, guid: d0eea086f909a354f8fc59a9412a164a, type: 3}
-    m_SceneIndex: 4
   - m_TrackName: Downtown
-    m_TrackDescription: Theres a world downtown
-    m_TrackImage: {fileID: 21300000, guid: 3258288690d7220468cdc67deaf3155e, type: 3}
-    m_SceneIndex: 5
-  - m_TrackName: Disco
-    m_TrackDescription: Panic at the Disco
+    m_TrackDescription: Between skrapers
     m_TrackImage: {fileID: 21300000, guid: 103efa4b734d09d4b84e561615226170, type: 3}
-    m_SceneIndex: 6
-  - m_TrackName: Frozen Harbour
-    m_TrackDescription: Standing at the harbor
-    m_TrackImage: {fileID: 21300000, guid: 15564606888c1b547a0b231423417e1b, type: 3}
-    m_SceneIndex: 7
-  - m_TrackName: Birch Raceway
-    m_TrackDescription: Lovely afternoon
-    m_TrackImage: {fileID: 21300000, guid: 2c53ff77e7647f6448b6ec16c10eab84, type: 3}
-    m_SceneIndex: 8
-  - m_TrackName: Station
-    m_TrackDescription: Dont go too fast
-    m_TrackImage: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-    m_SceneIndex: 9
+    m_SceneIndex: 2
+  - m_TrackName: City Highway
+    m_TrackDescription: Go zig-zag around pedestrians.
+    m_TrackImage: {fileID: 21300000, guid: 3258288690d7220468cdc67deaf3155e, type: 3}
+    m_SceneIndex: 3
   m_Pools:
   - {fileID: 1474805862565641891, guid: bff72a752f3f5af4683b4f441769d76d, type: 3}
   - {fileID: 3872731776511965506, guid: cda5d39130d7bec4eacf06c3cad6f1ce, type: 3}
@@ -2960,3 +2987,4 @@ SceneRoots:
   - {fileID: 750431462}
   - {fileID: 1138302881}
   - {fileID: 478344757}
+  - {fileID: 60686337}

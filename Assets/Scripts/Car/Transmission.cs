@@ -19,6 +19,13 @@ public class Transmission : CarComponent
     private float m_CenterSplit = 0.5f;
     private bool m_SwitchGear = false;
     private List<float> m_GearRatios = new List<float>();
+    private AudioSource m_EngineSound;
+
+    private float minPitch = 1f;
+    private float maxPitch = 3.0f;
+    private float idleRPM = 800f;
+    private float maxRPM = 7000f;
+
 
     public float MotorTorque
     {
@@ -39,11 +46,18 @@ public class Transmission : CarComponent
     private void Start()
     {
         InitializeGears();
+
+        m_EngineSound = Car.Stats.EngineSound;
+        if (m_EngineSound != null && !m_EngineSound.isPlaying)
+        {
+            m_EngineSound.Play();
+        }
     }
 
     private void Update()
     {
         SetGear();
+        UpdateEngineSound();
         ApplyMotorTorque();
     }
 
@@ -69,6 +83,21 @@ public class Transmission : CarComponent
         {
             StartCoroutine(SwitchGear(nextGear));
         }
+    }
+
+    private void UpdateEngineSound()
+    {
+        if (m_EngineSound == null)
+        {
+            return;
+        }
+
+        var gearRatio = m_GearRatios[m_CurrentGear];
+        var rpm = Mathf.Lerp(idleRPM, maxRPM, Car.CurrentSpeedRatio * gearRatio);
+        var t = Mathf.InverseLerp(idleRPM, maxRPM, rpm);
+
+        m_EngineSound.pitch = Mathf.Lerp(minPitch, maxPitch, t);
+        m_EngineSound.volume = m_SwitchGear ? 0.7f : 1f;
     }
 
     private IEnumerator SwitchGear(int nextGear)
@@ -98,6 +127,19 @@ public class Transmission : CarComponent
                 FrontDifferential.ApplyTorque(torque * m_CenterSplit);
                 RearDifferential.ApplyTorque(torque * (1 - m_CenterSplit));
                 break;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (m_EngineSound)
+        {
+            m_EngineSound.Stop();
+
+            if (SoundFxPool.Current != null)
+            {
+                SoundFxPool.Current.ReturnObjectToPool(m_EngineSound.gameObject);
+            }
         }
     }
 }

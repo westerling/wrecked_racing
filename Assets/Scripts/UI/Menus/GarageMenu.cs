@@ -8,9 +8,9 @@ public class GarageMenu : Menu
     [Header("UI")]
     [SerializeField]
     private Image m_TrackImage;
-
-    [SerializeField]
-    private List<MenuPlayerObject> m_GaragePlayers = new List<MenuPlayerObject>();
+        
+    //[SerializeField]
+    //private List<MenuPlayerObject> m_GaragePlayers = new List<MenuPlayerObject>();
 
     private GameObject m_SelectedCar;
     private TrackInfo m_SelectedTrackInfo;
@@ -22,7 +22,7 @@ public class GarageMenu : Menu
 
     private void Start()
     {
-        MenuManager.Current.SetActiveMenu(this);
+        MenuManager.Current.AddMenu(this);
 
         UpdateInformation();
     }
@@ -98,46 +98,46 @@ public class GarageMenu : Menu
 
     private void AddNewPlayer(Player newPlayer)
     {
-        var inactivePlayerPanels = m_GaragePlayers.Where(x => x.Player == null).ToList();
+        ////var inactivePlayerPanels = m_GaragePlayers.Where(x => x.Player == null).ToList();
 
-        if (!inactivePlayerPanels.Any())
-        {
-            return;
-        }
+        //if (!inactivePlayerPanels.Any())
+        //{
+        //    return;
+        //}
 
-        inactivePlayerPanels.First().Player = newPlayer;
+        //inactivePlayerPanels.First().Player = newPlayer;
         
-        m_ActivePlayers.Add(newPlayer);
+        //m_ActivePlayers.Add(newPlayer);
     }
 
     private void RemovePlayer(Player player)
     {
-        if (m_ActivePlayers.Contains(player))
-        {
-            m_ActivePlayers.Remove(player);
-        }
+        //if (m_ActivePlayers.Contains(player))
+        //{
+        //    m_ActivePlayers.Remove(player);
+        //}
 
-        if (m_GaragePlayers.Any(x => x.Player == player))
-        {
-            var playerCard = m_GaragePlayers.First(x => x.Player == player);
+        //if (m_GaragePlayers.Any(x => x.Player == player))
+        //{
+        //    var playerCard = m_GaragePlayers.First(x => x.Player == player);
 
-            playerCard.Player = null;
-        }
+        //    playerCard.Player = null;
+        //}
     }
 
     private void CheckPlayerStatus()
     {
-        foreach (var playerPanel in m_GaragePlayers)
-        {
-            if (playerPanel.Player != null)
-            {
-                playerPanel.SetStatus(PlayerStatus.Active);
-            }
-            else
-            {
-                playerPanel.SetStatus(PlayerStatus.Inactive);
-            }
-        }
+        //foreach (var playerPanel in m_GaragePlayers)
+        //{
+        //    if (playerPanel.Player != null)
+        //    {
+        //        playerPanel.SetStatus(PlayerStatus.Active);
+        //    }
+        //    else
+        //    {
+        //        playerPanel.SetStatus(PlayerStatus.Inactive);
+        //    }
+        //}
     }
 
     private void NextTrack()

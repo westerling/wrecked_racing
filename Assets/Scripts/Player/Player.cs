@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
     private bool m_IsAi;
 
     private PlayerColor m_Color;
+    private InputType m_InputType;
 
     public string Name
     {
@@ -23,5 +24,11 @@ public class Player : MonoBehaviour
     {
         get => m_Color;
         set => m_Color = value;
+    }
+
+    public InputType InputType
+    {
+        get => m_InputType;
+        set => m_InputType = value;
     }
 }

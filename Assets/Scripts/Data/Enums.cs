@@ -118,8 +118,10 @@ public enum PlayerColor
 {
     Green = 0,
     Red = 1,
-    Blyue = 2,
-    Yellow = 3
+    Blue = 2,
+    Yellow = 3,
+    Pink = 4,
+    Black = 5
 }
 
 public enum ParticleType
@@ -143,4 +145,20 @@ public enum SoundFxType
     Start_Go = 3,
     Shotgun = 4,
     Rifle = 5
+}
+
+public enum SurfaceType
+{
+    Asphalt,
+    Gravel,
+    Dirt,
+    Sand,
+    Grass,
+    Ice
+}
+
+public enum InputType
+{
+    Keyboard,
+    Controller
 }

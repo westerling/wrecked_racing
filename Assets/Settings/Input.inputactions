@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "Input",
     "maps": [
         {
@@ -292,6 +293,17 @@
                 },
                 {
                     "name": "",
+                    "id": "356cd3e9-e176-41ac-9d88-406499e264a9",
+                    "path": "<XInputController>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "NavigateUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c610727a-716f-43c6-beae-3fe1276a0ba0",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
@@ -314,6 +326,17 @@
                 },
                 {
                     "name": "",
+                    "id": "68f92d31-b0c9-4484-99e2-acb039d458aa",
+                    "path": "<XInputController>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "NavigateDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f4a247df-bd12-4bbb-acf9-db53b41d4982",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
@@ -326,10 +349,21 @@
                 {
                     "name": "",
                     "id": "db06c96d-b322-4d2c-898e-fc48abccf564",
-                    "path": "<XInputController>/leftStick/down",
+                    "path": "<XInputController>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "NavigateLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7c09085-9e58-4c27-8e94-6b4888cd27d5",
+                    "path": "<XInputController>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "NavigateLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -352,6 +386,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "NavigateRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9fef801b-bced-439f-9ce3-19792d8d8163",
+                    "path": "<XInputController>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
                     "action": "NavigateRight",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -414,5 +459,28 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Controller",
+            "bindingGroup": "Controller",
+            "devices": [
+                {
+                    "devicePath": "<XInputController>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }

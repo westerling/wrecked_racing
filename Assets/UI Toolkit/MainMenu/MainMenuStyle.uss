@@ -1,0 +1,53 @@
+:root {
+}
+
+.header {
+}
+
+.button {
+    align-content: auto;
+    align-self: auto;
+    width: 236px;
+    height: 60px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 40px;
+    -unity-font-style: normal;
+    -unity-font-definition: url("project://database/Packages/com.unity.cinemachine/Runtime/Debug/CinemachineRuntimeTheme.tss?fileID=2230732570650464555&guid=df9aec944f4474a04847b6d6375e4138&type=3#NotInter-Regular");
+    justify-content: flex-start;
+    bottom: auto;
+    left: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    -unity-text-outline-color: rgba(0, 0, 0, 0);
+    position: relative;
+    -unity-text-align: middle-left;
+    opacity: 1;
+}
+
+.button:focus {
+    font-size: 45px;
+    color: rgb(255, 255, 255);
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in;
+}
+
+.button:hover {
+    color: rgb(255, 255, 255);
+    font-size: 45px;
+    transition-property: all;
+    transition-duration: 0.1s;
+    transition-delay: 0.1s;
+    transition-timing-function: ease-in;
+}

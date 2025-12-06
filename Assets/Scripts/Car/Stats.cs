@@ -9,6 +9,12 @@ public class Stats
     private string m_Name;
 
     [SerializeField]
+    private Sprite m_Image;
+
+    [SerializeField]
+    private string m_Description;
+
+    [SerializeField]
     private Drivetrain m_DriveTrain;
 
     [SerializeField]
@@ -45,6 +51,10 @@ public class Stats
     [SerializeField]
     [Range(0f, 5f)]
     private float m_Downforce = 2f;
+
+    [Header("Audio")]
+    [SerializeField]
+    private AudioSource m_EngineSound;
 
     public float TopSpeed 
     {
@@ -98,5 +108,20 @@ public class Stats
     public AnimationCurve SlipCurveRear
     {
         get => m_SlipCurveRear;
+    }
+
+    public AudioSource EngineSound
+    {
+        get => m_EngineSound;
+    }
+    
+    public string Description
+    {
+        get => m_Description;
+    }
+
+    public Sprite Image
+    {
+        get => m_Image;
     }
 }

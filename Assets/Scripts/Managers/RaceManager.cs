@@ -158,25 +158,18 @@ public class RaceManager : MonoBehaviour
         RaceStatus = RaceStatus.HeatEnd;
         StopCurrentSong();
         ClearTargetGroup();
-        AddGameobjectToTargetGroup(GetClosestScoreBoard(), 1, 1);
+        AddGameobjectToTargetGroup(GetHeatWinner(), 1, 1);
         GivePoints();
         CheckForWinner();
         StartCoroutine(StartPauseEnumerator(5));
     }
 
-    private GameObject GetClosestScoreBoard()
+    private GameObject GetHeatWinner()
     {
-        if (Leader != null)
+        if (m_HeatResults.Any())
         {
-            if (TrackInformationManager.Current.ScoreBoards.Count() > 0)
-            {
-                var scoreBoard = TrackInformationManager.Current.ScoreBoards.OrderBy(
-                    scoreBoard =>
-                    (scoreBoard.transform.position - Leader.transform.position)
-                    .sqrMagnitude).FirstOrDefault().gameObject;
-
-                return scoreBoard;
-            }
+            Debug.Log("yay");
+            return m_HeatResults.OrderBy(x => x.Value).First().Key.gameObject;
         }
 
         return null;
@@ -184,7 +177,7 @@ public class RaceManager : MonoBehaviour
 
     private void GivePoints()
     {
-        var sortedEliminations = m_HeatResults.OrderBy(e => e.Value).ToList();
+        var sortedEliminations = m_HeatResults.OrderBy(x => x.Value).ToList();
         var results = new List<(Car, int)>();
         var currentPosition = 1;
         var lastEliminationTime = sortedEliminations[0].Value;

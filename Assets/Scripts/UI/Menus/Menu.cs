@@ -1,9 +1,21 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class Menu : MonoBehaviour
-{
+{    
     [SerializeField]
     private AudioClip[] m_MenuMusic;
+
+    private EventSystem m_EventSystem;
+
+    public EventSystem EventSystem => m_EventSystem != null
+                                  ? m_EventSystem
+                                  : EventSystem.current;
+
+    protected virtual void OnEnable()
+    {
+        m_EventSystem = EventSystem.current;
+    }
 
     private void Start()
     {

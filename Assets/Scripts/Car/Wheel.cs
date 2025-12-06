@@ -1,3 +1,4 @@
+﻿using System;
 using UnityEngine;
 
 public class Wheel : CarComponent
@@ -17,8 +18,12 @@ public class Wheel : CarComponent
     [SerializeField]
     private WheelPlacement m_WheelPlacement;
 
-    private AnimationCurve m_AnimationCurve;
+    [SerializeField]
+    private AudioSource m_AudioSource;
     
+    private AnimationCurve m_AnimationCurve;
+    private WheelSurfaceData m_CurrentSurfaceData;
+
     private CarStatus m_CarStatus;
 
     private float m_SteerAngle;
@@ -83,12 +88,110 @@ public class Wheel : CarComponent
 
     private void Update()
     {
-        AddSkidmarks();
+        UpdateWheelEffects();
 
         WheelRpm = m_WheelCollider.rpm;
         WheelCollider.GetWorldPose(out Vector3 position, out Quaternion rotation);
         GraphicsTransform.position = position;
         GraphicsTransform.rotation = rotation;
+    }
+
+    private void FixedUpdate()
+    {
+        var grip = m_CurrentSurfaceData != null
+            ? m_CurrentSurfaceData.GripMultiplier
+            : 1f;
+
+        WheelCollider.steerAngle = SteerAngle;
+        WheelCollider.motorTorque = MotorTorque * grip;
+        WheelCollider.brakeTorque = BrakeTorque * grip;
+    }
+
+    private void UpdateWheelEffects()
+    {
+        if (m_CarStatus != CarStatus.Active ||
+            !m_WheelCollider.GetGroundHit(out var hit))
+        {
+            DisableEffects();
+            return;
+        }
+
+        m_CurrentSurfaceData = GetSurfaceData(hit);
+
+        var combinedSlip = Mathf.Sqrt(
+            hit.forwardSlip * hit.forwardSlip +
+            hit.sidewaysSlip * hit.sidewaysSlip);
+
+        var slipThreshold = m_AnimationCurve.Evaluate(Car.CurrentSpeedRatio);
+
+        if (m_CurrentSurfaceData != null)
+        {
+            slipThreshold *= m_CurrentSurfaceData.SlipSensitivity;
+        }
+
+        var slipRatio = Mathf.InverseLerp(slipThreshold, slipThreshold * 2f, combinedSlip);
+        slipRatio = Mathf.Clamp01(slipRatio);
+
+        m_TrailRenderer.emitting = combinedSlip > slipThreshold;
+
+        UpdateAudio(slipRatio);
+
+        if (m_CurrentSurfaceData?.TrailMaterial != null &&
+            m_TrailRenderer.material != m_CurrentSurfaceData.TrailMaterial)
+        {
+            m_TrailRenderer.material = m_CurrentSurfaceData.TrailMaterial;
+        }
+    }
+
+    private WheelSurfaceData GetSurfaceData(WheelHit hit)
+    {
+        var ground = hit.collider.GetComponent<GroundSurface>();
+        return ground != null ? ground.SurfaceData : null;
+    }
+
+    private void DisableEffects()
+    {
+        m_TrailRenderer.emitting = false;
+        if (m_AudioSource.isPlaying)
+        {
+            m_AudioSource.Stop();
+        } 
+    }
+
+    private void UpdateAudio(float slipRatio)
+    {
+        if (m_CurrentSurfaceData == null || slipRatio < 0.05f)
+        {
+            m_AudioSource.volume = Mathf.Lerp(m_AudioSource.volume, 0f, Time.deltaTime * 3f);
+            
+            if (m_AudioSource.volume < 0.05f && m_AudioSource.isPlaying)
+            {
+                m_AudioSource.Stop();
+            }
+                
+            return;
+        }
+
+        if (!m_AudioSource.isPlaying)
+        {
+            if (m_AudioSource.clip != m_CurrentSurfaceData.SkidSound)
+            {
+                m_AudioSource.clip = m_CurrentSurfaceData.SkidSound;
+            }
+
+            Debug.Log("PLAY");
+            m_AudioSource.Play();
+        }
+
+        m_AudioSource.volume = Mathf.Lerp(
+            m_AudioSource.volume,
+            slipRatio * m_CurrentSurfaceData.VolumeMultiplier,
+            Time.deltaTime * 5f);
+
+        m_AudioSource.pitch = Mathf.Lerp(
+            m_AudioSource.pitch,
+            (0.8f + slipRatio * 0.4f) * m_CurrentSurfaceData.PitchMultiplier,
+            Time.deltaTime * 5f);
     }
 
     private void AddListeners()
@@ -104,34 +207,6 @@ public class Wheel : CarComponent
     private void RemoveListeners()
     {
         Car.CarStatusChanged -= OnCarStatusChanged;
-    }
-
-    private void AddSkidmarks()
-    {
-        if (m_CarStatus == CarStatus.Active)
-        {
-            if (m_WheelCollider.GetGroundHit(out var hit))
-            {
-                var combinedSlip = Mathf.Sqrt(hit.forwardSlip * hit.forwardSlip + hit.sidewaysSlip * hit.sidewaysSlip);
-
-                m_TrailRenderer.emitting = Mathf.Abs(combinedSlip) > m_AnimationCurve.Evaluate(Car.CurrentSpeedRatio);
-            }
-            else
-            {
-                m_TrailRenderer.emitting = false;
-            }
-        }
-        else
-        {
-            m_TrailRenderer.emitting = false;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        WheelCollider.steerAngle = SteerAngle;
-        WheelCollider.motorTorque = MotorTorque;
-        WheelCollider.brakeTorque = BrakeTorque;
     }
 
     private void OnDestroy()

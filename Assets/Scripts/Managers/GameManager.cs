@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GameManager : MonoBehaviour
 {
@@ -139,15 +138,24 @@ public class GameManager : MonoBehaviour
         {
             if (!Players.Contains(player))
             {
-                var availableColor = GivePlayerColor();
+                //var availableColor = GivePlayerColor();
 
-                if (!Enum.IsDefined(typeof(PlayerColor), availableColor))
+                //if (!Enum.IsDefined(typeof(PlayerColor), availableColor))
+                //{
+                //    Console.WriteLine("No available colors!");
+                //    return;
+                //}
+
+                //player.Color = availableColor;
+
+                if (playerInput.currentControlScheme == "Controller")
                 {
-                    Console.WriteLine("No available colors!");
-                    return;
+                    player.InputType = InputType.Controller;
                 }
-
-                player.Color = availableColor;
+                else
+                {
+                    player.InputType = InputType.Keyboard;
+                }
 
                 Players.Add(player);
                 PlayerStatusChanged?.Invoke(player, true);

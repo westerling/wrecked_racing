@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
                 return Sprites[0];
             case PlayerColor.Red:
                 return Sprites[1];
-            case PlayerColor.Blyue:
+            case PlayerColor.Blue:
                 return Sprites[2];
             case PlayerColor.Yellow:
                 return Sprites[3];

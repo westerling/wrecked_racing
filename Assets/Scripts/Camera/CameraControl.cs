@@ -23,8 +23,6 @@ public class CameraControl : MonoBehaviour
     private GameObject m_AudioListener;
 
     private CinemachineTargetGroup m_TargetGroup;
-    private GameObject m_Podium;
-    private GameObject m_Leader;
 
     public CinemachineCamera DollyCamera
     {
@@ -45,18 +43,6 @@ public class CameraControl : MonoBehaviour
     {
         get => m_TargetGroup;
         private set => m_TargetGroup = value;
-    }
-
-    protected GameObject Podium
-    {
-        get => m_Podium;
-        private set => m_Podium = value;
-    }
-
-    protected GameObject Leader
-    {
-        get => m_Leader;
-        private set => m_Leader = value;
     }
 
     private void Awake()
@@ -153,11 +139,9 @@ public class CameraControl : MonoBehaviour
             case RaceStatus.Countdown:
             case RaceStatus.Race:
                 SetBlend(Styles.Cut, 0.5f);
-                //SetBlend(Styles.EaseOut, 3);
                 DollyCamera.Priority = 1;
                 PodiumCamera.Priority = 0;
                 FinishedCamera.Priority = 0;
-
                 break;
             case RaceStatus.HeatEnd:
                 SetBlend(Styles.Cut, 0.5f);

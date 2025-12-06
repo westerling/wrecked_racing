@@ -10,17 +10,9 @@ public class TrackInformationManager : MonoBehaviour
     private Checkpoint[] m_Checkpoints;
 
     [SerializeField]
-    private GameObject[] m_ScoreBoards;
-
-    [SerializeField]
     private SplineContainer m_DollyTrack;
 
     public static TrackInformationManager Current;
-
-    public GameObject[] ScoreBoards
-    {
-        get => m_ScoreBoards;
-    }
 
     public Checkpoint[] Checkpoints
     {

@@ -24,33 +24,49 @@ public class SoundFxPool : ObjectPool
     {
         foreach (var pooledSoundsObject in m_FxObjectsToPool)
         {
-            var clipGO = new GameObject("AudioSource_" + pooledSoundsObject.ObjectToPool.name);
-            var source = clipGO.AddComponent<SoundFx>();
-            
-            source.SoundFxType = pooledSoundsObject.SoundFxType;
-            source.AudioClip = pooledSoundsObject.ObjectToPool;
-
-
-            m_ObjectsToPool.Add(new PooledObject
+            for (int i = 0; i < pooledSoundsObject.Amount; i++)
             {
-                ObjectToPool = clipGO,
-                Amount = pooledSoundsObject.Amount
-            });
+                var clipGO = new GameObject($"AudioSource_{pooledSoundsObject.ObjectToPool.name}");
+                clipGO.SetActive(false);
+
+                var source = SetupAudioSource(clipGO);
+                var soundFx = clipGO.AddComponent<SoundFx>();
+                soundFx.SoundFxType = pooledSoundsObject.SoundFxType;
+                soundFx.AudioClip = pooledSoundsObject.ObjectToPool;
+
+                source.clip = soundFx.AudioClip;
+
+                m_ObjectsToPool.Add(new PooledObject
+                {
+                    ObjectToPool = clipGO,
+                    Amount = 1
+                });
+            }
         }
+    }
+
+    private AudioSource SetupAudioSource(GameObject clipGO)
+    {
+        var source = clipGO.AddComponent<AudioSource>();
+        source.playOnAwake = false;
+        source.spatialBlend = 1f;
+        source.rolloffMode = AudioRolloffMode.Linear;
+        source.minDistance = 5f;
+        source.maxDistance = 50f;
+
+        return source;
     }
 
     public GameObject GetPooledObjectOfType(SoundFxType soundFxType)
     {
-        var pooledObjects = PooledObjects.Where(x => !(x.activeInHierarchy) && x.GetComponent<SoundFx>().SoundFxType == soundFxType).ToList();
+        var pooledObjects = PooledObjects
+            .Where(x => !x.activeInHierarchy && x.GetComponent<SoundFx>().SoundFxType == soundFxType)
+            .ToList();
 
-        if (pooledObjects == null || pooledObjects.Count() == 0)
-        {
-            Debug.LogError("Object does not exist");
+        if (pooledObjects.Count > 0)
+            return pooledObjects[Random.Range(0, pooledObjects.Count)];
 
-            return null;
-        }
-
-        var randomNumber = Random.Range(0, pooledObjects.Count());
-        return pooledObjects[randomNumber];
+        Debug.LogWarning($"No available SoundFxType of {soundFxType}");
+        return null;
     }
 }
