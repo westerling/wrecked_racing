@@ -1723,6 +1723,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Motorway_Ramp_4
       objectReference: {fileID: 0}
+    - target: {fileID: 8385267554391898125, guid: 22828125dd3d9e14688bf29943537088, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385267554391898125, guid: 22828125dd3d9e14688bf29943537088, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 404c20795b261a044a450db0a3f6d6f2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2917,11 +2925,6 @@ MonoBehaviour:
   - {fileID: 902223322}
   - {fileID: 27609856}
   - {fileID: 1287734750}
-  m_ScoreBoards:
-  - {fileID: 1179739094}
-  - {fileID: 315198724}
-  - {fileID: 926063948}
-  - {fileID: 1400391767}
   m_DollyTrack: {fileID: 1662566013}
 --- !u!1 &1201227673
 GameObject:

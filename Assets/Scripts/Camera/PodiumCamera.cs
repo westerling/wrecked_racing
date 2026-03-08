@@ -1,4 +1,6 @@
 using Unity.Cinemachine;
+using UnityEngine;
+using UnityEngine.Device;
 
 public class PodiumCamera : BaseCamera
 {
@@ -12,14 +14,8 @@ public class PodiumCamera : BaseCamera
     {
         foreach (var target in targetGroup.Targets)
         {
-            if (target.Object.gameObject.TryGetComponent(out TVScreen tvScreen))
-            {
-                if (tvScreen.FocusPoint != null)
-                {
-                    m_Camera.Follow = tvScreen.FocusPoint.transform;
-                    m_Camera.LookAt = tvScreen.FocusPoint.transform;
-                }
-            }
+            m_Camera.Follow = target.Object;
+            m_Camera.LookAt = target.Object;
         }
     }
 

@@ -22,26 +22,70 @@ public class InputManager : MonoBehaviour
     private const string MenuInputActionMap = "Menu";
 
     [SerializeField]
-    private PlayerInput m_Controls;
+    private PlayerInput m_PlayerInput;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (TryGetComponent(out Player player))
         {
             m_Player = player;
         }
 
-        m_RaceInputActionMap = m_Controls.actions.FindActionMap(RaceInputActionMap);
-        m_MenuInputActionMap = m_Controls.actions.FindActionMap(MenuInputActionMap);
+        m_RaceInputActionMap = m_PlayerInput.actions.FindActionMap(RaceInputActionMap);
+        m_MenuInputActionMap = m_PlayerInput.actions.FindActionMap(MenuInputActionMap);
     }
 
     private void Start()
     {
         GameManager.Current.GameStateChanged += OnGameStateChanged;
-        AddRaceListeners();
-        AddMenuListeners();
 
+        if (m_PlayerInput != null)
+        {
+            AddRaceListeners();
+            AddMenuListeners();
+        }
+        
         SetActionMapStatus(GameState.Menu);
+    }
+
+    protected void SendAccelerate(float value)
+    {
+        Accelerate?.Invoke(value);
+    }
+
+    protected void SendBrake(float value)
+    {
+        Brake?.Invoke(value);
+    }
+
+    protected void SendSteer(float value)
+    {
+        Steer?.Invoke(value);
+    }
+
+    protected void SendFireStarted()
+    {
+        FireStarted?.Invoke();
+    }
+
+    protected void SendFireStopped()
+    {
+        FireStopped?.Invoke();
+    }
+
+    protected void SendNavigateMenu(MenuNavigation navigation)
+    {
+        NavigateMenu?.Invoke(m_Player, navigation);
+    }
+
+    protected void SendBackMenu()
+    {
+        BackMenu?.Invoke(m_Player);
+    }
+
+    protected void SendGoMenu()
+    {
+        GoMenu?.Invoke(m_Player);
     }
 
     private void OnGameStateChanged(GameState gameState)
@@ -74,107 +118,111 @@ public class InputManager : MonoBehaviour
 
     private void AddMenuListeners()
     {
-        m_Controls.actions["NavigateUp"].performed += NavigateUpPerformed;
-        m_Controls.actions["NavigateDown"].performed += NavigateDownPerformed;
-        m_Controls.actions["NavigateLeft"].performed += NavigateLeftPerformed;
-        m_Controls.actions["NavigateRight"].performed += NavigateRightPerformed;
-        m_Controls.actions["GoBackMenu"].performed += NavigateBackPerformed;
-        m_Controls.actions["EnterMenu"].performed += NavigateForwardPerformed;
+        m_PlayerInput.actions["NavigateUp"].performed += NavigateUpPerformed;
+        m_PlayerInput.actions["NavigateDown"].performed += NavigateDownPerformed;
+        m_PlayerInput.actions["NavigateLeft"].performed += NavigateLeftPerformed;
+        m_PlayerInput.actions["NavigateRight"].performed += NavigateRightPerformed;
+        m_PlayerInput.actions["GoBackMenu"].performed += NavigateBackPerformed;
+        m_PlayerInput.actions["EnterMenu"].performed += NavigateForwardPerformed;
     }
 
     private void AddRaceListeners()
     {
-        m_Controls.actions["Accelerate"].performed += AcceleratePerfomed;
-        m_Controls.actions["Accelerate"].canceled += AcceleratePerfomed;
-        m_Controls.actions["Brake"].performed += BrakePerformed;
-        m_Controls.actions["Brake"].canceled += BrakePerformed;
-        m_Controls.actions["Steer"].performed += SteerPerformed;
-        m_Controls.actions["Steer"].canceled += SteerPerformed;
-        m_Controls.actions["Fire"].performed += FirePerfomed;
-        m_Controls.actions["Fire"].canceled += FireStoppedPerformed;
+        m_PlayerInput.actions["Accelerate"].performed += AcceleratePerfomed;
+        m_PlayerInput.actions["Accelerate"].canceled += AcceleratePerfomed;
+        m_PlayerInput.actions["Brake"].performed += BrakePerformed;
+        m_PlayerInput.actions["Brake"].canceled += BrakePerformed;
+        m_PlayerInput.actions["Steer"].performed += SteerPerformed;
+        m_PlayerInput.actions["Steer"].canceled += SteerPerformed;
+        m_PlayerInput.actions["Fire"].performed += FirePerfomed;
+        m_PlayerInput.actions["Fire"].canceled += FireStoppedPerformed;
     }
 
     private void SteerPerformed(InputAction.CallbackContext obj)
     {
-        Steer?.Invoke(obj.ReadValue<float>());
+        SendSteer(obj.ReadValue<float>());
     }
 
     private void BrakePerformed(InputAction.CallbackContext obj)
     {
-        Brake?.Invoke(obj.ReadValue<float>());
+        SendBrake(obj.ReadValue<float>());
     }
 
     private void AcceleratePerfomed(InputAction.CallbackContext obj)
     {
-        Accelerate?.Invoke(obj.ReadValue<float>());
+        SendAccelerate(obj.ReadValue<float>());
     }
 
     private void FirePerfomed(InputAction.CallbackContext obj)
     {
-        FireStarted?.Invoke();
+        SendFireStarted();
     }
 
     private void FireStoppedPerformed(InputAction.CallbackContext obj)
     {
-        FireStopped?.Invoke();
+        SendFireStopped();
     }
 
     private void NavigateRightPerformed(InputAction.CallbackContext obj)
     {
-        NavigateMenu?.Invoke(m_Player, MenuNavigation.Right);
+        SendNavigateMenu(MenuNavigation.Right);
     }
 
     private void NavigateLeftPerformed(InputAction.CallbackContext obj)
     {
-        NavigateMenu?.Invoke(m_Player, MenuNavigation.Left);
+        SendNavigateMenu(MenuNavigation.Left);
     }
 
     private void NavigateDownPerformed(InputAction.CallbackContext obj)
     {
-        NavigateMenu?.Invoke(m_Player, MenuNavigation.Down);
+        SendNavigateMenu(MenuNavigation.Down);
     }
 
     private void NavigateUpPerformed(InputAction.CallbackContext obj)
     {
-        NavigateMenu?.Invoke(m_Player, MenuNavigation.Up);
+        SendNavigateMenu(MenuNavigation.Up);
     }
 
     private void NavigateForwardPerformed(InputAction.CallbackContext obj)
     {
-        GoMenu?.Invoke(m_Player);
+        SendGoMenu();
     }
 
     private void NavigateBackPerformed(InputAction.CallbackContext obj)
     {
-        BackMenu?.Invoke(m_Player);
+        SendBackMenu();
     }
 
     private void RemoveRaceListeners()
     {
-        m_Controls.actions["Accelerate"].performed -= AcceleratePerfomed;
-        m_Controls.actions["Accelerate"].canceled -= AcceleratePerfomed;
-        m_Controls.actions["Brake"].performed -= BrakePerformed;
-        m_Controls.actions["Brake"].canceled -= BrakePerformed;
-        m_Controls.actions["Steer"].performed -= SteerPerformed;
-        m_Controls.actions["Steer"].canceled -= SteerPerformed;
-        m_Controls.actions["Fire"].performed -= FirePerfomed;
-        m_Controls.actions["Fire"].canceled -= FireStoppedPerformed;
+        m_PlayerInput.actions["Accelerate"].performed -= AcceleratePerfomed;
+        m_PlayerInput.actions["Accelerate"].canceled -= AcceleratePerfomed;
+        m_PlayerInput.actions["Brake"].performed -= BrakePerformed;
+        m_PlayerInput.actions["Brake"].canceled -= BrakePerformed;
+        m_PlayerInput.actions["Steer"].performed -= SteerPerformed;
+        m_PlayerInput.actions["Steer"].canceled -= SteerPerformed;
+        m_PlayerInput.actions["Fire"].performed -= FirePerfomed;
+        m_PlayerInput.actions["Fire"].canceled -= FireStoppedPerformed;
     }
 
     private void RemoveMenuListeners()
     {
-        m_Controls.actions["NavigateUp"].performed -= NavigateUpPerformed;
-        m_Controls.actions["NavigateDown"].performed -= NavigateDownPerformed;
-        m_Controls.actions["NavigateLeft"].performed -= NavigateLeftPerformed;
-        m_Controls.actions["NavigateRight"].performed -= NavigateRightPerformed;
-        m_Controls.actions["GoBackMenu"].performed -= NavigateBackPerformed;
-        m_Controls.actions["EnterMenu"].performed -= NavigateForwardPerformed;
+        m_PlayerInput.actions["NavigateUp"].performed -= NavigateUpPerformed;
+        m_PlayerInput.actions["NavigateDown"].performed -= NavigateDownPerformed;
+        m_PlayerInput.actions["NavigateLeft"].performed -= NavigateLeftPerformed;
+        m_PlayerInput.actions["NavigateRight"].performed -= NavigateRightPerformed;
+        m_PlayerInput.actions["GoBackMenu"].performed -= NavigateBackPerformed;
+        m_PlayerInput.actions["EnterMenu"].performed -= NavigateForwardPerformed;
     }
 
     private void OnDestroy()
     {
         GameManager.Current.GameStateChanged -= OnGameStateChanged;
-        RemoveRaceListeners();
-        RemoveMenuListeners();
+
+        if (m_PlayerInput != null)
+        {
+            RemoveRaceListeners();
+            RemoveMenuListeners();
+        }
     }
 }

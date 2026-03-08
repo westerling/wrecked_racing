@@ -17,6 +17,7 @@ public class Targeter : CarComponent
     private Transform m_LaserTransform;
     private GameObject m_MovingObject;
     private GameObject m_CurrentTarget;
+
     private RaycastHit m_Hit;
 
     public GameObject CurrentTarget
@@ -27,17 +28,20 @@ public class Targeter : CarComponent
     
     private void OnEnable()
     {
-        if (Car.WeaponManager.Weapon == null)
+        if (Car is PlayerCar playerCar)
         {
-            return;
-        }
+            if (playerCar.WeaponManager.Weapon == null)
+            {
+                return;
+            }
 
-        if (Car.WeaponManager.Weapon is TargetWeapon targetWeapon)
-        {
-            m_LaserTransform = targetWeapon.LaserTransform;
-            m_MovingObject = targetWeapon.MovingObject;
-            m_LineRenderer.enabled = true;
-            m_LineRenderer.material = m_LineRenderer.materials[0];
+            if (playerCar.WeaponManager.Weapon is TargetWeapon targetWeapon)
+            {
+                m_LaserTransform = targetWeapon.LaserTransform;
+                m_MovingObject = targetWeapon.MovingObject;
+                m_LineRenderer.enabled = true;
+                m_LineRenderer.material = m_LineRenderer.materials[0];
+            }
         }
     }
 

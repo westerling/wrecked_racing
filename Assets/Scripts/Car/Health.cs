@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class Health : CarComponent
 {
@@ -16,8 +15,6 @@ public class Health : CarComponent
 
     public void Damage(float amount)
     {
-        Debug.Log("Fuck with " + amount + " amount.");
-
         m_Health -= amount;
         CheckDamage();
     }

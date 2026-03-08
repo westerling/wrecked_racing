@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 public class Brakes : InputComponent
 {
     private float m_CurrentAccelerationInput = 0f;

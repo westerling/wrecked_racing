@@ -3,6 +3,7 @@ using UnityEngine;
 public class WeaponManager : CarComponent
 {
     private Weapon m_Weapon;
+    private PlayerCar m_PlayerCar;
 
     public Weapon Weapon
     {
@@ -12,6 +13,11 @@ public class WeaponManager : CarComponent
 
     private void Start()
     {
+        if (Car is PlayerCar playerCar)
+        {
+            m_PlayerCar = playerCar;
+        }
+
         AddListeners();
         SetTargeterStatus();
     }
@@ -25,8 +31,8 @@ public class WeaponManager : CarComponent
             weaponToActivate.SetActive(true);
             weaponToActivate.transform.parent = transform;
             weaponToActivate.transform.SetPositionAndRotation(
-                Car.WeaponTransform.position, 
-                Car.WeaponTransform.rotation);
+                m_PlayerCar.WeaponTransform.position,
+                m_PlayerCar.WeaponTransform.rotation);
 
             weapon.PickupWeapon(Car);
 
@@ -71,10 +77,10 @@ public class WeaponManager : CarComponent
     {
         if (Weapon == null)
         {
-            Car.Targeter.enabled = false;
+            m_PlayerCar.Targeter.enabled = false;
         }
 
-        Car.Targeter.enabled = Weapon is TargetWeapon;
+        m_PlayerCar.Targeter.enabled = Weapon is TargetWeapon;
     }
 
     private void OnFireStarted()
