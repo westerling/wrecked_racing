@@ -26,7 +26,7 @@ public class Brakes : InputComponent
 
     private void ApplyBrakes()
     {
-        if (m_RaceStatus == RaceStatus.Race && m_CarStatus == CarStatus.Active)
+        if ((m_RaceStatus == RaceStatus.Race && m_CarStatus == CarStatus.Active) || Car.IsAi)
         {
             if (m_CurrentBrakeInput == 0 && m_CurrentAccelerationInput == 0 && Car.CurrentSpeed < 5f)
             {

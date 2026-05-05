@@ -1,11 +1,14 @@
-using UnityEngine;
-
 public class Engine : InputComponent
 {
     private float m_CurrentAccelerationInput = 0f;
     private float m_CurrentBrakeInput = 0f;
 
     private RaceStatus m_RaceStatus;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     protected override void AddListeners()
     {
@@ -31,11 +34,11 @@ public class Engine : InputComponent
 
     private void ApplyAcceleration()
     {
-        var motorTorque = 0f;
+        var torque = 0f;
 
         if (m_CurrentAccelerationInput > 0)
         {
-            motorTorque = Car.CurrentSpeed < (Car.Stats.TopSpeed * Car.StatusManager.GetModifierAmount(Stat.Speed)) ?
+            torque = Car.CurrentSpeed < (Car.Stats.TopSpeed * Car.StatusManager.GetModifierAmount(Stat.Speed)) ?
             (m_CurrentAccelerationInput * Car.Stats.MotorTorque.Evaluate(Car.CurrentSpeedRatio) * Car.StatusManager.GetModifierAmount(Stat.Acceleration))
             : 0;
         }
@@ -44,13 +47,13 @@ public class Engine : InputComponent
         {
             if (Car.HeadingDirection != CarDirection.Forward)
             {
-                motorTorque = -(Car.CurrentSpeed > -(Car.Stats.TopSpeed / 8) ?
+                torque = -(Car.CurrentSpeed > -(Car.Stats.TopSpeed / 8) ?
                 (m_CurrentBrakeInput * Car.Stats.MotorTorque.Evaluate(Car.CurrentSpeedRatio))
                 : 0);
             }       
         }
 
-        Car.Transmission.MotorTorque = motorTorque;
+        Car.Transmission.MotorTorque = torque;
     }
 
     private void OnRaceStateChanged(RaceStatus obj)

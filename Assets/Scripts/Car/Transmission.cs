@@ -19,6 +19,8 @@ public class Transmission : CarComponent
     private float m_CenterSplit = 0.5f;
     private bool m_SwitchGear = false;
     private List<float> m_GearRatios = new List<float>();
+
+    [SerializeField]
     private AudioSource m_EngineSound;
 
     private float minPitch = 1f;
@@ -47,7 +49,13 @@ public class Transmission : CarComponent
     {
         InitializeGears();
 
+        if (Car.IsAi)
+        {
+            return;
+        }
+
         m_EngineSound = Car.Stats.EngineSound;
+
         if (m_EngineSound != null && !m_EngineSound.isPlaying)
         {
             m_EngineSound.Play();
@@ -87,6 +95,11 @@ public class Transmission : CarComponent
 
     private void UpdateEngineSound()
     {
+        if (Car.IsAi)
+        {
+            return;
+        }
+
         if (m_EngineSound == null)
         {
             return;

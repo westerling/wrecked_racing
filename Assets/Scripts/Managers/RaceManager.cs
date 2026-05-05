@@ -168,7 +168,6 @@ public class RaceManager : MonoBehaviour
     {
         if (m_HeatResults.Any())
         {
-            Debug.Log("yay");
             return m_HeatResults.OrderBy(x => x.Value).First().Key.gameObject;
         }
 
@@ -335,24 +334,27 @@ public class RaceManager : MonoBehaviour
 
     private void OnCarStatusChanged(Car car, CarStatus carStatus)
     {
-        if (carStatus == CarStatus.Inactive)
+        if (car is PlayerCar playerCar)
         {
-            if (m_ActiveCars.Contains(car))
+            if (carStatus == CarStatus.Inactive)
             {
-                m_ActiveCars.Remove(car);
-            }
+                if (m_ActiveCars.Contains(car))
+                {
+                    m_ActiveCars.Remove(playerCar);
+                }
 
-            if (!m_InactiveCars.Contains(car))
-            {
-                m_InactiveCars.Add(car);
-            }
+                if (!m_InactiveCars.Contains(car))
+                {
+                    m_InactiveCars.Add(playerCar);
+                }
 
-            if (!m_HeatResults.ContainsKey(car))
-            {
-                m_HeatResults.Add(car, m_RaceTimer);
+                if (!m_HeatResults.ContainsKey(car))
+                {
+                    m_HeatResults.Add(car, m_RaceTimer);
+                }
+
+                RemoveGameobjectFromTargetGroup(car.gameObject);
             }
-            
-            RemoveGameobjectFromTargetGroup(car.gameObject);
         }
     }
 
@@ -419,7 +421,7 @@ public class RaceManager : MonoBehaviour
         {
             var carGameObject = Instantiate(m_RaceSettings.Car, m_CarTransform);
 
-            if (carGameObject.TryGetComponent(out Car car))
+            if (carGameObject.TryGetComponent(out PlayerCar car))
             {
                 Cars.Add(car);
                 car.Player = player;

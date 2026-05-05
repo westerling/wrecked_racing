@@ -23,7 +23,7 @@ public class Differential : CarComponent
         set => m_RightWheel = value;
     }
 
-    public void ApplyTorque(float totalTorque)
+    public void ApplyTorque(float torque)
     {
         if (LeftWheel.WheelCollider.GetGroundHit(out var hitLeft) && RightWheel.WheelCollider.GetGroundHit(out var hitRight))
         {
@@ -43,8 +43,8 @@ public class Differential : CarComponent
                 m_TorqueSplit = 0.5f;
             }
 
-            LeftWheel.MotorTorque = totalTorque * m_TorqueSplit;
-            RightWheel.MotorTorque = totalTorque * (1 - m_TorqueSplit);
+            LeftWheel.MotorTorque = torque * m_TorqueSplit;
+            RightWheel.MotorTorque = torque * (1 - m_TorqueSplit);
         }
     }
 }

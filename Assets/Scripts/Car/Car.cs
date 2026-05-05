@@ -35,6 +35,8 @@ public class Car : MonoBehaviour
     private CarStatus m_CarStatus = CarStatus.Inactive;
     private CarDirection m_HeadingDirection = CarDirection.Stationary;
 
+    private bool m_IsAi;
+
     public Rigidbody Rigidbody
     {
         get => m_Rigidbody;
@@ -110,12 +112,17 @@ public class Car : MonoBehaviour
         }
     }
 
+    public bool IsAi
+    {
+        get => m_IsAi;
+        protected set => m_IsAi = value;
+    }
+
     protected virtual void Awake()
     {
         Rigidbody.centerOfMass = m_CenterOfMass.localPosition;
 
         GetWheels();
-        
     }
 
     protected void TriggerCarStatus(CarStatus carStatus)

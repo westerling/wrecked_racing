@@ -1,23 +1,16 @@
 using UnityEngine;
 
-public class NpcCar : MonoBehaviour
+public class NpcCar : Car
 {
     [SerializeField]
-    private float m_Speed = 18f;
+    private bool m_ActiveOnStart;
 
-    [SerializeField]
-    private Transform m_Target;
-
-    private void Update()
+    protected override void Awake()
     {
-        transform.Translate(transform.forward.normalized * m_Speed * Time.deltaTime, Space.World);
+        base.Awake();
 
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            m_Target.position,
-            m_Speed * Time.deltaTime
-        );
+        CarStatus = CarStatus.Active; 
 
-        transform.LookAt(m_Target.position);
+        IsAi = true;
     }
 }

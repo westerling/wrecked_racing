@@ -1707,7 +1707,7 @@ MonoBehaviour:
     m_DragCoefficient: 1
     m_Health: 100
     m_Downforce: 2
-    m_EngineSound: {fileID: 0}
+    m_EngineSound: {fileID: 7155653447812977334}
   m_Health: {fileID: 5444383200223937931}
   m_WeaponTransform: {fileID: 9147419541456383720}
   m_WeaponManager: {fileID: 2134604244635626885}
@@ -1854,6 +1854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontDifferential: {fileID: 2355279881888821124}
   rearDifferential: {fileID: 6421152291299561099}
+  m_EngineSound: {fileID: 0}
 --- !u!114 &2134604244635626885
 MonoBehaviour:
   m_ObjectHideFlags: 0

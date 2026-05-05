@@ -23,10 +23,16 @@ public class Steering : InputComponent
 
     private void Update()
     {
+        if (!m_SteeringWheels.Any())
+        {
+            SetSteeringWheels();
+            return;
+        }
+
         foreach (var wheel in m_SteeringWheels)
         {
-            var steeringAngle = m_SteerInput * Car.Stats.TurningCurve.Evaluate(Car.CurrentSpeedRatio);
-            wheel.SteerAngle = steeringAngle;
+            var steerAngle = m_SteerInput * Car.Stats.TurningCurve.Evaluate(Car.CurrentSpeedRatio);
+            wheel.SteerAngle = steerAngle;
         }
     }
 

@@ -117,7 +117,6 @@ public class Targeter : CarComponent
         {
             if (m_LineRenderer.material == m_LineRenderer.materials[1])
             {
-                Debug.Log("REEEEED");
                 m_LineRenderer.material = m_LineRenderer.materials[0];
             }
         }
@@ -125,7 +124,6 @@ public class Targeter : CarComponent
         {
             if (m_LineRenderer.material == m_LineRenderer.materials[0])
             {
-                Debug.Log("GREEEEN");
                 m_LineRenderer.material = m_LineRenderer.materials[1];
             }
         }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerCar : Car
@@ -35,6 +34,8 @@ public class PlayerCar : Car
         base.Awake();
 
         AddListeners();
+
+        IsAi = false;
     }
 
     private void OnCarActive(CarStatus carStatus)
