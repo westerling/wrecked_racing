@@ -12,6 +12,11 @@ public abstract class CarComponent : MonoBehaviour
 
     protected virtual void Awake()
     {
-        m_Car = GetComponentInParent<Car>();
+        Car = GetComponentInParent<Car>();
+
+        if (Car == null)
+        {
+            Debug.LogError("Could not find Car component in parent.");
+        }
     }
 }

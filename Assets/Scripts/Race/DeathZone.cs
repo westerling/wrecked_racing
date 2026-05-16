@@ -11,9 +11,9 @@ public class DeathZone : MonoBehaviour
             return;
         }
 
-        if (car.gameObject.TryGetComponent(out Health health))
+        if (car is PlayerCar playerCar)
         {
-            health.Destroy();
+            playerCar.Health.Damage(float.MaxValue);
         }
     }
 }

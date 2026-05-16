@@ -2,7 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 
-public class AiInputManager : InputManager
+public class AIInputManager : InputManager
 {
     [SerializeField]
     private AICarController m_AICarController;

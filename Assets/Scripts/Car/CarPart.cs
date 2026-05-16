@@ -1,25 +1,17 @@
-using System;
-using Unity.Mathematics;
+using System.Linq;
 using UnityEngine;
 
 public class CarPart : MonoBehaviour
 {
     [SerializeField]
-    private Transform m_ParentTransform;
-
-    [SerializeField]
-    private float m_Threshold;
-
-    [SerializeField]
-    private Rigidbody m_Rigidbody;
-
-    [SerializeField]
-    private Collider m_Collider;
+    private CarPartType m_CarPartType;
 
     private bool m_Detached;
+    private float m_Threshold;
 
-    private Vector3 m_StartPos;
-    private quaternion m_StartRotation;
+    private Collider m_Collider;
+    private Rigidbody m_Rigidbody;
+    private Transform m_ParentTransform;
 
     public bool Detached
     {
@@ -30,18 +22,32 @@ public class CarPart : MonoBehaviour
     public float Threshold
     {
         get => m_Threshold;
+        private set => m_Threshold = value;
     }
 
-    private void Start()
+    public void SetupCarPart(Car car)
     {
+        var stats = car.Stats.CarPartStats.Where(x => x.CarPartType == m_CarPartType).FirstOrDefault();
+
+        if (stats == null)
+        {
+            Debug.LogError("No Stats found for car part " + m_CarPartType);
+        }
+
+        m_ParentTransform = car.transform;
+
+        var meshCollider = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
+        meshCollider.convex = true;
+        meshCollider.material = car.PhysicsMaterial;
+        m_Collider = meshCollider;
+
+        var rigidBody = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
+        rigidBody.mass = stats.Mass;
+        m_Rigidbody = rigidBody;
+
+        Threshold = stats.Threshold;
+
         SeperateComponent(false);
-        //SetStartPosition();
-    }
-
-    private void SetStartPosition()
-    {
-        m_StartPos = transform.position;
-        m_StartRotation = transform.rotation;
     }
 
     public void SeperateComponent(bool enable)
@@ -54,7 +60,6 @@ public class CarPart : MonoBehaviour
 
     public void ResetTransformAndPosition()
     {
-        //transform.SetPositionAndRotation(m_StartPos, m_StartRotation);
         SeperateComponent(true);
     }
 }

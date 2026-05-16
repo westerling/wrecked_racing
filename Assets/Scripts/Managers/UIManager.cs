@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SetutPointScreen(List<Car> cars, int startPoints)
+    public void SetutPointScreen(List<PlayerCar> cars, int startPoints)
     {
         if (m_PointScreen.TryGetComponent(out PointScreen pointScreen))
         {
@@ -67,7 +67,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdatePoints(Car car, int points)
+    public void UpdatePoints(PlayerCar car, int points)
     {
         if (m_PointScreen.TryGetComponent(out PointScreen pointScreen))
         {

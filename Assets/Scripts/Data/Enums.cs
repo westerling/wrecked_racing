@@ -162,3 +162,10 @@ public enum InputType
     Keyboard,
     Controller
 }
+
+public enum CarPartType
+{
+    Hood,
+    Trunk,
+    Door
+}

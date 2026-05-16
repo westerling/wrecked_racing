@@ -464,7 +464,7 @@ MonoBehaviour:
     Spline: {fileID: 0}
     Position: 0
     Units: 0
-  SplineOffset: {x: 0, y: 40, z: -40}
+  SplineOffset: {x: 0, y: 30, z: -30}
   CameraRotation: 3
   Damping:
     Enabled: 1
@@ -555,8 +555,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6120098746381631262}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.29620066, y: -0.6525532, z: 0.30916777, w: 0.6251839}
+  m_LocalPosition: {x: 72.20318, y: 49.999287, z: -142.3469}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -595,7 +595,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 40.000008
   orthographic: 0
   orthographic size: 10
   m_Depth: 0

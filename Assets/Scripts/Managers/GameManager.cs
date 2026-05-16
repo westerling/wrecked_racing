@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -132,22 +133,13 @@ public class GameManager : MonoBehaviour
         SetGameState(GameState.Menu);
     }
 
+    [UsedImplicitly]
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         if (playerInput.TryGetComponent(out Player player))
         {
             if (!Players.Contains(player))
             {
-                //var availableColor = GivePlayerColor();
-
-                //if (!Enum.IsDefined(typeof(PlayerColor), availableColor))
-                //{
-                //    Console.WriteLine("No available colors!");
-                //    return;
-                //}
-
-                //player.Color = availableColor;
-
                 if (playerInput.currentControlScheme == "Controller")
                 {
                     player.InputType = InputType.Controller;
@@ -171,6 +163,7 @@ public class GameManager : MonoBehaviour
         return allColors.FirstOrDefault(color => !takenColors.Contains(color));
     }
 
+    [UsedImplicitly]
     private void OnPlayerLeft(PlayerInput playerInput)
     {
         if (playerInput.TryGetComponent(out Player player))

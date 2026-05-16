@@ -2,59 +2,48 @@ using System;
 
 public class Health : CarComponent
 {
-    public event Action<CarStatus> CarActive;
+    public event Action<CarStatus> CarHealthStatus;
+    public event Action<float, float> CarHealthChanged;
 
-    private float m_Health;
+    private float m_MaxHealthPoints;
+    private float m_HealthPoints;
+
+    public float HealthPoints
+    {
+        get => m_HealthPoints;
+        set => m_HealthPoints = value;
+    }
 
     protected override void Awake()
     {
         base.Awake();
+
+        m_MaxHealthPoints = Car.Stats.HealthPoints;
 
         AddListeners();
     }
 
     public void Damage(float amount)
     {
-        m_Health -= amount;
-        CheckDamage();
-    }
-
-    public void Destroy()
-    {
-        m_Health = 0;
+        HealthPoints -= amount;
+        var healthRatio = HealthPoints / m_MaxHealthPoints;
+        CarHealthChanged?.Invoke(HealthPoints, healthRatio);
         CheckDamage();
     }
 
     private void ResetHealth()
     {
-        m_Health = Car.Stats.Health;
-        CarActive?.Invoke(CarStatus.Active);
-    }
-
-    private void ResetCarParts()
-    {
-        foreach (var carPart in Car.CarParts)
-        {
-            carPart.ResetTransformAndPosition();
-        }
+        HealthPoints = m_MaxHealthPoints;
+        var healthRatio = HealthPoints / m_MaxHealthPoints;
+        CarHealthChanged?.Invoke(HealthPoints, healthRatio);
+        CarHealthStatus?.Invoke(CarStatus.Active);
     }
 
     private void CheckDamage()
     {
-        if (m_Health <= 0)
+        if (HealthPoints <= 0)
         {
-            CarActive?.Invoke(CarStatus.Inactive);
-        }
-
-        foreach (var carPart in Car.CarParts)
-        {
-            if (!carPart.Detached)
-            {
-                if (m_Health < carPart.Threshold)
-                {
-                    carPart.SeperateComponent(true);
-                }
-            }
+            CarHealthStatus?.Invoke(CarStatus.Inactive);
         }
     }
 
@@ -63,7 +52,6 @@ public class Health : CarComponent
         if (raceState == RaceStatus.Countdown)
         {
             ResetHealth();
-            ResetCarParts();
         }
     }
 

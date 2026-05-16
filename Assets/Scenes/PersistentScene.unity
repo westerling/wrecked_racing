@@ -2754,7 +2754,7 @@ MonoBehaviour:
   m_RaceCamera: {fileID: 1521013187045654880, guid: 9213ba321882b9247ba874faf2e22051, type: 3}
   m_FollowCamera: {fileID: 1521013187045654880, guid: 9092d568fef421e4e91b6d0bc07615e9, type: 3}
   m_Cars:
-  - {fileID: 8323597071206408131, guid: 75aff2ab966b8f641960a9eb45a490de, type: 3}
+  - {fileID: 8323597071206408131, guid: 64577fdeba33c17428f8ee4467a9b11d, type: 3}
   m_Tracks:
   - m_TrackName: Downtown
     m_TrackDescription: Between skrapers

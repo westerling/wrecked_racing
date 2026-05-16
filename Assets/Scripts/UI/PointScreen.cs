@@ -24,7 +24,7 @@ public class PointScreen : MonoBehaviour
         pointsScreen.SetNewPoints(newPoints);
     }
 
-    public void SetupCars(List<Car> cars, int startPoints)
+    public void SetupCars(List<PlayerCar> cars, int startPoints)
     {
         for (var i = 0; i < m_PointsPanels.Length; i++)
         {

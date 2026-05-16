@@ -10,13 +10,13 @@ public class Car : MonoBehaviour
     private Rigidbody m_Rigidbody;
 
     [SerializeField]
+    private PhysicsMaterial m_PhysicsMaterial;
+
+    [SerializeField]
     private Transform m_CenterOfMass;
 
     [SerializeField]
     private CarStatsManager m_StatusManager;
-
-    [SerializeField]
-    private CarPart[] m_CarParts;
 
     [SerializeField]
     private Transmission m_Transmission;
@@ -24,18 +24,16 @@ public class Car : MonoBehaviour
     [SerializeField]
     private Stats m_Stats;
 
-    private List<Wheel> m_Wheels = new List<Wheel>();
-    
-    private Player m_Player;
-    private InputManager m_InputManager;
-    
     private float m_CurrentSpeedRatio = 0f;
     private float m_CurrentSpeed = 0f;
+    private bool m_IsAi;
+
+    private List<Wheel> m_Wheels = new List<Wheel>();
+    private InputManager m_InputManager;
 
     private CarStatus m_CarStatus = CarStatus.Inactive;
     private CarDirection m_HeadingDirection = CarDirection.Stationary;
 
-    private bool m_IsAi;
 
     public Rigidbody Rigidbody
     {
@@ -68,12 +66,6 @@ public class Car : MonoBehaviour
         get => m_Stats; 
     }
     
-    public Player Player 
-    {
-        get => m_Player; 
-        set => m_Player = value; 
-    }
-
     public float CurrentSpeedRatio 
     {
         get => m_CurrentSpeedRatio; 
@@ -96,11 +88,6 @@ public class Car : MonoBehaviour
     {
         get => m_Transmission;
     }
-
-    public CarPart[] CarParts
-    {
-        get => m_CarParts;
-    }
     
     protected CarStatus CarStatus
     {
@@ -116,6 +103,11 @@ public class Car : MonoBehaviour
     {
         get => m_IsAi;
         protected set => m_IsAi = value;
+    }
+
+    public PhysicsMaterial PhysicsMaterial
+    {
+        get => m_PhysicsMaterial;
     }
 
     protected virtual void Awake()

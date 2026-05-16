@@ -46,11 +46,14 @@ public class Stats
 
     [Range(0f, 100f)]
     [SerializeField]
-    private float m_Health = 50f;
+    private float m_HealthPoints = 50f;
 
     [SerializeField]
     [Range(0f, 5f)]
     private float m_Downforce = 2f;
+
+    [SerializeField]
+    private CarPartStats[] m_CarPartStats;
 
     [Header("Audio")]
     [SerializeField]
@@ -85,9 +88,9 @@ public class Stats
         get => m_DriveTrain; 
     }
     
-    public float Health 
+    public float HealthPoints 
     {
-        get => m_Health; 
+        get => m_HealthPoints; 
     }
 
     public float Downforce 
@@ -123,5 +126,10 @@ public class Stats
     public Sprite Image
     {
         get => m_Image;
+    }
+
+    public CarPartStats[] CarPartStats
+    {
+        get => m_CarPartStats;
     }
 }

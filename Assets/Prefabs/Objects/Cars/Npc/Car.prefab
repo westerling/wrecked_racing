@@ -1040,7 +1040,6 @@ GameObject:
   - component: {fileID: 1172658212887164914}
   - component: {fileID: 6281712835204309860}
   - component: {fileID: 5179280186740586072}
-  - component: {fileID: 6518032394590343788}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -1119,103 +1118,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!82 &6518032394590343788
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3519218700529367157}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 5c1f89cc895d1964fa780b3c65f5b551, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &4021070260500436111
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,7 +1693,7 @@ GameObject:
   - component: {fileID: 4472814131929106098}
   - component: {fileID: 5425455620479602863}
   m_Layer: 7
-  m_Name: NPC
+  m_Name: Car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1876,22 +1778,22 @@ MonoBehaviour:
   m_SteeringWheels:
   - {fileID: 2979441318901467019}
   - {fileID: 4618832504054155692}
-  m_TopSpeed: 25
+  m_TopSpeed: 42
   m_MotorTorque:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 500
-      inSlope: 754.94586
-      outSlope: 754.94586
+      inSlope: 1349.2242
+      outSlope: 1349.2242
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.17437313
-      value: 631.6423
+      time: 0.16103695
+      value: 717.27496
       inSlope: 588.3156
       outSlope: 588.3156
       tangentMode: 0
@@ -1899,19 +1801,19 @@ MonoBehaviour:
       inWeight: 0.2641212
       outWeight: 0.17712297
     - serializedVersion: 3
-      time: 0.39480978
-      value: 706.76184
-      inSlope: 240.14662
-      outSlope: 240.14662
+      time: 0.3481484
+      value: 767.27563
+      inSlope: 138.54039
+      outSlope: 138.54039
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.49108994
+      outWeight: 0.2738634
     - serializedVersion: 3
       time: 1
       value: 800
-      inSlope: 154.06422
-      outSlope: 154.06422
+      inSlope: 50.20217
+      outSlope: 50.20217
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

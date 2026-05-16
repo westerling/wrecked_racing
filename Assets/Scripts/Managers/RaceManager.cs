@@ -34,9 +34,9 @@ public class RaceManager : MonoBehaviour
     private Checkpoint m_NextCheckpoint;
     private Checkpoint m_LastCheckpoint;
     private RaceSettings m_RaceSettings;
-    private List<Car> m_AllCars = new List<Car>();
-    private List<Car> m_ActiveCars = new List<Car>();
-    private List<Car> m_InactiveCars = new List<Car>();
+    private List<PlayerCar> m_AllCars = new List<PlayerCar>();
+    private List<PlayerCar> m_ActiveCars = new List<PlayerCar>();
+    private List<PlayerCar> m_InactiveCars = new List<PlayerCar>();
     private GameObject m_Camera;
     private GameObject m_Leader;
 
@@ -45,7 +45,7 @@ public class RaceManager : MonoBehaviour
 
     private IPointService m_PointService;
 
-    public List<Car> Cars 
+    public List<PlayerCar> Cars 
     {
         get => m_AllCars; 
         private set => m_AllCars = value; 
@@ -274,10 +274,7 @@ public class RaceManager : MonoBehaviour
 
         foreach (var inactiveCar in inactiveCars)
         {
-            if (inactiveCar.TryGetComponent(out Health health))
-            {
-                health.Destroy();
-            }
+            inactiveCar.Health.Damage(float.MaxValue);
         }
     }
 
@@ -420,6 +417,8 @@ public class RaceManager : MonoBehaviour
         foreach (var player in GameManager.Current.Players)
         {
             var carGameObject = Instantiate(m_RaceSettings.Car, m_CarTransform);
+
+            Debug.Log("Spawn car");
 
             if (carGameObject.TryGetComponent(out PlayerCar car))
             {
