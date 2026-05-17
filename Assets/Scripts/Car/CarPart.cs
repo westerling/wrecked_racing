@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -5,6 +6,10 @@ public class CarPart : MonoBehaviour
 {
     [SerializeField]
     private CarPartType m_CarPartType;
+
+    private Vector3 startPosition;
+    private Quaternion startRotation;
+    private Vector3 startScale;
 
     private bool m_Detached;
     private float m_Threshold;
@@ -25,8 +30,10 @@ public class CarPart : MonoBehaviour
         private set => m_Threshold = value;
     }
 
-    public void SetupCarPart(Car car)
+    public void SetupCarPart(Transform parentObject, Car car)
     {
+        SetStartTransform();
+
         var stats = car.Stats.CarPartStats.Where(x => x.CarPartType == m_CarPartType).FirstOrDefault();
 
         if (stats == null)
@@ -34,7 +41,7 @@ public class CarPart : MonoBehaviour
             Debug.LogError("No Stats found for car part " + m_CarPartType);
         }
 
-        m_ParentTransform = car.transform;
+        m_ParentTransform = parentObject;
 
         var meshCollider = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
         meshCollider.convex = true;
@@ -47,19 +54,33 @@ public class CarPart : MonoBehaviour
 
         Threshold = stats.Threshold;
 
-        SeperateComponent(false);
+        DetachComponent(false);
     }
 
-    public void SeperateComponent(bool enable)
+    private void SetStartTransform()
     {
-        m_Collider.enabled = enable;
-        m_Rigidbody.isKinematic = !enable;
-        Detached = enable;
-        transform.parent = enable ? null : m_ParentTransform;
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+        startScale = transform.localScale;
+    }
+
+    public void DetachComponent(bool detached)
+    {
+        m_Collider.enabled = detached;
+        m_Rigidbody.isKinematic = !detached;
+        Detached = detached;
+        transform.parent = detached ? null : m_ParentTransform;
+
+        if (!detached)
+        {
+            transform.position = startPosition;
+            transform.rotation = startRotation;
+            transform.localScale = startScale;
+        }
     }
 
     public void ResetTransformAndPosition()
     {
-        SeperateComponent(true);
+        DetachComponent(false);
     }
 }

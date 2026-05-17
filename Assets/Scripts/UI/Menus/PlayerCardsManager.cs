@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
@@ -115,6 +114,7 @@ public class PlayerCardsManager : MonoBehaviour
 
             playerCard.Ready = true;
             playerCard.Image.sprite = GetSpriteFromColor(playerCard.Color, true);
+            player.Color = playerCard.Color;
 
             BlockOtherPlayers(playerCard);
         }
@@ -137,7 +137,7 @@ public class PlayerCardsManager : MonoBehaviour
     {
         foreach (var playerCard in m_PlayerCards)
         {
-            if (playerCard == playerPlayerCard)
+            if (playerCard.Player == null || playerCard == playerPlayerCard)
             {
                 continue;
             }
@@ -156,14 +156,17 @@ public class PlayerCardsManager : MonoBehaviour
     {
         foreach (var playerCard in m_PlayerCards)
         {
-            if (playerCard != playerPlayerCard)
+            if (playerCard.Player == null || playerCard == playerPlayerCard)
             {
-                if (playerCard.Color == playerPlayerCard.Color)
+                continue;
+            }
+
+            if (playerCard.Color == playerPlayerCard.Color)
+            {
+                if (!playerCard.Ready)
                 {
-                    if (!playerCard.Ready)
-                    {
-                        playerCard.Image.sprite = GetBlockedSpriteFromColor(playerCard.Color);
-                    }
+                    Debug.Log("Block!!!");
+                    playerCard.Image.sprite = GetBlockedSpriteFromColor(playerCard.Color);
                 }
             }
         }

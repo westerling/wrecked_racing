@@ -270,7 +270,7 @@ public class RaceManager : MonoBehaviour
             return;
         }
 
-        var inactiveCars = m_ActiveCars.Where(x => Vector3.Distance(x.transform.position, Leader.transform.position) > 40f).ToList();
+        var inactiveCars = m_ActiveCars.Where(x => Vector3.Distance(x.transform.position, Leader.transform.position) > 60f).ToList();
 
         foreach (var inactiveCar in inactiveCars)
         {
@@ -417,8 +417,6 @@ public class RaceManager : MonoBehaviour
         foreach (var player in GameManager.Current.Players)
         {
             var carGameObject = Instantiate(m_RaceSettings.Car, m_CarTransform);
-
-            Debug.Log("Spawn car");
 
             if (carGameObject.TryGetComponent(out PlayerCar car))
             {

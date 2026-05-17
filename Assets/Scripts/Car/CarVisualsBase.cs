@@ -26,7 +26,7 @@ public class CarVisualsBase : CarComponent
 
         foreach (var carPart in m_CarParts)
         {
-            carPart.SetupCarPart(Car);
+            carPart.SetupCarPart(transform, Car);
         }
     }
 
@@ -46,7 +46,7 @@ public class CarVisualsBase : CarComponent
             {
                 if (currentHealthRatio < carPart.Threshold)
                 {
-                    carPart.SeperateComponent(true);
+                    carPart.DetachComponent(true);
                 }
             }
         }
