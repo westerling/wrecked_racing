@@ -10,6 +10,8 @@ public class AIInputManager : InputManager
     [SerializeField]
     private SplineContainer m_Spline;
 
+    private float m_DetectionDistance = 10f;
+    private float m_MinFollowDistance = 3f;
     private float m_MaxSpeed = 20f;
     private float m_NearestPoint;
     private float m_SteerSensitivity = 5f;
@@ -36,6 +38,33 @@ public class AIInputManager : InputManager
         m_NearestPoint = nearestPoint;
     }
 
+    private bool TryGetCarAhead(out Rigidbody targetRb, out float distance)
+    {
+        targetRb = null;
+        distance = 0f;
+
+        var origin = transform.position + transform.up * 0.5f;
+
+        if (Physics.SphereCast(
+            origin,
+            1.2f,
+            transform.forward,
+            out RaycastHit hit,
+            m_DetectionDistance,
+            LayerMasks.CarLayerMask))
+        {
+            if (hit.rigidbody != null &&
+                hit.rigidbody != m_AICarController.Rigidbody)
+            {
+                targetRb = hit.rigidbody;
+                distance = hit.distance;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void DriveAlongSpline()
     {
         var speed = m_AICarController.Rigidbody.linearVelocity.magnitude;
@@ -52,6 +81,21 @@ public class AIInputManager : InputManager
         var localDirection = transform.InverseTransformDirection(direction);
         var steer = Mathf.Clamp(localDirection.x * m_SteerSensitivity, -1f, 1f);
         var allowedSpeed = GetCornerSpeed(speed);
+
+        if (TryGetCarAhead(out Rigidbody targetRb, out float distance))
+        {
+            var targetSpeed = targetRb.linearVelocity.magnitude;
+
+            var followFactor = Mathf.InverseLerp(
+                m_MinFollowDistance,
+                m_DetectionDistance,
+                distance);
+
+            allowedSpeed = Mathf.Min(
+                allowedSpeed,
+                Mathf.Lerp(targetSpeed, allowedSpeed, followFactor));
+        }
+
         var speedError = allowedSpeed - speed;
         var throttle = Mathf.Clamp01(speedError / allowedSpeed);
         var brake = speedError < 0f ? Mathf.Clamp01(-speedError / allowedSpeed) : 0f;

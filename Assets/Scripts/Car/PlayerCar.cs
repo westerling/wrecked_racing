@@ -20,6 +20,9 @@ public class PlayerCar : Car
 
     private Player m_Player;
 
+    private bool m_RaceActive = false;
+    private float m_Timer;
+
     public WeaponManager WeaponManager
     {
         get => m_WeaponManager;
@@ -69,6 +72,32 @@ public class PlayerCar : Car
         carVisualBase.gameObject.SetActive(true);
     }
 
+    private void Update()
+    {
+        CheckStationaryCar();
+    }
+
+    private void CheckStationaryCar()
+    {
+        if (!m_RaceActive)
+        {
+            return;
+        }
+        if (CurrentSpeed < 1)
+        {
+            m_Timer += Time.deltaTime;
+
+            if (m_Timer >= 3)
+            {
+                Health.Damage(float.MaxValue);
+            }
+        }
+        else
+        {
+            m_Timer = 0f;
+        }
+    }
+
     private void OnCarActive(CarStatus carStatus)
     {
         if (carStatus == CarStatus)
@@ -82,11 +111,27 @@ public class PlayerCar : Car
     private void AddListeners()
     {
         Health.CarHealthStatus += OnCarActive;
+        RaceManager.Current.RaceStatusChanged += OnRaceStatusChanged;
+    }
+
+    private void OnRaceStatusChanged(RaceStatus raceStatus)
+    {
+        m_Timer = 0;
+        switch (raceStatus)
+        {
+            case RaceStatus.Race:
+                m_RaceActive = true;
+                break;
+            default:
+                m_RaceActive = false;
+                break;
+        }
     }
 
     private void RemoveListeners()
     {
         Health.CarHealthStatus -= OnCarActive;
+        RaceManager.Current.RaceStatusChanged -= OnRaceStatusChanged;
     }
 
     private void OnDestroy()
