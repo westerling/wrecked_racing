@@ -24,14 +24,13 @@ public enum WeaponType
 {
     RocketLauncher = 0,
     Mine = 1,
-    DrumBombs = 2,
+    BarrelLauncher = 2,
     Rifle = 3,
     Shotgun = 4,
     OilSlick = 5,
     Boost = 6,
     Flamethrower = 7,
-    Mortar = 8,
-    Barricades = 9,
+    Mortar = 8
 }
 
 public enum AmmunitionType

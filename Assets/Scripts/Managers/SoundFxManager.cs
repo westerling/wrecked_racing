@@ -13,26 +13,25 @@ public class SoundFxManager : MonoBehaviour
         Current = this;
     }
 
-    public void PlaySoundClip(SoundFxType soundFxType, Transform spawnTransform, float volume = 1f)
+    public void PlaySoundClip(Sound sound, Transform origin)
     {
-        var pooledObject = SoundFxPool.Current.GetPooledObjectOfType(soundFxType);
+        var pooledObject = AudioSourcePool.Current.GetPooledObject();
         if (pooledObject == null)
         {
             return;
         }
 
-        pooledObject.transform.position = spawnTransform.position;
+        pooledObject.transform.position = origin.position;
         pooledObject.SetActive(true);
 
-        if (pooledObject.TryGetComponent(out AudioSource source))
+        if (pooledObject.TryGetComponent(out AudioSource audioSource))
         {
-            source.volume = volume;
-            source.Play();
-            StartCoroutine(ReturnToPoolAfterDelay(pooledObject, source.clip.length));
-        }
-        else
-        {
-            Debug.LogWarning("Pooled object missing AudioSource");
+            audioSource.volume = sound.Volume;
+            audioSource.pitch = sound.Pitch;
+            audioSource.clip = sound.AudioClip;
+            audioSource.spatialBlend = 1;
+            audioSource.Play();
+            StartCoroutine(ReturnToPoolAfterDelay(pooledObject, audioSource.clip.length));
         }
     }
 

@@ -45,19 +45,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ObjectsToPool:
-  - m_ObjectToPool: {fileID: 6072868019317132879, guid: bb1d6d69a697f174caf54eec842fb5c7, type: 3}
+  - m_ObjectToPool: {fileID: 6641741524439848413, guid: d8ac629d530aa7f4c9c227a063421834, type: 3}
+    m_Amount: 20
+  - m_ObjectToPool: {fileID: 1647896687148889355, guid: bd1baa1fab0d7d748bc430b6fea3afae, type: 3}
+    m_Amount: 20
+  - m_ObjectToPool: {fileID: 3057656447872400843, guid: 9646e4817e198e9488e18e7b77754527, type: 3}
+    m_Amount: 20
+  - m_ObjectToPool: {fileID: 8602898186953890068, guid: dcadfee5e8196d74d802b904628dcac8, type: 3}
+    m_Amount: 20
+  - m_ObjectToPool: {fileID: 8976064955809561048, guid: df5e10bc231e235478f9b5e96cb37305, type: 3}
+    m_Amount: 20
+  - m_ObjectToPool: {fileID: 6063638723636854775, guid: 2db625d9138cc9f43a7cf00375a2b719, type: 3}
+    m_Amount: 20
+  - m_ObjectToPool: {fileID: 1968254240279791211, guid: bb1d6d69a697f174caf54eec842fb5c7, type: 3}
     m_Amount: 0
-  - m_ObjectToPool: {fileID: 2989475826973648678, guid: 3bc52b6c59cd73a4aa07bbb49d6d1ae8, type: 3}
-    m_Amount: 20
-  - m_ObjectToPool: {fileID: 9022489621276167780, guid: 2db625d9138cc9f43a7cf00375a2b719, type: 3}
-    m_Amount: 0
-  - m_ObjectToPool: {fileID: 5362390160445346468, guid: df5e10bc231e235478f9b5e96cb37305, type: 3}
-    m_Amount: 20
-  - m_ObjectToPool: {fileID: 301921520142891702, guid: 2aae5b0c61f045041841f3f203b7d969, type: 3}
-    m_Amount: 0
-  - m_ObjectToPool: {fileID: 6861472178999012346, guid: 9646e4817e198e9488e18e7b77754527, type: 3}
-    m_Amount: 20
-  - m_ObjectToPool: {fileID: 6099884469882385137, guid: 4319ab79c7b7f184e9554923f3ce0356, type: 3}
-    m_Amount: 20
-  - m_ObjectToPool: {fileID: 1214045620132085374, guid: d8ac629d530aa7f4c9c227a063421834, type: 3}
+  - m_ObjectToPool: {fileID: 7628203292883347528, guid: e6ad3a10f94e4fb4dac5547f1d793a9c, type: 3}
     m_Amount: 20

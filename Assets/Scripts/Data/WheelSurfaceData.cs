@@ -4,6 +4,10 @@ using UnityEngine;
 public class WheelSurfaceData : ScriptableObject
 {
 
+    [Header("Basic Info")]
+    [SerializeField]
+    private SurfaceType m_SurfaceType;
+
     [Header("Handling / Grip")]
     [Tooltip("0 = no traction, 1 = full traction (asphalt)")]
     [Range(0.1f, 1f)]
@@ -66,5 +70,10 @@ public class WheelSurfaceData : ScriptableObject
     public float SlipSensitivity
     {
         get => m_SlipSensitivity;
+    }
+    
+    public SurfaceType SurfaceType
+    {
+        get => m_SurfaceType;
     }
 }

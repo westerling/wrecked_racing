@@ -5,11 +5,15 @@ public class Rifle : TargetWeapon
     [SerializeField]
     private Transform m_BulletOrigin;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private Sound m_ShootSound;
+
     protected override void Fire()
     {
         AddMuzzleFlash();
         AddImpact();
-        SoundFxManager.Current.PlaySoundClip(SoundFxType.Rifle, transform, 80f);
+        SoundFxManager.Current.PlaySoundClip(m_ShootSound, transform);
     }
 
     private void AddImpact()

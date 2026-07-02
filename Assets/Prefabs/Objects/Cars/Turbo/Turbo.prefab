@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 6543657657795841510}
   - component: {fileID: 2134604244635626885}
   - component: {fileID: 7622432914169628861}
+  - component: {fileID: 839302051183114735}
   - component: {fileID: 5130229282045622695}
   - component: {fileID: 6121139499739757052}
   m_Layer: 7
@@ -230,13 +231,13 @@ MonoBehaviour:
     m_Image: {fileID: 21300000, guid: 615077948385b28448ae47be1b93ab5d, type: 3}
     m_Description: Fine Car
     m_DriveTrain: 0
-    m_TopSpeed: 45
+    m_TopSpeed: 35
     m_MotorTorque:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 300
+        value: 250
         inSlope: 55.320087
         outSlope: 55.320087
         tangentMode: 0
@@ -245,7 +246,7 @@ MonoBehaviour:
         outWeight: 0.4041694
       - serializedVersion: 3
         time: 0.1731947
-        value: 310.13504
+        value: 260
         inSlope: 46.210777
         outSlope: 46.210777
         tangentMode: 0
@@ -253,22 +254,22 @@ MonoBehaviour:
         inWeight: 0.21090727
         outWeight: 0.5828595
       - serializedVersion: 3
-        time: 0.4628157
-        value: 318.16156
-        inSlope: 9.7359085
-        outSlope: 9.7359085
+        time: 0.45948237
+        value: 271.65558
+        inSlope: 30.775614
+        outSlope: 30.775614
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.6590045
-        outWeight: 0.44999215
+        inWeight: 0.33584762
+        outWeight: 0.32606304
       - serializedVersion: 3
         time: 1
-        value: 320
-        inSlope: 0
-        outSlope: 0
+        value: 280
+        inSlope: 8.034486
+        outSlope: 8.034486
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.47885004
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -406,7 +407,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_DragCoefficient: 1
-    m_Health: 100
+    m_HealthPoints: 50
     m_Downforce: 2
     m_CarPartStats:
     - m_Threshold: 30
@@ -602,6 +603,19 @@ MonoBehaviour:
     m_Bits: 401
   m_RayOrigin: {fileID: 7643170457057670463}
   m_LineRenderer: {fileID: 5130229282045622695}
+--- !u!114 &839302051183114735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8323597071206408131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d7655c3d8fc5614fbc3be2d6301ec3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Buoyancy
+  m_RigidBody: {fileID: 5886851840719736776}
 --- !u!120 &5130229282045622695
 LineRenderer:
   serializedVersion: 2

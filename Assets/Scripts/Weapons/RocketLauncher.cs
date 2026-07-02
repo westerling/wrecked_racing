@@ -5,6 +5,10 @@ public class RocketLauncher : TargetWeapon
     [SerializeField]
     private Transform m_BulletOrigin;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private Sound m_ExplosionSound;
+
     protected override void Fire()
     {        
         if (Physics.Raycast(m_BulletOrigin.position, m_BulletOrigin.forward, out var hit, 25f, LayerMasks.ShootableLayerMask))
@@ -23,7 +27,7 @@ public class RocketLauncher : TargetWeapon
             ActivateDummyMissile();
         }
 
-        SoundFxManager.Current.PlaySoundClip(SoundFxType.Explosion, transform, 83f);
+        SoundFxManager.Current.PlaySoundClip(m_ExplosionSound, transform);
     }
 
     private void ActivateHomingMissile(Transform target)

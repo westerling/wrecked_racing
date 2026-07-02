@@ -6,7 +6,7 @@ public abstract class ObjectPool : MonoBehaviour
     [SerializeField]
     protected List<PooledObject> m_ObjectsToPool = new();
 
-    private List<GameObject> m_PooledObjects;
+    private List<GameObject> m_PooledObjects = new();
 
     public List<GameObject> PooledObjects
     {
@@ -24,12 +24,13 @@ public abstract class ObjectPool : MonoBehaviour
 
     protected virtual void InstantiateObjects()
     {
-        PooledObjects = new List<GameObject>();
+        PooledObjects.Clear();
+        
         GameObject temp;
 
         foreach (var objectToPool in m_ObjectsToPool)
         {
-            for (int i = 0; i < objectToPool.Amount; i++)
+            for (var i = 0; i < objectToPool.Amount; i++)
             {
                 temp = Instantiate(objectToPool.ObjectToPool, transform);
                 temp.SetActive(false);
@@ -42,5 +43,7 @@ public abstract class ObjectPool : MonoBehaviour
     {
         objectToReturn.SetActive(false);
         objectToReturn.transform.SetParent(transform);
+        objectToReturn.transform.localPosition = Vector3.zero;
+        objectToReturn.transform.localRotation = Quaternion.identity;
     }
 }

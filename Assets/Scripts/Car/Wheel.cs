@@ -13,16 +13,14 @@ public class Wheel : CarComponent
     private Transform m_FxOrigin;
 
     [SerializeField]
-    private TrailRenderer m_TrailRenderer;
-
-    [SerializeField]
     private WheelPlacement m_WheelPlacement;
 
     [SerializeField]
     private AudioSource m_AudioSource;
     
     private AnimationCurve m_AnimationCurve;
-    private WheelSurfaceData m_CurrentSurfaceData;
+    private WheelSurfaceData m_SurfaceData;
+    private PooledSkidTrail m_TrailRenderer;
 
     private CarStatus m_CarStatus;
 
@@ -75,15 +73,7 @@ public class Wheel : CarComponent
         base.Awake();
 
         AddListeners();
-
-        if (WheelPlacement == WheelPlacement.FrontLeft || WheelPlacement == WheelPlacement.FrontRight)
-        {
-            m_AnimationCurve = Car.Stats.SlipCurveFront;
-        }
-        else if (WheelPlacement == WheelPlacement.RearLeft || WheelPlacement == WheelPlacement.RearRight)
-        {
-            m_AnimationCurve = Car.Stats.SlipCurveRear;
-        }
+        SetSlipCurve();
     }
 
     private void Update()
@@ -96,15 +86,32 @@ public class Wheel : CarComponent
         GraphicsTransform.rotation = rotation;
     }
 
+
+
     private void FixedUpdate()
     {
-        var grip = m_CurrentSurfaceData != null
-            ? m_CurrentSurfaceData.GripMultiplier
+        var grip = m_SurfaceData != null
+            ? m_SurfaceData.GripMultiplier
             : 1f;
 
         WheelCollider.steerAngle = SteerAngle;
         WheelCollider.motorTorque = MotorTorque * grip;
         WheelCollider.brakeTorque = BrakeTorque * grip;
+    }
+
+    private void SetSlipCurve()
+    {
+        switch (WheelPlacement)
+        {
+            case WheelPlacement.FrontLeft:
+            case WheelPlacement.FrontRight:
+                m_AnimationCurve = Car.Stats.SlipCurveFront;
+                break;
+            case WheelPlacement.RearLeft:
+            case WheelPlacement.RearRight:
+                m_AnimationCurve = Car.Stats.SlipCurveRear;
+                break;
+        }
     }
 
     private void UpdateWheelEffects()
@@ -116,7 +123,7 @@ public class Wheel : CarComponent
             return;
         }
 
-        m_CurrentSurfaceData = GetSurfaceData(hit);
+        m_SurfaceData = GetSurfaceData(hit);
 
         var combinedSlip = Mathf.Sqrt(
             hit.forwardSlip * hit.forwardSlip +
@@ -124,34 +131,80 @@ public class Wheel : CarComponent
 
         var slipThreshold = m_AnimationCurve.Evaluate(Car.CurrentSpeedRatio);
 
-        if (m_CurrentSurfaceData != null)
+        if (m_SurfaceData != null)
         {
-            slipThreshold *= m_CurrentSurfaceData.SlipSensitivity;
+            slipThreshold *= m_SurfaceData.SlipSensitivity;
         }
 
         var slipRatio = Mathf.InverseLerp(slipThreshold, slipThreshold * 2f, combinedSlip);
         slipRatio = Mathf.Clamp01(slipRatio);
 
-        m_TrailRenderer.emitting = combinedSlip > slipThreshold;
-
         UpdateAudio(slipRatio);
 
-        if (m_CurrentSurfaceData?.TrailMaterial != null &&
-            m_TrailRenderer.material != m_CurrentSurfaceData.TrailMaterial)
+        if (m_SurfaceData != null && m_TrailRenderer != null)
         {
-            m_TrailRenderer.material = m_CurrentSurfaceData.TrailMaterial;
+            if (m_SurfaceData.SurfaceType != m_TrailRenderer.SurfaceType)
+            {
+                RemoveOldRenderer();
+            }
+        }
+
+        if (m_TrailRenderer == null)
+        {
+            AddNewTrailRenderer();   
+        }
+
+        m_TrailRenderer.EmitTrail(combinedSlip > slipThreshold);
+    }
+
+    private void RemoveOldRenderer()
+    {
+        if (m_TrailRenderer == null)
+        {
+            return;
+        }
+
+        m_TrailRenderer.StopTrail();
+        m_TrailRenderer = null;
+    }
+
+    private void AddNewTrailRenderer()
+    {
+        var pooledObject = TrailPool.Current.GetPooledObjectOfType(m_SurfaceData.SurfaceType);
+
+        if (pooledObject == null)
+        {
+            Debug.LogError("No pooled trail object exist of type: " + m_SurfaceData.SurfaceType);
+            return;
+        }
+
+        pooledObject.transform.SetParent(transform);
+        pooledObject.transform.position = m_FxOrigin.position;
+        pooledObject.SetActive(true);
+
+        if (pooledObject.TryGetComponent(out PooledSkidTrail pooledTrailedRenderer))
+        {
+            m_TrailRenderer = pooledTrailedRenderer;
         }
     }
 
     private WheelSurfaceData GetSurfaceData(WheelHit hit)
     {
-        var ground = hit.collider.GetComponent<GroundSurface>();
-        return ground != null ? ground.SurfaceData : null;
+        if (hit.collider.TryGetComponent(out GroundSurface groundSurface))
+        {
+            return groundSurface.SurfaceData;
+        }
+
+        return null;
     }
 
     private void DisableEffects()
     {
-        m_TrailRenderer.emitting = false;
+        if (m_TrailRenderer != null)
+        {
+            m_TrailRenderer.EmitTrail(false);
+        }
+
         if (m_AudioSource.isPlaying)
         {
             m_AudioSource.Stop();
@@ -160,7 +213,7 @@ public class Wheel : CarComponent
 
     private void UpdateAudio(float slipRatio)
     {
-        if (m_CurrentSurfaceData == null || slipRatio < 0.05f)
+        if (m_SurfaceData == null || slipRatio < 0.05f)
         {
             m_AudioSource.volume = Mathf.Lerp(m_AudioSource.volume, 0f, Time.deltaTime * 3f);
             
@@ -174,23 +227,22 @@ public class Wheel : CarComponent
 
         if (!m_AudioSource.isPlaying)
         {
-            if (m_AudioSource.clip != m_CurrentSurfaceData.SkidSound)
+            if (m_AudioSource.clip != m_SurfaceData.SkidSound)
             {
-                m_AudioSource.clip = m_CurrentSurfaceData.SkidSound;
+                m_AudioSource.clip = m_SurfaceData.SkidSound;
             }
 
-            Debug.Log("PLAY");
             m_AudioSource.Play();
         }
 
         m_AudioSource.volume = Mathf.Lerp(
             m_AudioSource.volume,
-            slipRatio * m_CurrentSurfaceData.VolumeMultiplier,
+            slipRatio * m_SurfaceData.VolumeMultiplier,
             Time.deltaTime * 5f);
 
         m_AudioSource.pitch = Mathf.Lerp(
             m_AudioSource.pitch,
-            (0.8f + slipRatio * 0.4f) * m_CurrentSurfaceData.PitchMultiplier,
+            (0.8f + slipRatio * 0.4f) * m_SurfaceData.PitchMultiplier,
             Time.deltaTime * 5f);
     }
 

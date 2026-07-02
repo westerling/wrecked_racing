@@ -55,8 +55,6 @@ public class PlayerCar : Car
 
         AddListeners();
 
-        Debug.Log("Get player");
-
         IsAi = false;
     }
 
@@ -87,7 +85,7 @@ public class PlayerCar : Car
         {
             m_Timer += Time.deltaTime;
 
-            if (m_Timer >= 3)
+            if (m_Timer >= 30)
             {
                 Health.Damage(float.MaxValue);
             }

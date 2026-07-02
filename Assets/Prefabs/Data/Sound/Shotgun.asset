@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20559b3fd80aac94fb72aec7cf9060b1, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: Assembly-CSharp::Sound
+  m_AudioClip: {fileID: 8300000, guid: ac8ff48646724384c9005590983dd79d, type: 3}
+  m_Volume: 0.8
+  m_VolumeRandomness: 0.1
+  m_Pitch: 1
+  m_PitchRandomness: 0.06

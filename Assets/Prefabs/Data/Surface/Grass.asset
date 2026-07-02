@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db963d9e6731f5f4c8a809b72ae0322b, type: 3}
   m_Name: Grass
   m_EditorClassIdentifier: Assembly-CSharp::WheelSurfaceData
-  Surface: 4
-  m_GripMultiplier: 0.4
-  m_SlipSensitivity: 1.5
+  m_SurfaceType: 4
+  m_GripMultiplier: 0.8
+  m_SlipSensitivity: 0.5
   m_SkidSound: {fileID: 8300000, guid: 2d8d85099e53d0a4790111d7143a3a93, type: 3}
-  m_VolumeMultiplier: 1
-  m_PitchMultiplier: 1
-  m_TrailMaterial: {fileID: 2100000, guid: 5488db5e0f1fcb94a8c9fb5af7861e8a, type: 2}
+  m_VolumeMultiplier: 0.1
+  m_PitchMultiplier: 0.1
+  m_TrailMaterial: {fileID: 2100000, guid: 563bb91c4957edc498d0235c6cf46841, type: 2}
   m_DustFxPrefab: {fileID: 6274191564127575477, guid: d835549e4ef480140b9d9b9d071219c1, type: 3}

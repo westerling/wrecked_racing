@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class CountdownLight : MonoBehaviour
 {
+    [Header("Lights")]
     [SerializeField]
     private List<GameObject> m_RedLights = new List<GameObject>();
 
@@ -13,6 +12,13 @@ public class CountdownLight : MonoBehaviour
 
     [SerializeField]
     private List<GameObject> m_GreenLights = new List<GameObject>();
+
+    [Header("Sound")]    
+    [SerializeField]
+    private Sound m_StaySound;
+
+    [SerializeField]
+    private Sound m_GoSound;
 
     private void Start()
     {
@@ -26,17 +32,17 @@ public class CountdownLight : MonoBehaviour
         {
             case CountdownEvents.RedLights:
                 SwitchLights(m_RedLights, true);
-                SoundFxManager.Current.PlaySoundClip(SoundFxType.Start_Stay, transform, 75f);
+                SoundFxManager.Current.PlaySoundClip(m_StaySound, transform);
                 break;
             case CountdownEvents.YellowLights:
                 SwitchLights(m_OrangeLights, true);
-                SoundFxManager.Current.PlaySoundClip(SoundFxType.Start_Stay, transform, 75f);
+                SoundFxManager.Current.PlaySoundClip(m_StaySound, transform);
                 break;
             case CountdownEvents.Start:
                 SwitchLights(m_RedLights, false);
                 SwitchLights(m_OrangeLights, false);
                 SwitchLights(m_GreenLights, true);
-                SoundFxManager.Current.PlaySoundClip(SoundFxType.Start_Go, transform, 75f);
+                SoundFxManager.Current.PlaySoundClip(m_GoSound, transform);
                 break;
             case CountdownEvents.LightsOut:
                 TurnOffAllLights();

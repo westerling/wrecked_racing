@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class Mine : Ammunition
 {
+    [Header("Sounds")]
+    [SerializeField]
+    private Sound m_ExplosionSound;
+
     private float m_Radius = 10f;
     private float m_SafeTimer = 2f;
 
@@ -71,7 +75,7 @@ public class Mine : Ammunition
             }
         }
 
-        SoundFxManager.Current.PlaySoundClip(SoundFxType.Explosion, transform, 80f);
+        SoundFxManager.Current.PlaySoundClip(m_ExplosionSound, transform);
         Deactivate();
     }
 }

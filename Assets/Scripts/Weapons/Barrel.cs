@@ -5,8 +5,13 @@ public class Barrel : Ammunition
 {
     [SerializeField]
     private float m_Radius = 5f;
+
     [SerializeField]
     private float m_Power = 100000f;
+
+    [Header("Sounds")]
+    [SerializeField]
+    private Sound m_ExplosionSound;
 
     private bool m_Active;
 
@@ -50,7 +55,7 @@ public class Barrel : Ammunition
 
         m_Active = false;
 
-        SoundFxManager.Current.PlaySoundClip(SoundFxType.Explosion, transform, 85f);
+        SoundFxManager.Current.PlaySoundClip(m_ExplosionSound, transform);
         Deactivate();
     }
 

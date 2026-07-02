@@ -45,13 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ObjectsToPool:
-  - m_ObjectToPool: {fileID: 4451943311120367946, guid: 734b005051d5ff740aab48b0a8ba8934, type: 3}
+  - m_ObjectToPool: {fileID: 8138132022640754384, guid: 302f3885745a75e4ea613cec0766729c, type: 3}
     m_Amount: 4
   - m_ObjectToPool: {fileID: 1958170600727062600, guid: 90a05fd5a0967d34eb664ccbbd6711ae, type: 3}
     m_Amount: 4
-  - m_ObjectToPool: {fileID: 518185412234543514, guid: 5d7b02f55ab2cac45867413038b75b45, type: 3}
+  - m_ObjectToPool: {fileID: 3109419430208531219, guid: fce1013349c36e94093ef9886714acc5, type: 3}
     m_Amount: 4
-  - m_ObjectToPool: {fileID: 5187016253747506043, guid: fce1013349c36e94093ef9886714acc5, type: 3}
+  - m_ObjectToPool: {fileID: 98855813470901279, guid: 5d7b02f55ab2cac45867413038b75b45, type: 3}
     m_Amount: 4
   - m_ObjectToPool: {fileID: 9165847494016654649, guid: 23f466f8c35d14d4d9f5ce72561b1ce5, type: 3}
+    m_Amount: 4
+  - m_ObjectToPool: {fileID: 2843793083857492308, guid: e5741d782a5ca8643ad5c9da920df45f, type: 3}
+    m_Amount: 4
+  - m_ObjectToPool: {fileID: 8560255127361742410, guid: f9c775184b511ee47bd202b47d721181, type: 3}
     m_Amount: 4

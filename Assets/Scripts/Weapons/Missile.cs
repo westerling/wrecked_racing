@@ -12,6 +12,10 @@ public abstract class Missile : Ammunition
     [SerializeField]
     private float m_Power = 100000f;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private Sound m_ExplosionSound;
+
     private bool m_Active;
     private float m_Speed;
 
@@ -70,7 +74,7 @@ public abstract class Missile : Ammunition
         }
 
 
-        SoundFxManager.Current.PlaySoundClip(SoundFxType.Explosion, transform, 80f);
+        SoundFxManager.Current.PlaySoundClip(m_ExplosionSound, transform);
         Deactivate();
     }
 

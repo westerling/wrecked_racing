@@ -63,6 +63,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e5d59af6e0aa4314f92886782e341fb6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8082303359750833663}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e5d59af6e0aa4314f92886782e341fb6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8567637627556124217}
   m_SourcePrefab: {fileID: 100100000, guid: e5d59af6e0aa4314f92886782e341fb6, type: 3}
 --- !u!1 &400354061049542150 stripped
 GameObject:
@@ -90,3 +93,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 100, y: 0.20000002, z: 100}
   m_Center: {x: 0, y: 0.0024482943, z: 0}
+--- !u!114 &8567637627556124217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400354061049542150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4000270af486da44a5ff460dd7c8551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Water

@@ -188,6 +188,9 @@ MonoBehaviour:
   - {fileID: 4823467847208751232}
   m_GreenLights:
   - {fileID: 1877150038413610420}
+  m_AudioSource: {fileID: 0}
+  m_StaySound: {fileID: 11400000, guid: ba2840c2a5ac55340a9c0fece8d4e195, type: 2}
+  m_GoSound: {fileID: 11400000, guid: 84b23f111ce7bf247a2879419f58f74c, type: 2}
 --- !u!1 &8042584670621892748
 GameObject:
   m_ObjectHideFlags: 0
