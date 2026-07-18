@@ -120,7 +120,8 @@ public enum PlayerColor
     Blue = 2,
     Yellow = 3,
     Pink = 4,
-    Black = 5
+    Black = 5,
+    Purple = 6
 }
 
 public enum ParticleType
@@ -133,7 +134,10 @@ public enum ParticleType
     SkidMarks = 5,
     RifleTrail = 6,
     MuzzleFlash = 7,
-    HitEffect = 8
+    HitEffect = 8,
+    Grass = 9,
+    RocketTrail = 10,
+    CastedFlames = 11
 }
 
 public enum SoundFxType
@@ -153,7 +157,8 @@ public enum SurfaceType
     Dirt,
     Sand,
     Grass,
-    Ice
+    Ice,
+    Oil
 }
 
 public enum InputType
@@ -167,4 +172,10 @@ public enum CarPartType
     Hood,
     Trunk,
     Door
+}
+
+public enum ModifierType
+{
+    Addative,
+    Multiplier
 }

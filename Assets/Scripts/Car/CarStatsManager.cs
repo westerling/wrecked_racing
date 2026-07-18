@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public class CarStatsManager : CarComponent
-{
+{    
     private List<StatModifier> m_ActiveModifiers = new List<StatModifier>();
 
     private void Update()
@@ -25,37 +25,37 @@ public class CarStatsManager : CarComponent
         }
     }
 
-    public void AddTimedModifier(Stat stat, float modifierValue, float duration)
+    public void AddTimedModifier(Stat stat, ModifierType modifierType, float modifierValue, float duration)
     {
-        m_ActiveModifiers.Add(new TimedModifier(stat, modifierValue, duration));
+        m_ActiveModifiers.Add(new TimedModifier(stat, modifierType, modifierValue, duration));
     }
 
-    public void AddConditionalModifier(Stat stat, Func<float> modifierValue, Func<bool> condition)
+    public void AddConditionalModifier(Stat stat, ModifierType modifierType, Func<float> modifierValue, Func<bool> modifierCondition)
     {
-        m_ActiveModifiers.Add(new ConditionalModifier(stat, modifierValue, condition));
+        m_ActiveModifiers.Add(new ConditionalModifier(stat, modifierType, modifierValue, modifierCondition));
     }
 
     public float GetModifierAmount(Stat carStat)
     {
-        var modifierValue = 1f;
+        var modifierAmount = 1f;
+        var modifiers = m_ActiveModifiers.Where(x => x.Stat == carStat);
 
-        if (m_ActiveModifiers.Count != 0)
+        foreach (var modifier in modifiers)
         {
-            var modifiers = m_ActiveModifiers.Where(x => x.Stat == carStat);
+            var modifierValue = modifier.GetValue();
 
-            foreach (var modifier in modifiers)
+            switch (modifier.ModifierType)
             {
-                if (modifier is TimedModifier timedModifier)
-                {
-                    modifierValue *= timedModifier.Value;
-                }
-                else if (modifier is ConditionalModifier conditionalModifier)
-                {
-                    modifierValue *= conditionalModifier.GetValue();
-                }
+                case ModifierType.Addative:
+                    modifierAmount += modifierValue;
+                    break;
+                case ModifierType.Multiplier:
+                    modifierAmount *= modifierValue;
+                    break;
             }
+
         }
 
-        return modifierValue;
+        return modifierAmount;
     }
 }

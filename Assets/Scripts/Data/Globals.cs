@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public static class Globals
 {
     public static int MaxPoints(int numberOfPlayers)
@@ -54,5 +56,28 @@ public static class Globals
         }
 
         return 1;
+    }
+
+    public static Color GetPlayerColor(PlayerColor playerColor, byte alpha)
+    {
+        switch (playerColor)
+        {
+            case PlayerColor.Green:
+                return new Color32(51, 156, 107, alpha);
+            case PlayerColor.Red:
+                return new Color32(250, 55, 56, alpha);
+            case PlayerColor.Blue:
+                return new Color32(35, 163, 229, alpha);
+            case PlayerColor.Yellow:
+                return new Color32(255, 201, 51, alpha);
+            case PlayerColor.Pink:
+                return new Color32(249, 69, 127, alpha);
+            case PlayerColor.Black:
+                return new Color32(10, 5, 5, alpha);
+            case PlayerColor.Purple:
+                return new Color32(101, 19, 143, alpha);
+        }
+
+        return new Color32(255, 255, 255, 255);
     }
 }

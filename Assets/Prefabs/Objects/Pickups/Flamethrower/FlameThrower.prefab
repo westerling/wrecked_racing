@@ -32,6 +32,7 @@ Transform:
   m_Children:
   - {fileID: 475899792686119334}
   - {fileID: 3532775060836460155}
+  - {fileID: 3521094872884851679}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6322272279670721022
@@ -50,7 +51,39 @@ MonoBehaviour:
   m_FireRate: 0.1
   m_StartAmmunition: 20
   m_IsAutomatic: 1
+  m_FlameOrigin: {fileID: 3521094872884851679}
   m_SoundEffect: {fileID: 11400000, guid: 6721c201e4db76342bbd413e06196073, type: 2}
+--- !u!1 &8369408315730132268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3521094872884851679}
+  m_Layer: 0
+  m_Name: FlameOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3521094872884851679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369408315730132268}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: -0.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 962982334571871328}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &76566873575104077
 PrefabInstance:
   m_ObjectHideFlags: 0

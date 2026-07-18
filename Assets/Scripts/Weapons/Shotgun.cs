@@ -29,6 +29,11 @@ public class Shotgun : Weapon
                 {
                     ApplyImpactForce(hit.rigidbody, bulletOrigin.forward, 10000f, 1000f);
                 }
+
+                if (hit.collider.gameObject.TryGetComponent(out Health health))
+                {
+                    health.Damage(16f);
+                }
             }
         }
     }

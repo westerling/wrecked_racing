@@ -59,7 +59,7 @@ public class Mine : Ammunition
         {
             if (hit.TryGetComponent(out Rigidbody hitRigidBody))
             {
-                hitRigidBody.AddExplosionForce(75000f, explosionPos, m_Radius, 17000f);
+                hitRigidBody.AddExplosionForce(100000f, explosionPos, m_Radius, 500000f);
 
                 var randomTorque = new Vector3(
                     Random.Range(-200f, 200f),
@@ -71,7 +71,7 @@ public class Mine : Ammunition
 
             if (hit.TryGetComponent(out Health health))
             {
-                health.Damage(40f);
+                health.Damage(30f);
             }
         }
 

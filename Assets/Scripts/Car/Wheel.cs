@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Wheel : CarComponent
 {
@@ -248,17 +247,17 @@ public class Wheel : CarComponent
 
     private void AddListeners()
     {
-        Car.CarStatusChanged += OnCarStatusChanged;
+        Car.Health.CarHealthStatus += OnCarStatusChanged;
     }
 
-    private void OnCarStatusChanged(Car car, CarStatus carStatus)
+    private void OnCarStatusChanged(CarStatus carStatus, Car car)
     {
         m_CarStatus = carStatus;
     }
 
     private void RemoveListeners()
     {
-        Car.CarStatusChanged -= OnCarStatusChanged;
+        Car.Health.CarHealthStatus -= OnCarStatusChanged;
     }
 
     private void OnDestroy()

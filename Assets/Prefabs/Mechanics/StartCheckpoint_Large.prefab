@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 912171192244969508}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: -6}
+  m_LocalPosition: {x: -3, y: 1, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 1207296446365955166}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: -1}
+  m_LocalPosition: {x: -4, y: 1, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 2377211890916819877}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 0, z: -9}
+  m_LocalPosition: {x: 3, y: 1, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -188,7 +188,6 @@ MonoBehaviour:
   - {fileID: 4823467847208751232}
   m_GreenLights:
   - {fileID: 1877150038413610420}
-  m_AudioSource: {fileID: 0}
   m_StaySound: {fileID: 11400000, guid: ba2840c2a5ac55340a9c0fece8d4e195, type: 2}
   m_GoSound: {fileID: 11400000, guid: 84b23f111ce7bf247a2879419f58f74c, type: 2}
 --- !u!1 &8042584670621892748
@@ -216,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 8042584670621892748}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 0, z: -3}
+  m_LocalPosition: {x: 4, y: 1, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

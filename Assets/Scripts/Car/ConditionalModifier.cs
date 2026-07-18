@@ -2,19 +2,24 @@ using System;
 
 public class ConditionalModifier : StatModifier
 {
-    private Func<float> m_GetValue;
+    private Func<float> m_Value;
     private Func<bool> m_Condition;
 
-    public ConditionalModifier(Stat stat, Func<float> getValue, Func<bool> condition) : base(stat)
+    public ConditionalModifier(Stat stat, ModifierType modifierType, Func<float> value, Func<bool> condition) : base(stat, modifierType)
     {
         m_Condition = condition;
-        GetValue = getValue;
+        Value = value;
     }
 
-    public Func<float> GetValue
+    public Func<float> Value
     {
-        get => m_GetValue;
-        set => m_GetValue = value;
+        get => m_Value;
+        set => m_Value = value;
+    }
+
+    public override float GetValue()
+    {
+        return Value();
     }
 
     public override bool IsExpired()

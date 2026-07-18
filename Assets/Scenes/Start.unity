@@ -267,8 +267,8 @@ GameObject:
   - component: {fileID: 26530792}
   - component: {fileID: 26530791}
   - component: {fileID: 26530794}
-  - component: {fileID: 26530795}
   - component: {fileID: 26530796}
+  - component: {fileID: 26530795}
   m_Layer: 5
   m_Name: PlayersMenu
   m_TagString: Untagged
@@ -401,6 +401,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c7845fe7f0eca344393dd54694b0c268, type: 2}
   - {fileID: 11400000, guid: 49294db16f248124fb848306856f8d1f, type: 2}
   - {fileID: 11400000, guid: a98d3d746be086345bcac59f56b5144c, type: 2}
+  - {fileID: 11400000, guid: 9c42870775b07884985714e1fc6fcd19, type: 2}
 --- !u!1 &66820109
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,7 +823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193f34534356f914d96db6d71bffcfda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
-  m_MenuMusic: []
+  m_MenuMusic:
+  - {fileID: 8300000, guid: e39f8486e3ab02547b9537e4213db88a, type: 3}
   startSelection: {fileID: 700458128}
   m_StartGameMenu: {fileID: 26530794}
   m_SettingsMenu: {fileID: 0}
@@ -3719,7 +3721,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 592.75, y: -546.6875}
+  m_AnchoredPosition: {x: 577.25, y: -530}
   m_SizeDelta: {x: 1100, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &822167052
@@ -6985,7 +6987,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 592.75, y: -255.5625}
+  m_AnchoredPosition: {x: 577.25, y: -250}
   m_SizeDelta: {x: 1175.5, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1968960679

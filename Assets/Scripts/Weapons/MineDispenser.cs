@@ -1,12 +1,15 @@
-using System;
-using static UnityEngine.UI.Image;
 using UnityEngine;
 
 public class MineDispenser : Weapon
 {
+    [SerializeField]
+    private GameObject m_TopMine;
+
+
     private void Awake()
     {
         WeaponType = WeaponType.Mine;
+        m_TopMine.SetActive(true);
     }
 
     protected override void Fire()
@@ -29,6 +32,11 @@ public class MineDispenser : Weapon
                 if (pooledObject.TryGetComponent(out Mine mine))
                 {
                     mine.PlaceMine();
+
+                    if (Ammunition == 1)
+                    {
+                        m_TopMine.SetActive(false);
+                    }
                 }
             }
         }

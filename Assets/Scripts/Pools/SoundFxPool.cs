@@ -16,7 +16,7 @@ public class SoundFxPool : ObjectPool
 
     protected override void InstantiateObjects()
     {
-        CreateGameObjects();
+        //CreateGameObjects();
         base.InstantiateObjects();
     }
 

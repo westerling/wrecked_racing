@@ -19,4 +19,4 @@ MonoBehaviour:
   m_VolumeMultiplier: 0.1
   m_PitchMultiplier: 0.1
   m_TrailMaterial: {fileID: 2100000, guid: 563bb91c4957edc498d0235c6cf46841, type: 2}
-  m_DustFxPrefab: {fileID: 6274191564127575477, guid: d835549e4ef480140b9d9b9d071219c1, type: 3}
+  m_DustParticleType: 9

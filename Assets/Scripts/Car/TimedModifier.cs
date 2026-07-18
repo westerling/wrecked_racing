@@ -9,7 +9,7 @@ public class TimedModifier : StatModifier
         private set => m_Value = value;
     }
 
-    public TimedModifier(Stat stat, float value, float duration) : base(stat)
+    public TimedModifier(Stat stat, ModifierType modifierType, float value, float duration) : base(stat, modifierType)
     {
         m_TimeRemaining = duration;
         Value = value;
@@ -23,5 +23,10 @@ public class TimedModifier : StatModifier
     public override bool IsExpired()
     {
         return m_TimeRemaining <= 0;
+    }
+
+    public override float GetValue()
+    {
+        return Value;
     }
 }

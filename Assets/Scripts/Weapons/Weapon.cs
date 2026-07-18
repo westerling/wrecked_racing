@@ -21,7 +21,7 @@ public abstract class Weapon : MonoBehaviour
     private int m_Ammunition;
 
     private Car m_ParentCar;
-    
+
     protected float m_LastFireTime = -Mathf.Infinity;
 
     protected Car ParentCar
@@ -42,6 +42,12 @@ public abstract class Weapon : MonoBehaviour
         set => m_IsFiring = value;
     }
 
+    protected int Ammunition
+    {
+        get => m_Ammunition;
+        private set => m_Ammunition = value;
+    }
+
     public virtual void PickupWeapon(Car car)
     {
         ParentCar = car;
@@ -56,12 +62,16 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        m_Ammunition = m_StartAmmunition;
+        Ammunition = m_StartAmmunition;
     }
 
     protected virtual void Update()
     {
         CheckFiring();
+    }
+
+    protected virtual void ReturnWeapon()
+    {
     }
 
     private void CheckFiring()
@@ -86,11 +96,12 @@ public abstract class Weapon : MonoBehaviour
 
     private void CheckAmmunition()
     {
-        m_Ammunition--;
+        Ammunition--;
 
-        if (m_Ammunition <= 0)
+        if (Ammunition <= 0)
         {
             IsFiring = false;
+            ReturnWeapon();
             WeaponDepleated?.Invoke();
             return;
         }

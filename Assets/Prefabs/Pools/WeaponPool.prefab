@@ -47,7 +47,7 @@ MonoBehaviour:
   m_ObjectsToPool:
   - m_ObjectToPool: {fileID: 8138132022640754384, guid: 302f3885745a75e4ea613cec0766729c, type: 3}
     m_Amount: 4
-  - m_ObjectToPool: {fileID: 1958170600727062600, guid: 90a05fd5a0967d34eb664ccbbd6711ae, type: 3}
+  - m_ObjectToPool: {fileID: 2469214952141466652, guid: 90a05fd5a0967d34eb664ccbbd6711ae, type: 3}
     m_Amount: 4
   - m_ObjectToPool: {fileID: 3109419430208531219, guid: fce1013349c36e94093ef9886714acc5, type: 3}
     m_Amount: 4

@@ -9,8 +9,6 @@ public class NpcCar : Car
     {
         base.Awake();
 
-        CarStatus = CarStatus.Active; 
-
         IsAi = true;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BarrelLauncher : Weapon
 {
@@ -20,15 +21,17 @@ public class BarrelLauncher : Weapon
     {
         var i = m_Barrels.Count - 1;
 
-        if (m_Barrels[i].TryGetComponent(out Barrel barrel))
+        if (m_Barrels[i].TryGetComponent(out DrumBomb barrel))
         {            
             if (barrel.TryGetComponent(out Rigidbody rigidbody))
             {
                 barrel.ActivateBarrel();
                 barrel.transform.SetParent(null);
 
+                var shootDirection = (transform.up + transform.forward * 0.2f).normalized;
+
                 rigidbody.isKinematic = false;
-                rigidbody.linearVelocity = transform.up * 25f;
+                rigidbody.linearVelocity = shootDirection * 15f;
             }
         }
 

@@ -2,8 +2,10 @@ using System;
 
 public class Health : CarComponent
 {
-    public event Action<CarStatus> CarHealthStatus;
+    public event Action<CarStatus, PlayerCar> CarHealthStatus;
     public event Action<float, float> CarHealthChanged;
+
+    private CarStatus m_CarStatus;
 
     private float m_MaxHealthPoints;
     private float m_HealthPoints;
@@ -17,10 +19,6 @@ public class Health : CarComponent
     protected override void Awake()
     {
         base.Awake();
-
-        m_MaxHealthPoints = Car.Stats.HealthPoints;
-
-        AddListeners();
     }
 
     public void Damage(float amount)
@@ -31,43 +29,32 @@ public class Health : CarComponent
         CheckDamage();
     }
 
-    private void ResetHealth()
+    public void ResetHealth()
     {
         HealthPoints = m_MaxHealthPoints;
         var healthRatio = HealthPoints / m_MaxHealthPoints;
+        m_CarStatus = CarStatus.Active;
         CarHealthChanged?.Invoke(HealthPoints, healthRatio);
-        CarHealthStatus?.Invoke(CarStatus.Active);
+
+        if (Car is PlayerCar playerCar)
+        {
+            CarHealthStatus?.Invoke(m_CarStatus, playerCar);
+        }
     }
 
     private void CheckDamage()
     {
-        if (HealthPoints <= 0)
+        if (m_CarStatus == CarStatus.Active)
         {
-            CarHealthStatus?.Invoke(CarStatus.Inactive);
+            if (HealthPoints <= 0)
+            {
+                m_CarStatus = CarStatus.Inactive;
+                
+                if (Car is PlayerCar playerCar)
+                {
+                    CarHealthStatus?.Invoke(m_CarStatus, playerCar);
+                }
+            }
         }
-    }
-
-    private void OnRaceStateChanged(RaceStatus raceState)
-    {
-        if (raceState == RaceStatus.Countdown)
-        {
-            ResetHealth();
-        }
-    }
-
-
-    private void AddListeners()
-    {
-        RaceManager.Current.RaceStatusChanged += OnRaceStateChanged;
-    }
-
-    private void RemoveListeners()
-    {
-        RaceManager.Current.RaceStatusChanged -= OnRaceStateChanged;
-    }
-
-    private void OnDestroy()
-    {
-        RemoveListeners();
     }
 }

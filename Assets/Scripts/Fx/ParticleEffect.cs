@@ -6,9 +6,14 @@ public class ParticleEffect : SpecialEffect
     [SerializeField]
     private ParticleSystem[] m_ParticleSystems;
 
-    private void OnEnable()
+    protected ParticleSystem[] ParticleSystems
     {
-        foreach (var particleSystem in m_ParticleSystems)
+        get => m_ParticleSystems;
+    }
+
+    protected virtual void OnEnable()
+    {
+        foreach (var particleSystem in ParticleSystems)
         {
             particleSystem.Play(true);
         }
@@ -16,7 +21,7 @@ public class ParticleEffect : SpecialEffect
         StartCoroutine(DeactivateAfterPlay());
     }
 
-    private IEnumerator DeactivateAfterPlay()
+    protected IEnumerator DeactivateAfterPlay()
     {
         yield return new WaitWhile(() => AnyParticlesAlive());
 
@@ -26,7 +31,7 @@ public class ParticleEffect : SpecialEffect
 
     private bool AnyParticlesAlive()
     {
-        foreach (var particleSystem in m_ParticleSystems)
+        foreach (var particleSystem in ParticleSystems)
         {
             if (particleSystem.IsAlive(true))
             {

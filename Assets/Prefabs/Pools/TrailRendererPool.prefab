@@ -53,3 +53,9 @@ MonoBehaviour:
     m_Amount: 16
   - m_ObjectToPool: {fileID: 9014327990658390055, guid: 8c6d0acce6b5a4948a703fe4d74dbaaa, type: 3}
     m_Amount: 16
+  - m_ObjectToPool: {fileID: 8609618189399706593, guid: 3f65143c6c414e640838ae1527525dd4, type: 3}
+    m_Amount: 16
+  - m_ObjectToPool: {fileID: 9014327990658390055, guid: 9dc2d170a3722424ca7d3f34622cf982, type: 3}
+    m_Amount: 16
+  - m_ObjectToPool: {fileID: 9014327990658390055, guid: 3101a71a9b97466489c273f6950d6e7d, type: 3}
+    m_Amount: 16

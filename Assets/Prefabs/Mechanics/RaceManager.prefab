@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8136689637365071070}
   - component: {fileID: 6785121993804126638}
   - component: {fileID: 1190430990099193026}
+  - component: {fileID: 5030594568072011023}
   m_Layer: 0
   m_Name: RaceManager
   m_TagString: Untagged
@@ -46,7 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Countdown: {fileID: 1190430990099193026}
-  m_Checkpoints: []
+  m_TargetGroup: {fileID: 0}
+  m_CarTransform: {fileID: 0}
+  m_CameraTransform: {fileID: 0}
+  m_PoolTransform: {fileID: 0}
 --- !u!114 &1190430990099193026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,3 +63,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e4005478689094d82d10213d64b980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5030594568072011023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106337461519516019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a217d8434c54845a01f362d358d4e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrackInformationManager
+  m_SongList: []
+  m_Checkpoints: []
+  m_DollyTrack: {fileID: 0}

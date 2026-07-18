@@ -21,28 +21,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject m_PointScreen;
 
-    public Sprite[] Sprites
-    {
-        get => m_Sprites;
-    }
-
-    public Sprite GetSprite(PlayerColor color)
-    {
-        switch (color)
-        {
-            case PlayerColor.Green:
-                return Sprites[0];
-            case PlayerColor.Red:
-                return Sprites[1];
-            case PlayerColor.Blue:
-                return Sprites[2];
-            case PlayerColor.Yellow:
-                return Sprites[3];
-            default:
-                return Sprites[0];
-        }
-    }
-
     public void SetScreenActive(Screens screen, bool active)
     {
         switch (screen)
@@ -59,7 +37,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SetutPointScreen(List<PlayerCar> cars, int startPoints)
+    public void SetupPointScreen(List<PlayerCar> cars, int startPoints)
     {
         if (m_PointScreen.TryGetComponent(out PointScreen pointScreen))
         {
@@ -67,11 +45,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdatePoints(PlayerCar car, int points)
+    public void UpdatePoints(PlayerCar car, int newPoints)
     {
         if (m_PointScreen.TryGetComponent(out PointScreen pointScreen))
         {
-            pointScreen.UpdatePoints(car, points);
+            pointScreen.UpdatePoints(car, newPoints);
+        }
+    }
+
+    public void SetCarPanel(PlayerCar car, bool active)
+    {
+        if (m_PointScreen.TryGetComponent(out PointScreen pointScreen))
+        {
+            pointScreen.SetCarPanel(car, active);
         }
     }
 

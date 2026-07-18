@@ -9,6 +9,9 @@ public class PooledSkidTrail : MonoBehaviour
     [SerializeField]
     private TrailRenderer m_TrailRenderer;
 
+    [SerializeField]
+    private ParticleSystem m_ParticleSystem;
+
     public SurfaceType SurfaceType
     {
         get => m_SurfaceType;
@@ -22,11 +25,13 @@ public class PooledSkidTrail : MonoBehaviour
     public void EmitTrail(bool emit)
     {
         m_TrailRenderer.emitting = emit;
+        m_ParticleSystem.Play();
     }
 
     public void StopTrail()
     {
         m_TrailRenderer.emitting = false;
+        m_ParticleSystem.Stop();
         StartCoroutine(ReturnToPool());
     }
 

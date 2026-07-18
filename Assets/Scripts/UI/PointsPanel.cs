@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,94 +8,103 @@ public class PointsPanel : MonoBehaviour
     private TMP_Text m_PointsText;
 
     [SerializeField]
-    private GameObject m_CarPanel;
-
-    [SerializeField]
-    private GameObject m_PointsPanel;
-
-    [SerializeField]
     private GameObject m_PointsMarkersPanel;
 
     [SerializeField]
-    private GameObject[] m_PointMarkers;
+    private Image m_CarIcon;
+
+    [SerializeField]
+    private PointMarker[] m_PointMarkers;
+
+    [SerializeField]
+    private GameObject m_WinIcon;
 
     private int m_Points;
+    private int m_NumberOfPlayers;
 
-    private const int pointCell = 46;
+    private PlayerCar m_Car;
 
-    private Car m_Car;
-
-    public Car Car
+    public PlayerCar Car
     {
         get => m_Car;
         private set => m_Car = value;
     }
 
-    public void AddCar(Car car, int startPoints)
+    private void Start()
+    {
+        SetWidth();
+    }
+
+    public void AddCar(PlayerCar car, int startPoints)
     {
         Car = car;
         m_Points = startPoints;
+        UpdatePoints();
+
+        SetCarPanelBackground(Globals.GetPlayerColor(Car.Player.Color, 200));
+
+        m_CarIcon.sprite = Car.Stats.Image;
+        m_WinIcon.SetActive(false);
+        m_NumberOfPlayers = RaceManager.Current.Cars.Count;
     }
 
     public void SetNewPoints(int newPoints)
     {
-        ShowNewPoints(true);
-
         m_PointsText.text = FormatText(newPoints);
         m_Points += newPoints;
         
         UpdatePoints();
+        UptadeWinIcon();
+    }
+
+    public void SetCarPanel(bool active)
+    {
+        if (active)
+        {
+            SetCarPanelBackground(Globals.GetPlayerColor(Car.Player.Color, 200));
+        }
+        else
+        {
+            SetCarPanelBackground(new Color32(20,20,20, 150));
+        }
+    }
+
+    private void SetCarPanelBackground(Color color)
+    {
+        if (gameObject.TryGetComponent(out Image image))
+        {
+            image.color = color;
+        }
     }
 
     private void UpdatePoints()
     {
         for (var i = 0; i < m_PointMarkers.Length; i++)
         {
-            m_PointMarkers[i].SetActive(m_Points > i);
+            m_PointMarkers[i].SetPointImageActive(m_Points > i);
         }
     }
 
-    private void Start()
+    private void UptadeWinIcon()
     {
-        AddListeners();
-        SetWidth();
+        if (m_NumberOfPlayers == 4)
+        {
+            m_WinIcon.SetActive(m_Points >= 10);
+        }
+
+        else
+        {
+            m_WinIcon.SetActive(m_Points >= 7);
+        }
     }
 
     private void SetWidth()
     {
-        var players = RaceManager.Current.Cars.Count;
+        var maxPoints = Globals.MaxPoints(m_NumberOfPlayers);
 
-        var pointWidth = Globals.PointWidth(players);
-
-        if (m_PointsMarkersPanel.TryGetComponent(out GridLayoutGroup gridLayoutGroup))
+        for (var i = 0; i < m_PointMarkers.Length; i++)
         {
-            gridLayoutGroup.cellSize.Set(pointWidth, pointCell);
-        }
-    }
-
-    private void AddListeners()
-    {
-        RaceManager.Current.RaceStatusChanged += OnRaceState;
-    }
-
-    private void OnRaceState(RaceStatus raceState)
-    {
-        switch (raceState)
-        {
-            case RaceStatus.Countdown:
-                ShowNewPoints(false);
-                break;
-            case RaceStatus.Race:
-                ShowNewPoints(false);
-                break;
-            case RaceStatus.HeatEnd:
-                ShowNewPoints(true);
-                break;
-            case RaceStatus.Finished:
-                ShowNewPoints(true);
-                break;
-            default:
-                break;
+            m_PointMarkers[i].gameObject.SetActive(maxPoints > i);
         }
     }
 
@@ -108,21 +116,5 @@ public class PointsPanel : MonoBehaviour
         }
         
         return newPoints.ToString();
-    }
-
-    private void ShowNewPoints(bool showPoints)
-    {
-        m_CarPanel.SetActive(!showPoints);
-        m_PointsPanel.SetActive(showPoints);
-    }
-
-    private void RemoveListeners()
-    {
-        RaceManager.Current.RaceStatusChanged -= OnRaceState;
-    }
-
-    private void OnDestroy()
-    {
-        RemoveListeners();
     }
 }

@@ -19,6 +19,7 @@ public class DummyMissile : Missile
         RigidBody.linearVelocity = Vector3.zero;
         RigidBody.angularVelocity = Vector3.zero;
 
+        AddPooledObject();
         StartCoroutine(ActivateAfterDelay());
     }
 

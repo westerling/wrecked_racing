@@ -69,6 +69,7 @@ public class HomingMissile : Missile
         m_Target = target;
         m_TargetRigidBody = target.GetComponent<Rigidbody>();
 
+        AddPooledObject();
         StartCoroutine(ActivateAfterDelay());
     }
 

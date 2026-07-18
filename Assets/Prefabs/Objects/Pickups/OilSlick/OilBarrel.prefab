@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OilBarrel
   m_WeaponType: 5
-  m_FireRate: 0.1
-  m_StartAmmunition: 30
-  m_IsAutomatic: 1
+  m_FireRate: 0.5
+  m_StartAmmunition: 2
+  m_IsAutomatic: 0
 --- !u!1001 &6402056799565153479
 PrefabInstance:
   m_ObjectHideFlags: 0

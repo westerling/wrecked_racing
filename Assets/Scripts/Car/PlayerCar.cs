@@ -4,9 +4,6 @@ using UnityEngine;
 public class PlayerCar : Car
 {
     [SerializeField]
-    private Health m_Health;
-
-    [SerializeField]
     private Transform m_WeaponTransform;
 
     [SerializeField]
@@ -42,11 +39,6 @@ public class PlayerCar : Car
     {
         get => m_Player;
         set => m_Player = value;
-    }
-
-    public Health Health
-    {
-        get => m_Health;
     }
 
     protected override void Awake()
@@ -85,7 +77,7 @@ public class PlayerCar : Car
         {
             m_Timer += Time.deltaTime;
 
-            if (m_Timer >= 30)
+            if (m_Timer >= 5)
             {
                 Health.Damage(float.MaxValue);
             }
@@ -96,19 +88,8 @@ public class PlayerCar : Car
         }
     }
 
-    private void OnCarActive(CarStatus carStatus)
-    {
-        if (carStatus == CarStatus)
-        {
-            return;
-        }
-
-        CarStatus = carStatus;
-    }
-
     private void AddListeners()
     {
-        Health.CarHealthStatus += OnCarActive;
         RaceManager.Current.RaceStatusChanged += OnRaceStatusChanged;
     }
 
@@ -128,7 +109,6 @@ public class PlayerCar : Car
 
     private void RemoveListeners()
     {
-        Health.CarHealthStatus -= OnCarActive;
         RaceManager.Current.RaceStatusChanged -= OnRaceStatusChanged;
     }
 

@@ -24,6 +24,18 @@ public class PointScreen : MonoBehaviour
         pointsScreen.SetNewPoints(newPoints);
     }
 
+    public void SetCarPanel(Car car, bool active)
+    {
+        var pointsScreen = m_PointsPanels.Where(x => x.Car == car).FirstOrDefault();
+
+        if (pointsScreen == null)
+        {
+            return;
+        }
+
+        pointsScreen.SetCarPanel(active);
+    }
+
     public void SetupCars(List<PlayerCar> cars, int startPoints)
     {
         for (var i = 0; i < m_PointsPanels.Length; i++)

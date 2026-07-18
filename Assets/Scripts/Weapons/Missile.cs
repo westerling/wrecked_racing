@@ -6,6 +6,9 @@ public abstract class Missile : Ammunition
     [SerializeField]
     private Rigidbody m_Rigidbody;
 
+    [SerializeField]
+    private Transform m_RocketTrailOrigin;
+
     [Header("Blast")]
     [SerializeField]
     private float m_Radius = 5f;
@@ -15,6 +18,8 @@ public abstract class Missile : Ammunition
     [Header("Sounds")]
     [SerializeField]
     private Sound m_ExplosionSound;
+
+    private GameObject m_RocketTrail;
 
     private bool m_Active;
     private float m_Speed;
@@ -42,6 +47,23 @@ public abstract class Missile : Ammunition
     }
 
     protected abstract void UpdatePosition();
+
+    public void AddPooledObject()
+    {
+        var pooledObject = FxPool.Current.GetPooledObjectOfType(ParticleType.RocketTrail);
+
+        if (pooledObject != null)
+        {
+            pooledObject.SetActive(true);
+            pooledObject.transform.parent = m_RocketTrailOrigin.transform;
+            pooledObject.transform.SetPositionAndRotation(m_RocketTrailOrigin.position, m_RocketTrailOrigin.rotation);
+
+            if (pooledObject.TryGetComponent(out RocketTrail rocketTrail))
+            {
+                m_RocketTrail = rocketTrail.gameObject;
+            }
+        }
+    }
 
     protected IEnumerator ActivateAfterDelay()
     {
@@ -71,8 +93,20 @@ public abstract class Missile : Ammunition
             {
                 rigidbody.AddExplosionForce(m_Power, explosionPos, m_Radius, 300f);
             }
+
+            if (hit.TryGetComponent(out Health health))
+            {
+                health.Damage(37);
+            }
         }
 
+        if (m_RocketTrail != null)
+        {
+            if (m_RocketTrail.TryGetComponent(out RocketTrail rocketTrail))
+            {
+                rocketTrail.ReleaseGameObject();
+            }
+        }
 
         SoundFxManager.Current.PlaySoundClip(m_ExplosionSound, transform);
         Deactivate();

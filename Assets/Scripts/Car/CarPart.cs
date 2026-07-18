@@ -7,9 +7,9 @@ public class CarPart : MonoBehaviour
     [SerializeField]
     private CarPartType m_CarPartType;
 
-    private Vector3 startPosition;
-    private Quaternion startRotation;
-    private Vector3 startScale;
+    private Vector3 m_StartPosition;
+    private Quaternion m_StartRotation;
+    private Vector3 m_StartScale;
 
     private bool m_Detached;
     private float m_Threshold;
@@ -34,7 +34,7 @@ public class CarPart : MonoBehaviour
     {
         SetStartTransform();
 
-        var stats = car.Stats.CarPartStats.Where(x => x.CarPartType == m_CarPartType).FirstOrDefault();
+        var stats = car.Stats.CarPartStats.FirstOrDefault(x => x.CarPartType == m_CarPartType);
 
         if (stats == null)
         {
@@ -49,6 +49,14 @@ public class CarPart : MonoBehaviour
         m_Collider = meshCollider;
 
         var rigidBody = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
+        
+        if (stats == null)
+        {
+            Debug.LogError($"No stats found for car part {m_CarPartType}");
+            enabled = false;
+            return;
+        }
+
         rigidBody.mass = stats.Mass;
         m_Rigidbody = rigidBody;
 
@@ -59,9 +67,9 @@ public class CarPart : MonoBehaviour
 
     private void SetStartTransform()
     {
-        startPosition = transform.position;
-        startRotation = transform.rotation;
-        startScale = transform.localScale;
+        m_StartPosition = transform.localPosition;
+        m_StartRotation = transform.localRotation;
+        m_StartScale = transform.localScale;
     }
 
     public void DetachComponent(bool detached)
@@ -69,13 +77,13 @@ public class CarPart : MonoBehaviour
         m_Collider.enabled = detached;
         m_Rigidbody.isKinematic = !detached;
         Detached = detached;
-        transform.parent = detached ? null : m_ParentTransform;
+        transform.SetParent(detached ? null : m_ParentTransform);
 
         if (!detached)
         {
-            transform.position = startPosition;
-            transform.rotation = startRotation;
-            transform.localScale = startScale;
+            transform.localPosition = m_StartPosition;
+            transform.localRotation = m_StartRotation;
+            transform.localScale = m_StartScale;
         }
     }
 

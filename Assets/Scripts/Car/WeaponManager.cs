@@ -50,7 +50,12 @@ public class WeaponManager : CarComponent
     public void RemoveWeapon()
     {
         Weapon.ReleaseWeapon();
-        WeaponPool.Current?.ReturnObjectToPool(Weapon.gameObject);
+        
+        if (WeaponPool.Current != null)
+        {
+            WeaponPool.Current.ReturnObjectToPool(Weapon.gameObject);
+        }
+
         Weapon.WeaponDepleated -= OnWeaponDepleated;
         Weapon = null;
         SetTargeterStatus();
@@ -85,6 +90,11 @@ public class WeaponManager : CarComponent
 
     private void OnFireStarted()
     {
+        if (RaceManager.Current.RaceStatus != RaceStatus.Race)
+        {
+            return;
+        }
+
         if (Weapon == null)
         {
             return;

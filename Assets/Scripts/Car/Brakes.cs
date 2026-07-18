@@ -11,10 +11,10 @@ public class Brakes : InputComponent
     {
         base.Awake();
 
-        Car.CarStatusChanged += OnCarStatus;
+        Car.Health.CarHealthStatus += OnCarStatus;
     }
 
-    private void OnCarStatus(Car car, CarStatus carStatus)
+    private void OnCarStatus(CarStatus carStatus, Car car)
     {
         m_CarStatus = carStatus;
     }
@@ -83,6 +83,6 @@ public class Brakes : InputComponent
     {
         base.OnDestroy();
 
-        Car.CarStatusChanged -= OnCarStatus;
+        Car.Health.CarHealthStatus -= OnCarStatus;
     }
 }

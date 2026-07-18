@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db963d9e6731f5f4c8a809b72ae0322b, type: 3}
+  m_Name: Sand
+  m_EditorClassIdentifier: Assembly-CSharp::WheelSurfaceData
+  m_SurfaceType: 3
+  m_GripMultiplier: 1
+  m_SlipSensitivity: 2
+  m_SkidSound: {fileID: 8300000, guid: 599b5537e66880b45b4f8a366b028480, type: 3}
+  m_VolumeMultiplier: 1
+  m_PitchMultiplier: 1
+  m_TrailMaterial: {fileID: 2100000, guid: f625aefe56c67a8468214b5905c22740, type: 2}
+  m_DustParticleType: 4

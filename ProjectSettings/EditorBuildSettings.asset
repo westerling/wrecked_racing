@@ -17,5 +17,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tracks/02_Highway_Rumble/02_Highway_Rumble.unity
     guid: 09460d3dc51ffe54ab8a3b8997032e00
+  - enabled: 1
+    path: Assets/Scenes/Tracks/03_Frozen_Harbour/03_Frozen Harbour.unity
+    guid: cf9f46074edf85740aff7a3de697980f
+  - enabled: 1
+    path: Assets/Scenes/Tracks/04_Ring_Blistad/04_Ring_Blistad.unity
+    guid: 9681da848f0016d49aa510e5513286ce
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public event Action<Car, CarStatus> CarStatusChanged;
-
     [SerializeField]
     private Rigidbody m_Rigidbody;
 
@@ -24,6 +21,9 @@ public class Car : MonoBehaviour
     [SerializeField]
     private Stats m_Stats;
 
+    [SerializeField]
+    private Health m_Health;
+
     private float m_CurrentSpeedRatio = 0f;
     private float m_CurrentSpeed = 0f;
     private bool m_IsAi;
@@ -31,7 +31,6 @@ public class Car : MonoBehaviour
     private List<Wheel> m_Wheels = new List<Wheel>();
     private InputManager m_InputManager;
 
-    private CarStatus m_CarStatus = CarStatus.Inactive;
     private CarDirection m_HeadingDirection = CarDirection.Stationary;
 
 
@@ -89,20 +88,15 @@ public class Car : MonoBehaviour
         get => m_Transmission;
     }
     
-    protected CarStatus CarStatus
-    {
-        get => m_CarStatus;
-        set
-        {
-            CarStatusChanged?.Invoke(this, value);
-            m_CarStatus = value;
-        }
-    }
-
     public bool IsAi
     {
         get => m_IsAi;
         protected set => m_IsAi = value;
+    }
+
+    public Health Health
+    {
+        get => m_Health;
     }
 
     public PhysicsMaterial PhysicsMaterial
@@ -115,11 +109,6 @@ public class Car : MonoBehaviour
         Rigidbody.centerOfMass = m_CenterOfMass.localPosition;
 
         GetWheels();
-    }
-
-    protected void TriggerCarStatus(CarStatus carStatus)
-    {
-        CarStatusChanged?.Invoke(this, carStatus);
     }
 
     private void GetWheels()

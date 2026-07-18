@@ -15,9 +15,6 @@ public class GameManager : MonoBehaviour
     public event Action<GameState> GameStateChanged;
 
     [SerializeField]
-    private bool m_DebugMode = false;
-
-    [SerializeField]
     private GameObject m_RaceCamera;
 
     [SerializeField]
@@ -81,11 +78,6 @@ public class GameManager : MonoBehaviour
     public GameObject[] Pools
     {
         get => m_Pools;
-    }
-
-    public bool DebugMode
-    {
-        get => m_DebugMode;
     }
 
     private void Awake()

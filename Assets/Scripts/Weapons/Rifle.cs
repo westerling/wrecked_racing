@@ -24,7 +24,12 @@ public class Rifle : TargetWeapon
 
             if (hit.rigidbody != null && hit.transform != ParentCar.transform)
             {
-                ApplyImpactForce(hit.rigidbody, m_BulletOrigin.forward, 10000f, 1000f);
+                ApplyImpactForce(hit.rigidbody, m_BulletOrigin.forward, 750f, 2500f);
+
+                if (hit.collider.TryGetComponent(out Health health))
+                {
+                    health.Damage(3);
+                }
             }
         }
     }

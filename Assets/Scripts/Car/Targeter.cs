@@ -11,12 +11,13 @@ public class Targeter : CarComponent
     [SerializeField]
     private LineRenderer m_LineRenderer;
 
-    private float m_MaxDistance = 20f;
+    private float m_MaxDistance = 30f;
     private bool m_HasHit = false;
 
     private Transform m_LaserTransform;
     private GameObject m_MovingObject;
     private GameObject m_CurrentTarget;
+    private Material m_LaserMaterial;
 
     private RaycastHit m_Hit;
 
@@ -41,6 +42,7 @@ public class Targeter : CarComponent
                 m_MovingObject = targetWeapon.MovingObject;
                 m_LineRenderer.enabled = true;
                 m_LineRenderer.material = m_LineRenderer.materials[0];
+                m_LaserMaterial = m_LineRenderer.material;
             }
         }
     }
@@ -113,19 +115,13 @@ public class Targeter : CarComponent
 
     private void UpdateMaterials()
     {
-        if (CurrentTarget == null)
+        if (CurrentTarget != null)
         {
-            if (m_LineRenderer.material == m_LineRenderer.materials[1])
-            {
-                m_LineRenderer.material = m_LineRenderer.materials[0];
-            }
+            m_LaserMaterial.SetColor("_BaseColor", Color.green * 5f);
         }
         else
         {
-            if (m_LineRenderer.material == m_LineRenderer.materials[0])
-            {
-                m_LineRenderer.material = m_LineRenderer.materials[1];
-            }
+            m_LaserMaterial.SetColor("_BaseColor", Color.red * 5f);
         }
     }
 }

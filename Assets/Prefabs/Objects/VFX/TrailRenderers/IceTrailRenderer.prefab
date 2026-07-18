@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PooledTrailRenderer
   m_SurfaceType: 5
   m_TrailRenderer: {fileID: 2926415196956578986}
+  m_ParticleSystem: {fileID: 8754033432842396326, guid: d982ee8299c3bf047adb014f713991ca, type: 3}
 --- !u!96 &2926415196956578986
 TrailRenderer:
   serializedVersion: 3

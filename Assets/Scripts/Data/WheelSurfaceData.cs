@@ -35,7 +35,7 @@ public class WheelSurfaceData : ScriptableObject
         
     [Header("Particles")]
     [SerializeField]
-    private GameObject m_DustFxPrefab;
+    private ParticleType m_DustParticleType;
 
     public AudioClip SkidSound
     {
@@ -47,9 +47,9 @@ public class WheelSurfaceData : ScriptableObject
         get => m_GripMultiplier;
     }
     
-    public GameObject DustFxPrefab
+    public ParticleType DustParticleType
     {
-        get => m_DustFxPrefab;
+        get => m_DustParticleType;
     }
 
     public Material TrailMaterial

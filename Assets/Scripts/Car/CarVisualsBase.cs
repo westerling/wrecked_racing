@@ -61,7 +61,7 @@ public class CarVisualsBase : CarComponent
         }
     }
 
-    private void OnCarlHealthStatusChanged(CarStatus status)
+    private void OnCarlHealthStatusChanged(CarStatus status, PlayerCar car)
     {
         if (status == CarStatus.Active)
         {
