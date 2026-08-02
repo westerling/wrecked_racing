@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6785121993804126638}
   - component: {fileID: 1190430990099193026}
   - component: {fileID: 5030594568072011023}
+  - component: {fileID: 4029308777308198841}
   m_Layer: 0
   m_Name: RaceManager
   m_TagString: Untagged
@@ -78,3 +79,15 @@ MonoBehaviour:
   m_SongList: []
   m_Checkpoints: []
   m_DollyTrack: {fileID: 0}
+--- !u!114 &4029308777308198841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106337461519516019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6169e1cde002e4a80d0cabc0113b7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PointsManager

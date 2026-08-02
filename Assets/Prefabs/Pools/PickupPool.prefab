@@ -46,18 +46,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ObjectsToPool:
   - m_ObjectToPool: {fileID: 6641741524439848413, guid: d8ac629d530aa7f4c9c227a063421834, type: 3}
-    m_Amount: 0
+    m_Amount: 4
   - m_ObjectToPool: {fileID: 2807963731086871175, guid: 51474af44e1532049968fc4c9a56b08a, type: 3}
-    m_Amount: 0
+    m_Amount: 4
   - m_ObjectToPool: {fileID: 3057656447872400843, guid: 9646e4817e198e9488e18e7b77754527, type: 3}
-    m_Amount: 0
+    m_Amount: 4
   - m_ObjectToPool: {fileID: 8602898186953890068, guid: dcadfee5e8196d74d802b904628dcac8, type: 3}
-    m_Amount: 0
+    m_Amount: 4
   - m_ObjectToPool: {fileID: 8976064955809561048, guid: df5e10bc231e235478f9b5e96cb37305, type: 3}
-    m_Amount: 0
+    m_Amount: 4
   - m_ObjectToPool: {fileID: 6063638723636854775, guid: 2db625d9138cc9f43a7cf00375a2b719, type: 3}
-    m_Amount: 100
+    m_Amount: 4
   - m_ObjectToPool: {fileID: 1968254240279791211, guid: bb1d6d69a697f174caf54eec842fb5c7, type: 3}
     m_Amount: 0
   - m_ObjectToPool: {fileID: 7628203292883347528, guid: e6ad3a10f94e4fb4dac5547f1d793a9c, type: 3}
-    m_Amount: 0
+    m_Amount: 4

@@ -96,7 +96,13 @@ public class RaceManager : MonoBehaviour
 
     private void Start()
     {
+        SetStartPoints();
         ResetRace();
+    }
+
+    private void SetStartPoints()
+    {
+        PointsManager.Current.SetStartPoints(m_AllCars);
     }
 
     private void Update()
@@ -116,7 +122,7 @@ public class RaceManager : MonoBehaviour
     {
         if (m_DeathPoolOpen)
         {
-            if (m_DeathPoolTimer == 0)
+            if (m_DeathPoolTimer <= 0)
             {
                 CleanDeathPool();
             }
@@ -126,6 +132,14 @@ public class RaceManager : MonoBehaviour
     private void CleanDeathPool()
     {
         PointsManager.Current.UpdatePoints(m_DeathPool, m_ActiveCars.Count());
+
+        foreach (var playerCar in m_DeathPool)
+        {
+            if (m_ActiveCars.Contains(playerCar))
+            {
+                m_ActiveCars.Remove(playerCar);
+            }
+        }
 
         m_DeathPool.Clear();
         m_DeathPoolOpen = false;
@@ -159,6 +173,11 @@ public class RaceManager : MonoBehaviour
    
     private void CheckRaceStatus()
     {
+        if (m_DeathPoolOpen)
+        {
+            return;
+        }
+
         if (m_AllCars.Count() == 1)
         {
             if (m_ActiveCars.Count < 1)
@@ -171,7 +190,7 @@ public class RaceManager : MonoBehaviour
 
         if (m_ActiveCars.Count <= 1)
         {
-            PointsManager.Current.UpdatePoints(m_ActiveCars, m_ActiveCars.Count());
+            PointsManager.Current.UpdatePoints(m_ActiveCars, m_ActiveCars.Count);
             RaceFinished();
         }
     }
@@ -191,6 +210,11 @@ public class RaceManager : MonoBehaviour
         if (m_ActiveCars.Count() == 1)
         {
             return m_ActiveCars.FirstOrDefault().gameObject;
+        }
+
+        if (m_AllCars.Any())
+        {
+            return m_AllCars.FirstOrDefault().gameObject;
         }
 
         return null;
@@ -245,9 +269,9 @@ public class RaceManager : MonoBehaviour
     {
         if (RaceStatus == RaceStatus.Race)
         {
-            if (m_DeathPoolTimer > 0)
+            if (m_DeathPoolOpen)
             {
-                RaceTimer -= Time.deltaTime;
+                m_DeathPoolTimer -= Time.deltaTime;
             }
         }
     }
@@ -286,7 +310,6 @@ public class RaceManager : MonoBehaviour
     {
         GetSettings();
         SpawnCars();
-        PointsManager.Current.SetStartPoints(m_AllCars);
         AddListeners();
     }
 
@@ -328,11 +351,6 @@ public class RaceManager : MonoBehaviour
             {
                 m_DeathPoolOpen = true;
                 m_DeathPoolTimer += 1;
-                if (m_ActiveCars.Contains(playerCar))
-                {
-                    m_ActiveCars.Remove(playerCar);
-                }
-
                 m_DeathPool.Add(playerCar);
 
                 UIManager.Current.SetCarPanel(playerCar, false);
@@ -357,8 +375,9 @@ public class RaceManager : MonoBehaviour
 
     private void ResetCarLists()
     {
-        m_ActiveCars.AddRange(m_AllCars);
         m_DeathPool.Clear();
+        m_ActiveCars.Clear();
+        m_ActiveCars.AddRange(m_AllCars);
     }
 
     private void ResetCarHealth()

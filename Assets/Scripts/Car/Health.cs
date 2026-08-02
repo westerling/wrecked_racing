@@ -7,7 +7,6 @@ public class Health : CarComponent
 
     private CarStatus m_CarStatus;
 
-    private float m_MaxHealthPoints;
     private float m_HealthPoints;
 
     public float HealthPoints
@@ -24,17 +23,16 @@ public class Health : CarComponent
     public void Damage(float amount)
     {
         HealthPoints -= amount;
-        var healthRatio = HealthPoints / m_MaxHealthPoints;
+        var healthRatio = HealthPoints / Car.Stats.HealthPoints;
         CarHealthChanged?.Invoke(HealthPoints, healthRatio);
         CheckDamage();
     }
 
     public void ResetHealth()
     {
-        HealthPoints = m_MaxHealthPoints;
-        var healthRatio = HealthPoints / m_MaxHealthPoints;
+        HealthPoints = Car.Stats.HealthPoints;
         m_CarStatus = CarStatus.Active;
-        CarHealthChanged?.Invoke(HealthPoints, healthRatio);
+        CarHealthChanged?.Invoke(HealthPoints, 1);
 
         if (Car is PlayerCar playerCar)
         {

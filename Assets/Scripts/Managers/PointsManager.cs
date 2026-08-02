@@ -42,8 +42,9 @@ public class PointsManager : MonoBehaviour
     {
         foreach (var car in pointCars)
         {
-            var carPoints = CalculatePoints(carsLeft + 1, m_PlayerPoints[car], m_PlayerPoints.Count, pointCars.Count);
+            var carPoints = CalculatePoints(carsLeft, m_PlayerPoints[car], m_PlayerPoints.Count, pointCars.Count);
             UIManager.Current.UpdatePoints(car, carPoints);
+            m_PlayerPoints[car] += carPoints;
         }
     }
 
