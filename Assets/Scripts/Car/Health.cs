@@ -1,9 +1,14 @@
 using System;
+using UnityEngine;
 
 public class Health : CarComponent
 {
     public event Action<CarStatus, PlayerCar> CarHealthStatus;
     public event Action<float, float> CarHealthChanged;
+
+    [Header("Sounds")]
+    [SerializeField]
+    private Sound m_ExplosionSound;
 
     private CarStatus m_CarStatus;
 
@@ -47,12 +52,27 @@ public class Health : CarComponent
             if (HealthPoints <= 0)
             {
                 m_CarStatus = CarStatus.Inactive;
+                Explode();
                 
                 if (Car is PlayerCar playerCar)
                 {
                     CarHealthStatus?.Invoke(m_CarStatus, playerCar);
                 }
             }
+        }
+    }
+
+    private void Explode()
+    {
+        var explosionPos = transform.position;
+        var explosion = FxPool.Current.GetPooledObjectOfType(ParticleType.Explosion_m);
+
+        if (explosion != null)
+        {
+            explosion.transform.position = explosionPos;
+            explosion.SetActive(true);
+
+            SoundFxManager.Current.PlaySoundClip(m_ExplosionSound, transform);
         }
     }
 }

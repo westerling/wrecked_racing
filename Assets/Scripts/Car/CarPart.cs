@@ -1,18 +1,20 @@
-using System;
-using System.Linq;
 using UnityEngine;
 
 public class CarPart : MonoBehaviour
 {
+    [Range(0.01f, 1f)]
     [SerializeField]
-    private CarPartType m_CarPartType;
+    private float m_Threshold;
+
+    [Range(1f, 100f)]
+    [SerializeField]
+    private float m_Mass;
 
     private Vector3 m_StartPosition;
     private Quaternion m_StartRotation;
     private Vector3 m_StartScale;
 
     private bool m_Detached;
-    private float m_Threshold;
 
     private Collider m_Collider;
     private Rigidbody m_Rigidbody;
@@ -34,33 +36,19 @@ public class CarPart : MonoBehaviour
     {
         SetStartTransform();
 
-        var stats = car.Stats.CarPartStats.FirstOrDefault(x => x.CarPartType == m_CarPartType);
-
-        if (stats == null)
-        {
-            Debug.LogError("No Stats found for car part " + m_CarPartType);
-        }
-
         m_ParentTransform = parentObject;
 
-        var meshCollider = gameObject.AddComponent(typeof(MeshCollider)) as MeshCollider;
-        meshCollider.convex = true;
-        meshCollider.material = car.PhysicsMaterial;
-        m_Collider = meshCollider;
-
-        var rigidBody = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
-        
-        if (stats == null)
+        if (gameObject.TryGetComponent(out MeshCollider collider))
         {
-            Debug.LogError($"No stats found for car part {m_CarPartType}");
-            enabled = false;
-            return;
+            m_Collider = collider;
         }
 
-        rigidBody.mass = stats.Mass;
+        var rigidBody = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
+
+        rigidBody.mass = m_Mass;
         m_Rigidbody = rigidBody;
 
-        Threshold = stats.Threshold;
+        Threshold = m_Threshold;
 
         DetachComponent(false);
     }

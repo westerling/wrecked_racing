@@ -31,7 +31,7 @@ public class BarrelLauncher : Weapon
                 var shootDirection = (transform.up + transform.forward * 0.2f).normalized;
 
                 rigidbody.isKinematic = false;
-                rigidbody.linearVelocity = shootDirection * 15f;
+                rigidbody.linearVelocity = shootDirection * 10f;
             }
         }
 

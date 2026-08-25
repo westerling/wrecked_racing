@@ -2,6 +2,8 @@ using Unity.Cinemachine;
 using System;
 using UnityEngine;
 using static Unity.Cinemachine.CinemachineBlendDefinition;
+using System.Collections;
+using UnityEngine.UI;
 
 public class CameraControl : MonoBehaviour
 {
@@ -22,7 +24,11 @@ public class CameraControl : MonoBehaviour
     [SerializeField]
     private GameObject m_AudioListener;
 
+    [SerializeField]
+    private Image m_FadeImage; 
+
     private CinemachineTargetGroup m_TargetGroup;
+    private CinemachineCamera[] m_Cameras;
 
     public CinemachineCamera DollyCamera
     {
@@ -48,6 +54,17 @@ public class CameraControl : MonoBehaviour
     private void Awake()
     {
         AddListeners();
+        AddCameras();
+    }
+
+    private void AddCameras()
+    {
+        m_Cameras = new[]
+        {
+            DollyCamera,
+            PodiumCamera,
+            FinishedCamera
+        };
     }
 
     private void LateUpdate()
@@ -137,27 +154,67 @@ public class CameraControl : MonoBehaviour
         switch (raceStatus)
         {
             case RaceStatus.Countdown:
+                SetBlend(Styles.Cut, 0f);
+                StartCoroutine(FadeCamera(DollyCamera, true));
+                break;
             case RaceStatus.Race:
-                SetBlend(Styles.Cut, 0.5f);
-                DollyCamera.Priority = 1;
-                PodiumCamera.Priority = 0;
-                FinishedCamera.Priority = 0;
+                SetBlend(Styles.HardIn, 0.5f);
+                StartCoroutine(FadeCamera(DollyCamera, false));
                 break;
             case RaceStatus.HeatEnd:
-                SetBlend(Styles.Cut, 0.5f);
-                DollyCamera.Priority = 0;
-                PodiumCamera.Priority = 1;
-                FinishedCamera.Priority = 0;
+                SetBlend(Styles.HardIn, 0.5f);
+                StartCoroutine(FadeCamera(PodiumCamera, false));
                 break;
             case RaceStatus.Finished:
-                SetBlend(Styles.Cut, 0.5f);
-                DollyCamera.Priority = 0;
-                PodiumCamera.Priority = 0;
-                FinishedCamera.Priority = 1;
+                SetBlend(Styles.HardIn, 0.5f);
+                StartCoroutine(FadeCamera(FinishedCamera, false));
                 break;
             default:
                 break;
         }
+    }
+
+    private IEnumerator FadeCamera(CinemachineCamera cameraIn, bool fade)
+    {
+        if (fade)
+        {
+            yield return Fade(0f, 1f, 0.2f);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        foreach (var camera in m_Cameras)
+        {
+            camera.Priority = camera == cameraIn ? 1 : 0;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (fade)
+        {
+            yield return Fade(1f, 0f, 0.2f);
+        }
+    }
+
+    private IEnumerator Fade(float from, float to, float duration)
+    {
+        var color = m_FadeImage.color;
+        color.a = from;
+        m_FadeImage.color = color;
+
+        var elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+
+            color.a = Mathf.Lerp(from, to, elapsed / duration);
+            m_FadeImage.color = color;
+
+            yield return null;
+        }
+
+        color.a = to;
+        m_FadeImage.color = color;
     }
 
     private void SetBlend(Styles style, float time)

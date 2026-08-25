@@ -17,7 +17,18 @@ public class WheelSurfaceData : ScriptableObject
     [Tooltip("How quickly traction breaks loose on this surface")]
     [Range(0.1f, 2f)]
     [SerializeField]
-    private float m_SlipSensitivity = 1f;  
+    private float m_SlipSensitivity = 1f;
+
+    [Tooltip("0 = no forec, 10 = a lot of")]
+    [Range(0f, 10f)]
+    [SerializeField]
+    private float m_SideForceFrequency = 0f;
+
+    [Tooltip("0 = no forec, 1000 = a lot of")]
+    [Range(0f, 1000f)]
+    [SerializeField]
+    private float m_SideForceStrength = 0f;
+
 
     [Header("Audio")]
     [SerializeField]
@@ -75,5 +86,15 @@ public class WheelSurfaceData : ScriptableObject
     public SurfaceType SurfaceType
     {
         get => m_SurfaceType;
+    }
+    
+    public float SideForceStrength
+    {
+        get => m_SideForceStrength;
+    }
+
+    public float SideForceFrequency
+    {
+        get => m_SideForceFrequency;
     }
 }

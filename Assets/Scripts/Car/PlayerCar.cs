@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class PlayerCar : Car
     private Targeter m_Targeter;
 
     [SerializeField]
-    private CarVisualsBase[] m_CarVisualBases;
+    private MeshRenderer[] m_ColorRenderers;
 
     private Player m_Player;
 
@@ -52,14 +53,17 @@ public class PlayerCar : Car
 
     private void Start()
     {
-        var carVisualBase = m_CarVisualBases.Where(x => x.Color == Player.Color).FirstOrDefault();
+        SetMaterial();
+    }
 
-        if (carVisualBase == null)
+    private void SetMaterial()
+    {
+        var newMaterial = ColorManager.Current.GetMaterial(m_Player.Color);
+
+        foreach (var colorRenderer in m_ColorRenderers)
         {
-            Debug.LogError("Visuals not found for color " + Player.Color);
+            colorRenderer.material = newMaterial;
         }
-
-        carVisualBase.gameObject.SetActive(true);
     }
 
     private void Update()

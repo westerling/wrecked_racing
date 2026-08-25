@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public abstract class InputComponent : CarComponent
 {
     protected abstract void AddListeners();

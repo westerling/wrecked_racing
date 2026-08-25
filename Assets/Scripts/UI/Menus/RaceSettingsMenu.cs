@@ -16,6 +16,8 @@ public class RaceSettingsMenu : ButtonsMenu
 
     private int m_TrackIndex = 0;
     private int m_CarIndex = 0;
+    private int m_RaceModeIndex = 0;
+    private int m_PowerupsIndex = 0;
     private bool m_IsAirstrikeOn = true;
     private bool m_IsPowerupsOn = true;
 

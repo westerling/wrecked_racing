@@ -14,7 +14,7 @@ public class Speaker : MonoBehaviour
     private void OnNewSong(AudioClip audioClip)
     {
         m_AudioSource.clip = audioClip;
-        m_AudioSource.volume = 80f;
+        m_AudioSource.volume = 0.2f;
         m_AudioSource.Play();
     }
 

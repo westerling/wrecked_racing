@@ -46,16 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrailPool
   m_ObjectsToPool:
   - m_ObjectToPool: {fileID: 2141316988941749924, guid: 08501b341425e3f4f898955cebfa04de, type: 3}
-    m_Amount: 16
+    m_Amount: 64
   - m_ObjectToPool: {fileID: 3563861839973317609, guid: c91a9b089606f2f47b765bb26bea5ebd, type: 3}
-    m_Amount: 16
+    m_Amount: 64
   - m_ObjectToPool: {fileID: 8609618189399706593, guid: b5342512fd0913846965e9e89ec2814e, type: 3}
-    m_Amount: 16
+    m_Amount: 64
   - m_ObjectToPool: {fileID: 9014327990658390055, guid: 8c6d0acce6b5a4948a703fe4d74dbaaa, type: 3}
-    m_Amount: 16
+    m_Amount: 32
   - m_ObjectToPool: {fileID: 8609618189399706593, guid: 3f65143c6c414e640838ae1527525dd4, type: 3}
-    m_Amount: 16
+    m_Amount: 32
   - m_ObjectToPool: {fileID: 9014327990658390055, guid: 9dc2d170a3722424ca7d3f34622cf982, type: 3}
-    m_Amount: 16
+    m_Amount: 64
   - m_ObjectToPool: {fileID: 9014327990658390055, guid: 3101a71a9b97466489c273f6950d6e7d, type: 3}
-    m_Amount: 16
+    m_Amount: 32

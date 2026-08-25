@@ -62,10 +62,12 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b7443b42b1892604b9d5df92c1205d29, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,6 +85,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -187,7 +190,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.01
+      time: 0.002
       value: 1
       inSlope: 0
       outSlope: 0
@@ -196,40 +199,22 @@ AudioSource:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.07339352
-      value: 0.85467136
-      inSlope: -2.7285876
-      outSlope: -2.7285876
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.59151447
-      outWeight: 0.15622725
-    - serializedVersion: 3
-      time: 0.2356362
-      value: 0.27227435
-      inSlope: -0.5862107
-      outSlope: -0.5862107
+      time: 0.015307307
+      value: 0.9030425
+      inSlope: -0.21302715
+      outSlope: -0.21302715
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.44581473
-    - serializedVersion: 3
-      time: 0.63121295
-      value: 0.0792155
-      inSlope: -0.16769432
-      outSlope: -0.16769432
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.53009945
+      outWeight: 0.20082186
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -0.30322406
-      outSlope: -0.30322406
+      value: 0.8
+      inSlope: 0.20481321
+      outSlope: 0.20481321
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.47874174
+      inWeight: 0.2942684
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

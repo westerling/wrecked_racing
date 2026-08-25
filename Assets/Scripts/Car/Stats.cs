@@ -52,9 +52,6 @@ public class Stats
     [Range(0f, 5f)]
     private float m_Downforce = 2f;
 
-    [SerializeField]
-    private CarPartStats[] m_CarPartStats;
-
     [Header("Audio")]
     [SerializeField]
     private AudioSource m_EngineSound;
@@ -126,10 +123,5 @@ public class Stats
     public Sprite Image
     {
         get => m_Image;
-    }
-
-    public CarPartStats[] CarPartStats
-    {
-        get => m_CarPartStats;
     }
 }

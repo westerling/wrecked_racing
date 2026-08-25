@@ -1,5 +1,14 @@
+using UnityEngine;
+
 public class Engine : InputComponent
 {
+    [SerializeField]
+    private GameObject m_Flames;
+
+    [Header("Sounds")]
+    [SerializeField]
+    private Sound m_ExplosionSound;
+
     private float m_CurrentAccelerationInput = 0f;
     private float m_CurrentBrakeInput = 0f;
 
@@ -10,15 +19,40 @@ public class Engine : InputComponent
         base.Awake();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+
+        m_Flames.SetActive(false);
+    }
+
     protected override void AddListeners()
     {
+        Car.Health.CarHealthChanged += OnCarHealthChanged;
         Car.InputManager.Accelerate += OnAccelerationPerformed;
         Car.InputManager.Brake += OnBrakePerformed;
         RaceManager.Current.RaceStatusChanged += OnRaceStateChanged;
     }
 
+    private void OnCarHealthChanged(float healthPoints, float healthRatio)
+    {
+        if (healthPoints <= 0)
+        {
+            SoundFxManager.Current.PlaySoundClip(m_ExplosionSound, transform);
+        }
+
+        if (healthRatio < 0.25f)
+        {
+            if (!m_Flames.activeSelf)
+            {
+                m_Flames.SetActive(true);
+            }
+        }
+    }
+
     protected override void RemoveListeners()
     {
+        Car.Health.CarHealthChanged -= OnCarHealthChanged;
         Car.InputManager.Accelerate -= OnAccelerationPerformed;
         Car.InputManager.Brake -= OnBrakePerformed;
         RaceManager.Current.RaceStatusChanged -= OnRaceStateChanged;
@@ -56,9 +90,15 @@ public class Engine : InputComponent
         Car.Transmission.MotorTorque = torque;
     }
 
-    private void OnRaceStateChanged(RaceStatus obj)
+    private void OnRaceStateChanged(RaceStatus raceStatus)
     {
-        m_RaceStatus = obj;
+        m_RaceStatus = raceStatus;
+
+        if (raceStatus == RaceStatus.Countdown 
+            || raceStatus == RaceStatus.Race)
+        {
+            m_Flames.SetActive(false);
+        }
     }
 
     private void OnAccelerationPerformed(float obj)

@@ -7,6 +7,12 @@ public class Mine : Ammunition
     [SerializeField]
     private Sound m_ExplosionSound;
 
+    [SerializeField]
+    private GameObject m_MineActive;
+
+    [SerializeField]
+    private GameObject m_MineInactive;
+
     private float m_Radius = 10f;
     private float m_SafeTimer = 2f;
 
@@ -24,9 +30,17 @@ public class Mine : Ammunition
 
     private IEnumerator SetMineSafety()
     {
+        SetMineVisual(false);
         m_Active = false;
         yield return new WaitForSeconds(m_SafeTimer);
         m_Active = true;
+        SetMineVisual(true);
+    }
+
+    private void SetMineVisual(bool active)
+    {
+        m_MineActive.SetActive(active);
+        m_MineInactive.SetActive(!active);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -15,6 +15,8 @@ MonoBehaviour:
   m_SurfaceType: 3
   m_GripMultiplier: 1
   m_SlipSensitivity: 2
+  m_SideForceFrequency: 1.34
+  m_SideForceStrength: 508
   m_SkidSound: {fileID: 8300000, guid: 599b5537e66880b45b4f8a366b028480, type: 3}
   m_VolumeMultiplier: 1
   m_PitchMultiplier: 1

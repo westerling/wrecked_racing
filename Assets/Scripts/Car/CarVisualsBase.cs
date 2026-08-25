@@ -1,18 +1,9 @@
-using System;
 using UnityEngine;
 
 public class CarVisualsBase : CarComponent
 {
     [SerializeField]
-    private PlayerColor m_Color;
-
-    [SerializeField]
     private CarPart[] m_CarParts;
-
-    public PlayerColor Color
-    {
-        get => m_Color;
-    }
 
     public CarPart[] CarParts
     {

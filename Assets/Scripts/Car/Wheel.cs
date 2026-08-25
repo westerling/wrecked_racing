@@ -78,6 +78,7 @@ public class Wheel : CarComponent
     private void Update()
     {
         UpdateWheelEffects();
+        ApplySurfaceForces();
 
         WheelRpm = m_WheelCollider.rpm;
         WheelCollider.GetWorldPose(out Vector3 position, out Quaternion rotation);
@@ -185,6 +186,27 @@ public class Wheel : CarComponent
         {
             m_TrailRenderer = pooledTrailedRenderer;
         }
+    }
+
+    private void ApplySurfaceForces()
+    {
+        if (m_SurfaceData == null || m_SurfaceData.SideForceStrength <= 0)
+        {
+            return;
+        }
+
+        if (Random.value > m_SurfaceData.SideForceFrequency * Time.deltaTime)
+        {
+            return;
+        }
+
+        var direction = Random.value > 0.5f ? 1f : -1f;
+        var force = transform.right * direction *
+                        m_SurfaceData.SideForceStrength;
+
+        Car.Rigidbody.AddForce(
+            force,
+            ForceMode.Force);
     }
 
     private WheelSurfaceData GetSurfaceData(WheelHit hit)

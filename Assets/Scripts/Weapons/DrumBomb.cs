@@ -4,10 +4,10 @@ using UnityEngine;
 public class DrumBomb : Ammunition
 {
     [SerializeField]
-    private float m_Radius = 5f;
+    private float m_Radius = 8f;
 
     [SerializeField]
-    private float m_Power = 100000f;
+    private float m_Power = 300000f;
 
     [Header("Sounds")]
     [SerializeField]
@@ -49,7 +49,12 @@ public class DrumBomb : Ammunition
         {
             if (hit.TryGetComponent<Rigidbody>(out var rigidbody))
             {
-                rigidbody.AddExplosionForce(m_Power, explosionPos, m_Radius, 300f);
+                rigidbody.AddExplosionForce(m_Power, explosionPos, m_Radius, 3000f);
+            }
+
+            if (hit.TryGetComponent(out Health health))
+            {
+                health.Damage(48);
             }
         }
 
