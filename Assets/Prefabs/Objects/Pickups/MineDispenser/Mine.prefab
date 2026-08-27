@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7600973032772784681, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -6704817664873631307, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -60,9 +64,29 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5454329655516614370, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e023a79aac4d5ab49bd95d1e09a3543e, type: 2}
+    - target: {fileID: -4122427189046793550, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e023a79aac4d5ab49bd95d1e09a3543e, type: 2}
+    - target: {fileID: -660880251010688605, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e023a79aac4d5ab49bd95d1e09a3543e, type: 2}
     - target: {fileID: 919132149155446097, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
       propertyPath: m_Name
       value: Mine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5192465792246654500, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6889758615455367260, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8895722071858169563, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
       propertyPath: m_IsActive
@@ -97,8 +121,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mine
   m_ExplosionSound: {fileID: 11400000, guid: 6721c201e4db76342bbd413e06196073, type: 2}
-  m_MineActive: {fileID: 8496972333824609739}
-  m_MineInactive: {fileID: 4379819258141443858}
+  m_GreenLight: {fileID: 1737070086034056903}
+  m_RedLight: {fileID: 5086784335013473588}
+  m_NeutralLight: {fileID: 5838333846489320268}
 --- !u!65 &4543773276027570846
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -120,13 +145,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!1 &4379819258141443858 stripped
+--- !u!1 &1737070086034056903 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: -5597827901460657150, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
+  m_CorrespondingSourceObject: {fileID: -7600973032772784681, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
   m_PrefabInstance: {fileID: 1051796423760497424}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8496972333824609739 stripped
+--- !u!1 &5086784335013473588 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 8895722071858169563, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5192465792246654500, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
+  m_PrefabInstance: {fileID: 1051796423760497424}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5838333846489320268 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6889758615455367260, guid: 66512de96ccfe6447915951c6a9c20ba, type: 3}
   m_PrefabInstance: {fileID: 1051796423760497424}
   m_PrefabAsset: {fileID: 0}

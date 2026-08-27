@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class RocketTrail : ParticleEffect
 {
     public void ReleaseGameObject()
@@ -8,7 +6,6 @@ public class RocketTrail : ParticleEffect
 
         foreach (var particleSystem in ParticleSystems)
         {
-            Debug.Log("Relewase particle sysyem");
             particleSystem.Stop();
         }
     }

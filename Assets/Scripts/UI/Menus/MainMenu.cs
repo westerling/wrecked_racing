@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : ButtonsMenu
 {
@@ -42,18 +43,35 @@ public class MainMenu : ButtonsMenu
 
     public override void NavigateDownPerformed(Player player)
     {
+        if (EventSystem.currentSelectedGameObject.gameObject.TryGetComponent(out Selectable selectable))
+        {
+            Debug.Log("rawr");
+            LastSelected = selectable;
+        }
     }
 
     public override void NavigateLeftPerformed(Player player)
     {
+        if (EventSystem.currentSelectedGameObject.gameObject.TryGetComponent(out Selectable selectable))
+        {
+            LastSelected = selectable;
+        }
     }
 
     public override void NavigateRightPerformed(Player player)
     {
+        if (EventSystem.currentSelectedGameObject.gameObject.TryGetComponent(out Selectable selectable))
+        {
+            LastSelected = selectable;
+        }
     }
 
     public override void NavigateUpPerformed(Player player)
     {
+        if (EventSystem.currentSelectedGameObject.gameObject.TryGetComponent(out Selectable selectable))
+        {
+            LastSelected = selectable;
+        }
     }
 
     protected override void OnPlayerJoined(Player playerJoining)

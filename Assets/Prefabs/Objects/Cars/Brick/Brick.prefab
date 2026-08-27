@@ -233,7 +233,7 @@ MonoBehaviour:
     m_Image: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
     m_Description: Boxy but fast
     m_DriveTrain: 1
-    m_TopSpeed: 28
+    m_TopSpeed: 40
     m_MotorTorque:
       serializedVersion: 2
       m_Curve:
@@ -1080,6 +1080,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6793846317455559080, guid: 439f1c42b61ea3c498b2106f370e06de, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e023a79aac4d5ab49bd95d1e09a3543e, type: 2}
     - target: {fileID: 919132149155446097, guid: 439f1c42b61ea3c498b2106f370e06de, type: 3}
       propertyPath: m_Name
       value: Brick

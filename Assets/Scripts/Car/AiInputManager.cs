@@ -15,11 +15,25 @@ public class AIInputManager : InputManager
     private float m_MaxSpeed = 20f;
     private float m_NearestPoint;
     private float m_SteerSensitivity = 5f;
+    private float m_StuckSpeedThreshold = 1f;
+    private float m_StuckTime = 1f;
+    private float m_ReverseTime = 3f;
+    private float m_ReverseThrottle = 1f;
+    private float m_StuckTimer;
+    private float m_ReverseTimer;
+
+    private bool m_IsReversing;
 
     private void Update()
     {
         if (m_Spline == null)
         {
+            return;
+        }
+
+        if (m_IsReversing)
+        {
+            Reverse();
             return;
         }
 
@@ -36,6 +50,19 @@ public class AIInputManager : InputManager
             out float nearestPoint);
 
         m_NearestPoint = nearestPoint;
+    }
+
+    private void Reverse()
+    {
+        m_ReverseTimer -= Time.deltaTime;
+
+        SendBrake(1f);
+        SendSteer(-1f);
+
+        if (m_ReverseTimer <= 0f)
+        {
+            m_IsReversing = false;
+        }
     }
 
     private bool TryGetCarAhead(out Rigidbody targetRb, out float distance)
@@ -103,6 +130,7 @@ public class AIInputManager : InputManager
         SendSteer(steer);
         SendAccelerate(throttle);
         SendBrake(brake);
+        UpdateStuckDetection(speed, throttle);
     }
 
     private float GetCornerSpeed(float speed)
@@ -123,5 +151,29 @@ public class AIInputManager : InputManager
         var cornerFactor = Mathf.InverseLerp(0f, 60f, angle);
 
         return Mathf.Lerp(m_MaxSpeed, m_MaxSpeed * 0.4f, cornerFactor);
+    }
+
+    private void UpdateStuckDetection(float speed, float throttle)
+    {
+        if (throttle > 0.5f && speed < m_StuckSpeedThreshold)
+        {
+            m_StuckTimer += Time.deltaTime;
+
+            if (m_StuckTimer >= m_StuckTime)
+            {
+                StartReversing();
+            }
+        }
+        else
+        {
+            m_StuckTimer = 0f;
+        }
+    }
+
+    private void StartReversing()
+    {
+        m_IsReversing = true;
+        m_ReverseTimer = m_ReverseTime;
+        m_StuckTimer = 0f;
     }
 }

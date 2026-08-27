@@ -1,5 +1,3 @@
-using System.Drawing;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerCar : Car
@@ -84,6 +82,7 @@ public class PlayerCar : Car
             if (m_Timer >= 5)
             {
                 Health.Damage(float.MaxValue);
+                m_Timer = 0;
             }
         }
         else

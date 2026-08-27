@@ -8,19 +8,38 @@ public class Mine : Ammunition
     private Sound m_ExplosionSound;
 
     [SerializeField]
-    private GameObject m_MineActive;
+    private GameObject m_GreenLight;
 
     [SerializeField]
-    private GameObject m_MineInactive;
+    private GameObject m_RedLight;
+
+    [SerializeField]
+    private GameObject m_NeutralLight;
 
     private float m_Radius = 10f;
     private float m_SafeTimer = 2f;
-
+    private float m_FlashTimer = 1f;
     private bool m_Active = false;
 
     private void Awake()
     {
         AmmunitionType = AmmunitionType.Mine;
+    }
+
+    private void Update()
+    {
+        if (m_Active)
+        {
+            m_FlashTimer -= Time.deltaTime;
+
+            if (m_FlashTimer < 0)
+            {
+                m_RedLight.SetActive(!m_RedLight.activeInHierarchy);
+                m_NeutralLight.SetActive(!m_NeutralLight.activeInHierarchy);
+
+                m_FlashTimer = 1f;
+            }
+        }
     }
 
     public void PlaceMine()
@@ -30,18 +49,19 @@ public class Mine : Ammunition
 
     private IEnumerator SetMineSafety()
     {
-        SetMineVisual(false);
+        m_GreenLight.SetActive(true);
+        m_RedLight.SetActive(false);
+        m_NeutralLight.SetActive(false);
+
         m_Active = false;
         yield return new WaitForSeconds(m_SafeTimer);
         m_Active = true;
-        SetMineVisual(true);
+
+        m_GreenLight.SetActive(false);
+        m_RedLight.SetActive(true);
     }
 
-    private void SetMineVisual(bool active)
-    {
-        m_MineActive.SetActive(active);
-        m_MineInactive.SetActive(!active);
-    }
+
 
     private void OnTriggerEnter(Collider other)
     {
