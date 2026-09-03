@@ -2764,7 +2764,7 @@ MonoBehaviour:
   m_Tracks:
   - m_TrackName: Downtown
     m_TrackDescription: Between skrapers
-    m_TrackImage: {fileID: 21300000, guid: 103efa4b734d09d4b84e561615226170, type: 3}
+    m_TrackImage: {fileID: 21300000, guid: 0352e2bd74b32454887e38ef0c680c5c, type: 3}
     m_SceneIndex: 2
   - m_TrackName: City Highway
     m_TrackDescription: Go zig-zag around pedestrians.
@@ -2772,19 +2772,19 @@ MonoBehaviour:
     m_SceneIndex: 3
   - m_TrackName: Frozen Harbour
     m_TrackDescription: It's cold
-    m_TrackImage: {fileID: 21300000, guid: 2c53ff77e7647f6448b6ec16c10eab84, type: 3}
+    m_TrackImage: {fileID: 21300000, guid: 72f5b0c24a8c3054c9a8d42bca1766c5, type: 3}
     m_SceneIndex: 4
   - m_TrackName: Blistad Raceway
     m_TrackDescription: Farmtrack
-    m_TrackImage: {fileID: 21300000, guid: 7e765e38b63c5434bb748f58ba797115, type: 3}
+    m_TrackImage: {fileID: 21300000, guid: 4d656ba6aeff1d64bba168e200fc0664, type: 3}
     m_SceneIndex: 5
   - m_TrackName: September
     m_TrackDescription: Leaves are falling
-    m_TrackImage: {fileID: 21300000, guid: d988457738d7dfb44843950f60c87436, type: 3}
+    m_TrackImage: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
     m_SceneIndex: 6
   - m_TrackName: North Rim
     m_TrackDescription: Desert
-    m_TrackImage: {fileID: 21300000, guid: 5f780c03b73bf084a90153f561a72df9, type: 3}
+    m_TrackImage: {fileID: 21300000, guid: 6383078738c5eac43bc57a9b40ff78cc, type: 3}
     m_SceneIndex: 7
   m_Pools:
   - {fileID: 1474805862565641891, guid: bff72a752f3f5af4683b4f441769d76d, type: 3}
