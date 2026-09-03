@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Transmission: {fileID: 6543657657795841510}
   m_Stats:
     m_Name: Saab
-    m_Image: {fileID: 21300000, guid: 615077948385b28448ae47be1b93ab5d, type: 3}
+    m_Image: {fileID: 21300000, guid: 298d8cf639f771140a847c6e4dd9f72c, type: 3}
     m_Description: Fine Car
     m_DriveTrain: 2
     m_TopSpeed: 35

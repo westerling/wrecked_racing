@@ -825,7 +825,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
   m_MenuMusic:
   - {fileID: 8300000, guid: e39f8486e3ab02547b9537e4213db88a, type: 3}
-  startSelection: {fileID: 700458128}
+  m_StartSelection: {fileID: 700458128}
+  m_Buttons:
+  - {fileID: 700458129}
+  - {fileID: 339968429}
+  - {fileID: 609088049}
   m_StartGameMenu: {fileID: 26530794}
   m_SettingsMenu: {fileID: 0}
 --- !u!1 &132622524
@@ -1462,7 +1466,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RaceSettingsMenu
   m_MenuMusic: []
-  startSelection: {fileID: 880376243}
+  m_StartSelection: {fileID: 880376243}
+  m_Buttons:
+  - {fileID: 880376246}
+  - {fileID: 1220766986}
+  - {fileID: 732243069}
+  - {fileID: 1494203732}
+  - {fileID: 2130796801}
   m_TrackImage: {fileID: 2136324856}
   m_TrackDescription: {fileID: 16604736}
   m_CarImage: {fileID: 1302625647}
@@ -1504,6 +1514,7 @@ GameObject:
   - component: {fileID: 339968428}
   - component: {fileID: 339968427}
   - component: {fileID: 339968426}
+  - component: {fileID: 339968429}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -1613,6 +1624,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339968424}
   m_CullTransparentMesh: 1
+--- !u!114 &339968429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339968424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b15cc70df3ed44daa020f8472643ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomButton
+  m_ButtonSelectedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 117160589}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &366801797
 GameObject:
   m_ObjectHideFlags: 0
@@ -2191,6 +2229,7 @@ GameObject:
   - component: {fileID: 609088048}
   - component: {fileID: 609088047}
   - component: {fileID: 609088046}
+  - component: {fileID: 609088049}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -2300,6 +2339,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609088044}
   m_CullTransparentMesh: 1
+--- !u!114 &609088049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609088044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b15cc70df3ed44daa020f8472643ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomButton
+  m_ButtonSelectedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 117160589}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &640427135
 GameObject:
   m_ObjectHideFlags: 0

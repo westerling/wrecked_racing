@@ -35,6 +35,7 @@ public class RaceManager : MonoBehaviour
 
     private Checkpoint m_NextCheckpoint;
     private Checkpoint m_LastCheckpoint;
+    private Checkpoint m_StartCheckpoint;
     private RaceSettings m_RaceSettings;
     private List<PlayerCar> m_AllCars = new List<PlayerCar>();
     private List<PlayerCar> m_ActiveCars = new List<PlayerCar>();
@@ -321,6 +322,7 @@ public class RaceManager : MonoBehaviour
             return;
         }
 
+        Debug.LogError("No Settings Found");
         Application.Quit();
     }
 
@@ -406,19 +408,20 @@ public class RaceManager : MonoBehaviour
     private void ResetCheckpoints()
     {
         RemoveCheckpointListener();
-        FindPreviousStartCheckpoint();
+        FindStartCheckpoint();
         FindNextCheckpoint();
         AddCheckpointListener();
     }
 
     private void ResetCarTransforms()
     {
-        if (m_LastCheckpoint == null)
+        if (m_StartCheckpoint == null)
         {
+            Debug.LogError("No start checkpoint");
             return;
         }
 
-        if (m_LastCheckpoint.TryGetComponent(out StartCheckpoint startCheckpoint))
+        if (m_StartCheckpoint.TryGetComponent(out StartCheckpoint startCheckpoint))
         {
             for (var i = 0; i < Cars.Count; i++)
             {
@@ -501,6 +504,17 @@ public class RaceManager : MonoBehaviour
     {
         RemoveCheckpointListener();
         m_LastCheckpoint = m_NextCheckpoint;
+        
+        if (checkpointPassed.gameObject.TryGetComponent(out StartCheckpoint startCheckpoint))
+        {
+            Debug.Log("new start checkpoint");
+            m_StartCheckpoint = startCheckpoint;
+        }
+        else
+        {
+            Debug.Log("not startcheckpoin");
+        }
+        
         FindNextCheckpoint();
         AddCheckpointListener();
     }
@@ -511,7 +525,14 @@ public class RaceManager : MonoBehaviour
 
         if (m_LastCheckpoint == null)
         {
-            m_LastCheckpoint = checkpoints[0];
+            if (m_StartCheckpoint == null)
+            {
+                Debug.LogError("No Next Checkpoint");
+            }
+            else
+            {
+                m_LastCheckpoint = m_StartCheckpoint;
+            }
         }
 
         var index = Array.IndexOf(checkpoints, m_LastCheckpoint);
@@ -529,21 +550,27 @@ public class RaceManager : MonoBehaviour
         m_NextCheckpoint.gameObject.SetActive(true);
     }
 
-    private void FindPreviousStartCheckpoint()
+    private void FindStartCheckpoint()
     {
+        if (m_StartCheckpoint != null)
+        {
+            return;
+        }
+
         var checkpoints = TrackInformationManager.Current.Checkpoints;
 
         for (var i = checkpoints.Length - 1; i >= 0; i--)
         {
             if (checkpoints[i].TryGetComponent(out StartCheckpoint _))
             {
-                m_LastCheckpoint = checkpoints[i];
+                m_StartCheckpoint = checkpoints[i];
                 return;
             }
         }
 
-        Application.Quit();
+        Debug.LogError("No previous start checkpoint found");
     }
+
     private void AddCheckpointListener()
     {
         if (m_NextCheckpoint == null)

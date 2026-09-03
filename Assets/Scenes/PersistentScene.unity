@@ -2778,6 +2778,14 @@ MonoBehaviour:
     m_TrackDescription: Farmtrack
     m_TrackImage: {fileID: 21300000, guid: 7e765e38b63c5434bb748f58ba797115, type: 3}
     m_SceneIndex: 5
+  - m_TrackName: September
+    m_TrackDescription: Leaves are falling
+    m_TrackImage: {fileID: 21300000, guid: d988457738d7dfb44843950f60c87436, type: 3}
+    m_SceneIndex: 6
+  - m_TrackName: North Rim
+    m_TrackDescription: Desert
+    m_TrackImage: {fileID: 21300000, guid: 5f780c03b73bf084a90153f561a72df9, type: 3}
+    m_SceneIndex: 7
   m_Pools:
   - {fileID: 1474805862565641891, guid: bff72a752f3f5af4683b4f441769d76d, type: 3}
   - {fileID: 3872731776511965506, guid: cda5d39130d7bec4eacf06c3cad6f1ce, type: 3}

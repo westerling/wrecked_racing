@@ -29,6 +29,10 @@ public class WheelSurfaceData : ScriptableObject
     [SerializeField]
     private float m_SideForceStrength = 0f;
 
+    [Range(0f, 10f)]
+    [SerializeField]
+    private float m_StickyTimer = 0f;
+
 
     [Header("Audio")]
     [SerializeField]
@@ -96,5 +100,10 @@ public class WheelSurfaceData : ScriptableObject
     public float SideForceFrequency
     {
         get => m_SideForceFrequency;
+    }
+
+    public float StickyTimer
+    {
+        get => m_StickyTimer;
     }
 }

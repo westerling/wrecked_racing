@@ -23,5 +23,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tracks/04_Ring_Blistad/04_Ring_Blistad.unity
     guid: 9681da848f0016d49aa510e5513286ce
+  - enabled: 1
+    path: Assets/Scenes/Tracks/05_September/05_September.unity
+    guid: 83729b3e78ca9754d8d688648988da92
+  - enabled: 1
+    path: Assets/Scenes/Tracks/06_North_Rim/06_North_Rim.unity
+    guid: 83cc4e89f267161499b95b0ce08b3d39
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
