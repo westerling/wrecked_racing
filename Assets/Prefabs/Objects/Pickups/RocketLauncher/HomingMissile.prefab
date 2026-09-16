@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Radius: 5
   m_Power: 100000
   m_ExplosionSound: {fileID: 11400000, guid: 6721c201e4db76342bbd413e06196073, type: 2}
+  m_TrailSound: {fileID: 11400000, guid: a30a3d9513107654da51d2929129be0b, type: 2}
   m_RotateSpeed: 95
   m_MaxDistancePredict: 100
   m_MinDistancePredict: 5

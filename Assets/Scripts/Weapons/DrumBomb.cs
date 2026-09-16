@@ -54,7 +54,7 @@ public class DrumBomb : Ammunition
 
             if (hit.TryGetComponent(out Health health))
             {
-                health.Damage(48);
+                health.Damage(18);
             }
         }
 

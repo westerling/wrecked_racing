@@ -9,9 +9,11 @@ public class DummyMissile : Missile
         AmmunitionType = AmmunitionType.DummyMissile;
     }
 
-    public void ActivateMissile(Transform origin, float speed)
+    public void ActivateMissile(Transform origin, float startSpeed, float topSpeed)
     {
-        Speed = speed;
+        TopSpeed = topSpeed;
+        AccelerationTimer = 0f;
+        Speed = startSpeed + 5f;
 
         transform.SetPositionAndRotation(origin.position, origin.rotation);
         transform.parent = null;
@@ -19,12 +21,21 @@ public class DummyMissile : Missile
         RigidBody.linearVelocity = Vector3.zero;
         RigidBody.angularVelocity = Vector3.zero;
 
+        SoundFxManager.Current.PlaySoundClip(TrailSound, transform, () => !Exploded);
+
         AddPooledObject();
         StartCoroutine(ActivateAfterDelay());
     }
 
     protected override void UpdatePosition()
     {
+        AccelerationTimer += Time.deltaTime;
+
+        var accelerationPercentage =
+        Mathf.Clamp01(AccelerationTimer / ACCELERATION_TIME);
+
+        Speed = Mathf.Lerp(Speed, TopSpeed, accelerationPercentage);
+
         RigidBody.linearVelocity = m_InitialDirection * Speed;
 
         if (Physics.Raycast(transform.position, Vector3.down, out var hit, 10f, LayerMasks.ExplosionLayerMask))

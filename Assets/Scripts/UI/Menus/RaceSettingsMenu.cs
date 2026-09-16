@@ -9,20 +9,21 @@ public class RaceSettingsMenu : ButtonsMenu
     private Image m_TrackImage;
 
     [SerializeField]
-    private TMP_Text m_TrackDescription; 
+    private TMP_Text m_TrackDescription;
+
+    [SerializeField]
+    private TMP_Text m_CarDescription;
 
     [SerializeField]
     private Image m_CarImage;
 
     private int m_TrackIndex = 0;
     private int m_CarIndex = 0;
-    private int m_RaceModeIndex = 0;
-    private int m_PowerupsIndex = 0;
     private bool m_IsAirstrikeOn = true;
     private bool m_IsPowerupsOn = true;
 
     private TrackInfo m_SelectedTrackInfo;
-    private GameObject m_SelectedCar;
+    private Car m_SelectedCar;
 
     protected override void OnEnable()
     {
@@ -84,7 +85,7 @@ public class RaceSettingsMenu : ButtonsMenu
     {
         var raceSettings = new RaceSettings
         {
-            Car = m_SelectedCar,
+            Car = m_SelectedCar.gameObject,
             SceneIndex = m_SelectedTrackInfo.SceneIndex,
         };
 
@@ -170,18 +171,21 @@ public class RaceSettingsMenu : ButtonsMenu
     private void GetInformation()
     {
         m_SelectedTrackInfo = GameManager.Current.Tracks[m_TrackIndex];
-        m_SelectedCar = GameManager.Current.Cars[m_CarIndex];
+
+        var carGo = GameManager.Current.Cars[m_CarIndex];
+
+        if (carGo.TryGetComponent(out Car car))
+        {
+            m_SelectedCar = car;
+        }
     }
 
     private void UpdateUI()
     {
         m_TrackImage.sprite = m_SelectedTrackInfo.TrackImage;
-        CreateDescription();
+        m_CarImage.sprite = m_SelectedCar.Stats.Image;
 
-        if (m_SelectedCar.TryGetComponent(out Car car))
-        {
-            m_CarImage.sprite = car.Stats.Image;
-        }
+        CreateDescription();
     }
 
     private void CreateDescription()
@@ -193,5 +197,7 @@ public class RaceSettingsMenu : ButtonsMenu
             m_SelectedTrackInfo.TrackDescription + "\n"
             + "Airstrike: " + airstrikeText + "\n"
             + "Powerups: " + powerupText;
+
+        m_CarDescription.text = m_SelectedCar.Stats.Name + "\n" + m_SelectedCar.Stats.Description;
     }
 }

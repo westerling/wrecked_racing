@@ -11,19 +11,21 @@ public class FlameThrower : Weapon
 
     private bool m_FlamesActive = false;
 
+    private Transform m_RayOrigin;
+
     private Flames m_Flames;
 
     protected override void Fire()
     {
         AddImpact();
-        SoundFxManager.Current.PlaySoundClip(m_SoundEffect, transform);
-
+        
         if (!m_FlamesActive)
         {
             GetGameObjectFromPool();
             m_Flames.EmitParticles(true);
             AddConditionalModifiers();
             m_FlamesActive = true;
+            SoundFxManager.Current.PlaySoundClip(m_SoundEffect, transform, () => !m_FlamesActive);
         }
     }
 
@@ -39,13 +41,21 @@ public class FlameThrower : Weapon
         }
     }
 
+    protected override void GetBulletOrigin()
+    {
+        if (ParentCar is PlayerCar playerCar)
+        {
+            m_RayOrigin = playerCar.RayOriginRear;
+        }
+    }
+
     private void AddImpact()
     {
-        if (Physics.Raycast(m_FlameOrigin.position, m_FlameOrigin.forward, out var hit, 5f, LayerMasks.ShootableLayerMask))
+        if (Physics.Raycast(m_RayOrigin.position, m_RayOrigin.forward, out var hit, 5f, LayerMasks.ShootableLayerMask))
         {
             if (hit.rigidbody != null && hit.transform != ParentCar.transform)
             {
-                ApplyImpactForce(hit.rigidbody, m_FlameOrigin.forward, 10000f);
+                ApplyImpactForce(hit.rigidbody, m_RayOrigin.forward, 10000f);
 
                 if (hit.collider.TryGetComponent(out Health health))
                 {
@@ -103,13 +113,13 @@ public class FlameThrower : Weapon
         ParentCar.StatusManager.AddConditionalModifier(
             Stat.Speed,
             ModifierType.Multiplier,
-            () => 1.1f,
+            () => 1.3f,
             () => IsFiring == true);
 
         ParentCar.StatusManager.AddConditionalModifier(
            Stat.Acceleration,
            ModifierType.Multiplier,
-           () => 1.1f,
+           () => 1.3f,
            () => IsFiring == true);
     }
 }

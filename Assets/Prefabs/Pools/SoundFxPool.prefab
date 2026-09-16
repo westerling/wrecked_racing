@@ -61,3 +61,6 @@ MonoBehaviour:
   - m_ObjectToPool: {fileID: 8300000, guid: 985e9cb7091ed0e4faf9659b866928e5, type: 3}
     m_SoundFxType: 5
     m_Amount: 20
+  - m_ObjectToPool: {fileID: 8300000, guid: a205881c3d3abd64ca90bf95865e06a3, type: 3}
+    m_SoundFxType: 1
+    m_Amount: 20

@@ -179,3 +179,11 @@ public enum ModifierType
     Addative,
     Multiplier
 }
+
+public enum ElevatorState
+{
+    Bottom,
+    MovingUp,
+    Top,
+    MovingDown
+}

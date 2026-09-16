@@ -507,12 +507,7 @@ public class RaceManager : MonoBehaviour
         
         if (checkpointPassed.gameObject.TryGetComponent(out StartCheckpoint startCheckpoint))
         {
-            Debug.Log("new start checkpoint");
             m_StartCheckpoint = startCheckpoint;
-        }
-        else
-        {
-            Debug.Log("not startcheckpoin");
         }
         
         FindNextCheckpoint();

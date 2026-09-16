@@ -2767,15 +2767,15 @@ MonoBehaviour:
     m_TrackImage: {fileID: 21300000, guid: 0352e2bd74b32454887e38ef0c680c5c, type: 3}
     m_SceneIndex: 2
   - m_TrackName: City Highway
-    m_TrackDescription: Go zig-zag around pedestrians.
-    m_TrackImage: {fileID: 21300000, guid: 3258288690d7220468cdc67deaf3155e, type: 3}
+    m_TrackDescription: Highway revisited
+    m_TrackImage: {fileID: 21300000, guid: 561a0953731bbf84cb0b864f3aeed60a, type: 3}
     m_SceneIndex: 3
   - m_TrackName: Frozen Harbour
     m_TrackDescription: It's cold
     m_TrackImage: {fileID: 21300000, guid: 72f5b0c24a8c3054c9a8d42bca1766c5, type: 3}
     m_SceneIndex: 4
   - m_TrackName: Blistad Raceway
-    m_TrackDescription: Farmtrack
+    m_TrackDescription: Raceway
     m_TrackImage: {fileID: 21300000, guid: 4d656ba6aeff1d64bba168e200fc0664, type: 3}
     m_SceneIndex: 5
   - m_TrackName: September

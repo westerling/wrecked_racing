@@ -50,9 +50,9 @@ MonoBehaviour:
   - m_ObjectToPool: {fileID: 2384191027664474869, guid: a6890e863756df44b951eff024d0f9f4, type: 3}
     m_Amount: 10
   - m_ObjectToPool: {fileID: 92422745448511163, guid: 08b50ad8fe958c348a23e9beb3773d0d, type: 3}
-    m_Amount: 40
+    m_Amount: 80
   - m_ObjectToPool: {fileID: 92422745448511163, guid: c135bdd028956b643ade662dbfc741cf, type: 3}
-    m_Amount: 40
+    m_Amount: 150
   - m_ObjectToPool: {fileID: 92422745448511163, guid: d48d7366e93966b4f8111770f54ae13f, type: 3}
     m_Amount: 40
   - m_ObjectToPool: {fileID: 92422745448511163, guid: d48d7366e93966b4f8111770f54ae13f, type: 3}

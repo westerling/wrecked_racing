@@ -7,9 +7,9 @@ public class NpcTeleport : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out NpcCar npcCar))
+        if (other.TryGetComponent(out AICarController _))
         {
-            npcCar.transform.position = m_TeleportTransform.position;
+            other.gameObject.transform.position = m_TeleportTransform.position;
 
             var rigidBody = other.attachedRigidbody;
             if (rigidBody != null)
@@ -18,7 +18,7 @@ public class NpcTeleport : MonoBehaviour
                 rigidBody.angularVelocity = Vector3.zero;
             }
 
-            npcCar.transform.SetPositionAndRotation(
+            other.gameObject.transform.SetPositionAndRotation(
                 m_TeleportTransform.position,
                 m_TeleportTransform.rotation
             );

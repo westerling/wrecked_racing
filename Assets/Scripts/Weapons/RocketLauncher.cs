@@ -37,7 +37,7 @@ public class RocketLauncher : TargetWeapon
 
         if (rocket.TryGetComponent(out HomingMissile homingMissile))
         {
-            homingMissile.ActivateMissile(m_BulletOrigin, target, ParentCar.Stats.TopSpeed);
+            homingMissile.ActivateMissile(m_BulletOrigin, target, ParentCar.CurrentSpeed, ParentCar.Stats.TopSpeed);
         }
     }
 
@@ -48,7 +48,7 @@ public class RocketLauncher : TargetWeapon
 
         if (rocket.TryGetComponent(out DummyMissile dummyMissile))
         {
-            dummyMissile.ActivateMissile(m_BulletOrigin, ParentCar.Stats.TopSpeed);
+            dummyMissile.ActivateMissile(m_BulletOrigin, ParentCar.CurrentSpeed, ParentCar.Stats.TopSpeed);
         }
     }
 

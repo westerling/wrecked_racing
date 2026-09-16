@@ -28,7 +28,7 @@ public class Rifle : TargetWeapon
 
                 if (hit.collider.TryGetComponent(out Health health))
                 {
-                    health.Damage(3);
+                    health.Damage(8);
                 }
             }
         }

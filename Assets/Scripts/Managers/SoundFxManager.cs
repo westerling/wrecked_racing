@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -13,7 +14,12 @@ public class SoundFxManager : MonoBehaviour
         Current = this;
     }
 
-    public void PlaySoundClip(Sound sound, Transform origin)
+    private void Update()
+    {
+        
+    }
+
+    public void PlaySoundClip(Sound sound, Transform origin, Func<bool> stopCondition = null)
     {
         var pooledObject = AudioSourcePool.Current.GetPooledObject();
         if (pooledObject == null)
@@ -31,8 +37,30 @@ public class SoundFxManager : MonoBehaviour
             audioSource.clip = sound.AudioClip;
             audioSource.spatialBlend = 1;
             audioSource.Play();
-            StartCoroutine(ReturnToPoolAfterDelay(pooledObject, audioSource.clip.length));
+
+            if (sound.Loop && stopCondition != null)
+            {
+                StartCoroutine(ReturnAfterConditionMet(
+                pooledObject,
+                stopCondition));
+            }
+            else
+            {
+                StartCoroutine(ReturnToPoolAfterDelay(pooledObject, audioSource.clip.length));
+            }
         }
+    }
+
+    private IEnumerator ReturnAfterConditionMet(
+    GameObject pooledObject,
+    Func<bool> condition)
+    {
+        yield return new WaitUntil(condition);
+
+        var audioSource = pooledObject.GetComponent<AudioSource>();
+        audioSource.Stop();
+
+        pooledObject.SetActive(false);
     }
 
     private IEnumerator ReturnToPoolAfterDelay(GameObject pooledObject, float delay)

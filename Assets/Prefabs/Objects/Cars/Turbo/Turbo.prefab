@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2251480169129629773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2777366536053301410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 457747474172415734}
+  m_Layer: 7
+  m_Name: RayTransformFront
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &457747474172415734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2777366536053301410}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2251480169129629773}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2943386239108807767
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,6 +159,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2251480169129629773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5871243773985254393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2860178988374548504}
+  m_Layer: 7
+  m_Name: RayTransformBack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2860178988374548504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5871243773985254393}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 1, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2251480169129629773}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &8323597071206408131
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +243,8 @@ Transform:
   - {fileID: 7643170457057670463}
   - {fileID: 3849943587421261754}
   - {fileID: 2296603130319459504}
+  - {fileID: 457747474172415734}
+  - {fileID: 2860178988374548504}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &5886851840719736776
@@ -229,7 +293,7 @@ MonoBehaviour:
   m_Transmission: {fileID: 6543657657795841510}
   m_Stats:
     m_Name: Saab
-    m_Image: {fileID: 21300000, guid: 298d8cf639f771140a847c6e4dd9f72c, type: 3}
+    m_Image: {fileID: 21300000, guid: 3d3d8673892345d4c9e87e6e9b55deba, type: 3}
     m_Description: Fine Car
     m_DriveTrain: 2
     m_TopSpeed: 35
@@ -421,6 +485,8 @@ MonoBehaviour:
   - {fileID: 1081376353992660066}
   - {fileID: 3792965808965970516}
   - {fileID: 5271503673987906940}
+  m_RayOriginFront: {fileID: 457747474172415734}
+  m_RayOriginRear: {fileID: 2860178988374548504}
 --- !u!114 &9200829730072486220
 MonoBehaviour:
   m_ObjectHideFlags: 0

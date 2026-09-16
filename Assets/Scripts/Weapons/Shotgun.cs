@@ -21,18 +21,23 @@ public class Shotgun : Weapon
 
         foreach (var bulletOrigin in m_BulletOrigins)
         {
-            if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out var hit, 25f, LayerMasks.ShootableLayerMask))
+            for (int i = 0; i < 7; i++)
             {
-                AddHitEffect(hit, bulletOrigin.position);
+                var direction = GetSpreadDirection(bulletOrigin.forward, 15f);
 
-                if (hit.rigidbody != null && hit.transform != ParentCar.transform)
+                if (Physics.Raycast(bulletOrigin.position, direction, out var hit, 25f, LayerMasks.ShootableLayerMask))
                 {
-                    ApplyImpactForce(hit.rigidbody, bulletOrigin.forward, 10000f, 1000f);
-                }
+                    AddHitEffect(hit, bulletOrigin.position);
 
-                if (hit.collider.gameObject.TryGetComponent(out Health health))
-                {
-                    health.Damage(16f);
+                    if (hit.rigidbody != null && hit.rigidbody.transform.root != ParentCar.transform)
+                    {
+                        ApplyImpactForce(hit.rigidbody, bulletOrigin.forward, 1000f, 300f);
+                    }
+
+                    if (hit.collider.gameObject.TryGetComponent(out Health health))
+                    {
+                        health.Damage(2f);
+                    }
                 }
             }
         }
@@ -48,6 +53,14 @@ public class Shotgun : Weapon
             hitEffect.transform.SetPositionAndRotation(hit.point, Quaternion.LookRotation(directionToShooter));
             hitEffect.SetActive(true);
         }
+    }
+
+    private Vector3 GetSpreadDirection(Vector3 forward, float spreadAngle)
+    {
+        return Quaternion.Euler(
+            Random.Range(-spreadAngle, spreadAngle),
+            Random.Range(-spreadAngle, spreadAngle),
+            0f) * forward;
     }
 
     private void ApplyImpactForce(Rigidbody rigidbody, Vector3 forwardDirection, float forceAmount, float sideForceAmount)

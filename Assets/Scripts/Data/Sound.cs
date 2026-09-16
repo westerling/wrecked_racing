@@ -22,6 +22,9 @@ public class Sound : ScriptableObject
     [Range(0f, 0.5f)]
     private float m_PitchRandomness = 0f;
 
+    [SerializeField]
+    private bool m_Loop;
+
     public AudioClip AudioClip
     {
         get => m_AudioClip;
@@ -45,5 +48,10 @@ public class Sound : ScriptableObject
     public float VolumeRandomness
     {
         get => m_VolumeRandomness;
+    }
+
+    public bool Loop
+    {
+        get => m_Loop;
     }
 }

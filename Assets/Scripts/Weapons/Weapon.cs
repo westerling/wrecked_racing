@@ -51,6 +51,7 @@ public abstract class Weapon : MonoBehaviour
     public virtual void PickupWeapon(Car car)
     {
         ParentCar = car;
+        GetBulletOrigin();
     }
 
     public virtual void ReleaseWeapon()
@@ -68,6 +69,10 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void Update()
     {
         CheckFiring();
+    }
+
+    protected virtual void GetBulletOrigin()
+    {
     }
 
     protected virtual void ReturnWeapon()

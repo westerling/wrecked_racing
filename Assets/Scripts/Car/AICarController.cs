@@ -16,20 +16,22 @@ public class AICarController : MonoBehaviour
     private float m_TopSpeed = 15f;
 
     [SerializeField]
-    private AnimationCurve m_MotorTorque;
+    [Range(200f, 2000f)]
+    private float m_MotorTorque;
 
     [SerializeField]
-    private AnimationCurve m_BrakeStrength;
+    [Range(1000f, 10000f)]
+    private float m_BrakeStrength;
 
     [SerializeField]
-    private AnimationCurve m_TurningCurve;
+    [Range(10f, 50f)]
+    private float m_TurningCurve;
 
     [SerializeField]
     private InputManager m_InputManager;
 
     private int m_NumberOfWheels;
 
-    private float m_CurrentSpeedRatio = 0f;
     private float m_CurrentSpeed = 0f;
     private float m_brakeForce;
     private float m_CurrentAccelerationInput = 0f;
@@ -87,7 +89,7 @@ public class AICarController : MonoBehaviour
         if (m_CurrentAccelerationInput > 0)
         {
             torque = m_CurrentSpeed < m_TopSpeed
-                ? m_CurrentAccelerationInput * m_MotorTorque.Evaluate(m_CurrentSpeedRatio)
+                ? m_CurrentAccelerationInput * m_MotorTorque
                 : 0;
         }
 
@@ -96,7 +98,7 @@ public class AICarController : MonoBehaviour
             if (m_HeadingDirection != CarDirection.Forward)
             {
                 torque = -(m_CurrentSpeed > -(m_TopSpeed / 8) ?
-                (m_CurrentBrakeInput * m_MotorTorque.Evaluate(m_CurrentSpeedRatio))
+                (m_CurrentBrakeInput * m_MotorTorque)
                 : 0);
             }
         }
@@ -118,7 +120,7 @@ public class AICarController : MonoBehaviour
         else
         {
             m_brakeForce = m_HeadingDirection == CarDirection.Forward
-                        ? m_CurrentBrakeInput * m_BrakeStrength.Evaluate(m_CurrentSpeedRatio) / m_NumberOfWheels
+                        ? m_CurrentBrakeInput * m_BrakeStrength / m_NumberOfWheels
                         : 0f;
         }
 
@@ -137,7 +139,7 @@ public class AICarController : MonoBehaviour
     {
         foreach (var wheel in m_SteeringWheels)
         {
-            var steerAngle = m_CurrentSteerInput * m_TurningCurve.Evaluate(m_CurrentSpeedRatio);
+            var steerAngle = m_CurrentSteerInput * m_TurningCurve;
             wheel.SteerAngle = steerAngle;
         }
     }
@@ -161,7 +163,6 @@ public class AICarController : MonoBehaviour
     private void CalculateCarVelocity()
     {
         m_CurrentSpeed = transform.InverseTransformDirection(Rigidbody.linearVelocity).z;
-        m_CurrentSpeedRatio = m_CurrentSpeed / m_TopSpeed;
     }
 
     private void OnBrakePerformed(float obj)

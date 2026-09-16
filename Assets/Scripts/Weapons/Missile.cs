@@ -19,15 +19,23 @@ public abstract class Missile : Ammunition
     [SerializeField]
     private Sound m_ExplosionSound;
 
+    [SerializeField]
+    private Sound m_TrailSound;
+
     private GameObject m_RocketTrail;
 
+    private bool m_Exploded = false;
     private bool m_Active;
     private float m_Speed;
+    private float m_TopSpeed;
+    private float m_AccelerationTimer;
+    protected const float ACCELERATION_TIME = 3f;
 
-    public float Speed
+
+    public float TopSpeed
     {
-        get => m_Speed;
-        set => m_Speed = value;
+        get => m_TopSpeed;
+        set => m_TopSpeed = value;
     }
     
     protected bool Active
@@ -39,6 +47,29 @@ public abstract class Missile : Ammunition
     protected Rigidbody RigidBody
     {
         get => m_Rigidbody;
+    }
+
+    protected float Speed
+    {
+        get => m_Speed;
+        set => m_Speed = value;
+    }
+
+    protected float AccelerationTimer
+    {
+        get => m_AccelerationTimer;
+        set => m_AccelerationTimer = value;
+    }
+
+    protected Sound TrailSound
+    {
+        get => m_TrailSound;
+    }
+
+    protected bool Exploded
+    {
+        get => m_Exploded;
+        set => m_Exploded = value;
     }
 
     private void FixedUpdate()
@@ -67,11 +98,11 @@ public abstract class Missile : Ammunition
 
     protected IEnumerator ActivateAfterDelay()
     {
-        Speed = Speed + 3;
+        TopSpeed = TopSpeed + 3;
         Active = false;
         yield return new WaitForSeconds(0.5f);
         Active = true;
-        Speed = Speed + 0.2f;
+        TopSpeed = TopSpeed + 0.2f;
     }
 
     protected virtual void Explode()
@@ -96,7 +127,7 @@ public abstract class Missile : Ammunition
 
             if (hit.TryGetComponent(out Health health))
             {
-                health.Damage(37);
+                health.Damage(29);
             }
         }
 
@@ -119,6 +150,7 @@ public abstract class Missile : Ammunition
             return;
         }
 
+        Exploded = true;
         Explode();
     }
 }

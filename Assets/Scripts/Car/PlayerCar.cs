@@ -14,6 +14,12 @@ public class PlayerCar : Car
     [SerializeField]
     private MeshRenderer[] m_ColorRenderers;
 
+    [SerializeField]
+    private Transform m_RayOriginFront;
+
+    [SerializeField]
+    private Transform m_RayOriginRear;
+
     private Player m_Player;
 
     private bool m_RaceActive = false;
@@ -38,6 +44,16 @@ public class PlayerCar : Car
     {
         get => m_Player;
         set => m_Player = value;
+    }
+
+    public Transform RayOriginRear
+    {
+        get => m_RayOriginRear;
+    }
+
+    public Transform RayOriginFront
+    {
+        get => m_RayOriginFront;
     }
 
     protected override void Awake()

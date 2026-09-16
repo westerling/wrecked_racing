@@ -105,7 +105,7 @@ public class Mine : Ammunition
 
             if (hit.TryGetComponent(out Health health))
             {
-                health.Damage(30f);
+                health.Damage(21f);
             }
         }
 

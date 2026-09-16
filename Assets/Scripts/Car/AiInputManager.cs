@@ -18,7 +18,6 @@ public class AIInputManager : InputManager
     private float m_StuckSpeedThreshold = 1f;
     private float m_StuckTime = 1f;
     private float m_ReverseTime = 3f;
-    private float m_ReverseThrottle = 1f;
     private float m_StuckTimer;
     private float m_ReverseTimer;
 

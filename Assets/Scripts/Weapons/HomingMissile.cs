@@ -39,9 +39,19 @@ public class HomingMissile : Missile
             return;
         }
 
+        AccelerationTimer += Time.deltaTime;
+
+        var accelerationPercentage =
+        Mathf.Clamp01(AccelerationTimer / ACCELERATION_TIME);
+
+        Speed = Mathf.Lerp(Speed, TopSpeed, accelerationPercentage);
+
         RigidBody.linearVelocity = transform.forward * Speed;
 
-        var leadTimePercentage = Mathf.InverseLerp(m_MinDistancePredict, m_MaxDistancePredict, Vector3.Distance(transform.position, m_Target.position));
+        var leadTimePercentage = Mathf.InverseLerp(
+        m_MinDistancePredict,
+        m_MaxDistancePredict,
+        Vector3.Distance(transform.position, m_Target.position));
 
         PredictMovement(leadTimePercentage);
         AddDeviation(leadTimePercentage);
@@ -56,9 +66,11 @@ public class HomingMissile : Missile
         }
     }
 
-    public void ActivateMissile(Transform origin, Transform target, float speed)
+    public void ActivateMissile(Transform origin, Transform target, float startSpeed, float topSpeed)
     {
-        Speed = speed;
+        TopSpeed = topSpeed;
+        AccelerationTimer = 0f;
+        Speed = startSpeed + 5f;
 
         transform.SetPositionAndRotation(origin.position, origin.rotation);
         transform.parent = null;
@@ -68,6 +80,8 @@ public class HomingMissile : Missile
 
         m_Target = target;
         m_TargetRigidBody = target.GetComponent<Rigidbody>();
+
+        SoundFxManager.Current.PlaySoundClip(TrailSound, transform, () => !Exploded);
 
         AddPooledObject();
         StartCoroutine(ActivateAfterDelay());
