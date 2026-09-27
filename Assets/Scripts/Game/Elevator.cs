@@ -18,7 +18,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] 
     private float m_Speed = 5f;
 
-    private float m_PositionTolerance = 1.2f;
+    //private float m_PositionTolerance = 1.2f;
     private List<Car> m_CarsOnElevator = new List<Car>();
 
     private ElevatorState m_State;

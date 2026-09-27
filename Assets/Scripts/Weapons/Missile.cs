@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public abstract class Missile : Ammunition
 {
+    public event Action<Missile> MissileExploded;
+
     [SerializeField]
     private Rigidbody m_Rigidbody;
 
@@ -140,6 +143,8 @@ public abstract class Missile : Ammunition
         }
 
         SoundFxManager.Current.PlaySoundClip(m_ExplosionSound, transform);
+        
+        MissileExploded?.Invoke(this);
         Deactivate();
     }
 

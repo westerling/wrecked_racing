@@ -87,6 +87,7 @@ public class RaceSettingsMenu : ButtonsMenu
         {
             Car = m_SelectedCar.gameObject,
             SceneIndex = m_SelectedTrackInfo.SceneIndex,
+            AirstrikeOn = m_IsAirstrikeOn
         };
 
         GameManager.Current.LoadTrack(raceSettings);

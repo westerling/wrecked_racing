@@ -81,6 +81,7 @@ public class HomingMissile : Missile
         m_Target = target;
         m_TargetRigidBody = target.GetComponent<Rigidbody>();
 
+        UIManager.Current.AddIcon(IconType.Missile, target);
         SoundFxManager.Current.PlaySoundClip(TrailSound, transform, () => !Exploded);
 
         AddPooledObject();
@@ -108,5 +109,10 @@ public class HomingMissile : Missile
         var rotation = Quaternion.LookRotation(heading);
         
         RigidBody.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotation, m_RotateSpeed * Time.deltaTime));
+    }
+
+    protected override void Explode()
+    {
+        base.Explode();
     }
 }

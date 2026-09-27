@@ -95,7 +95,7 @@ public class PlayerCar : Car
         {
             m_Timer += Time.deltaTime;
 
-            if (m_Timer >= 5)
+            if (m_Timer >= 5000)
             {
                 Health.Damage(float.MaxValue);
                 m_Timer = 0;

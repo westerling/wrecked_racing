@@ -21,6 +21,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject m_PointScreen;
 
+    [SerializeField]
+    private GameObject m_PauseScreen;
+
+    [Header("Airstrike")]
+    [SerializeField]
+    private GameObject m_AirstrikeScreen;
+
     public void SetScreenActive(Screens screen, bool active)
     {
         switch (screen)
@@ -34,7 +41,15 @@ public class UIManager : MonoBehaviour
             case Screens.PointScreen:
                 m_PointScreen.SetActive(active);
                 break;
+            case Screens.AirstrikeScreen:
+                m_AirstrikeScreen.SetActive(active);
+                break;
         }
+    }
+
+    public void AddIcon(IconType iconType, Transform carTransform)
+    {
+
     }
 
     public void SetupPointScreen(List<PlayerCar> cars, int startPoints)
@@ -42,6 +57,14 @@ public class UIManager : MonoBehaviour
         if (m_PointScreen.TryGetComponent(out PointScreen pointScreen))
         {
             pointScreen.SetupCars(cars, startPoints);
+        }
+    }
+
+    public void SetupAirstrikeScreen(List<PlayerCar> cars)
+    {
+        if (m_AirstrikeScreen.TryGetComponent(out AirstrikeScreen airstrikeScreen))
+        {
+            airstrikeScreen.SetupAirstrike(cars);
         }
     }
 

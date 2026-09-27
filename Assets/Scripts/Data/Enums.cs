@@ -110,7 +110,8 @@ public enum Screens
     SplashScreen = 0,
     LoadingScreen = 1,
     PauseScreen = 2,
-    PointScreen = 3
+    PointScreen = 3,
+    AirstrikeScreen = 4
 }
 
 public enum PlayerColor
@@ -186,4 +187,11 @@ public enum ElevatorState
     MovingUp,
     Top,
     MovingDown
+}
+
+public enum IconType
+{
+    Missile,
+    Warning,
+    Winning
 }

@@ -149,6 +149,7 @@ public class RaceManager : MonoBehaviour
     public void Quit()
     {
         UIManager.Current.SetScreenActive(Screens.PointScreen, false);
+        UIManager.Current.SetScreenActive(Screens.AirstrikeScreen, false);
         GameManager.Current.UnloadTrack();
     }
 
@@ -179,7 +180,8 @@ public class RaceManager : MonoBehaviour
             return;
         }
 
-        if (m_AllCars.Count() == 1)
+        if (m_AllCars.Count() == 1 
+            || m_AllCars.Count() == 2)
         {
             if (m_ActiveCars.Count < 1)
             {
@@ -311,6 +313,7 @@ public class RaceManager : MonoBehaviour
     {
         GetSettings();
         SpawnCars();
+        SetupAirstrike();
         AddListeners();
     }
 
@@ -453,6 +456,15 @@ public class RaceManager : MonoBehaviour
                     car.InputManager = inputManager;
                 }
             }
+        }
+    }
+
+    private void SetupAirstrike()
+    {
+        if (m_RaceSettings.AirstrikeOn)
+        {
+            UIManager.Current.SetScreenActive(Screens.AirstrikeScreen, true);
+            UIManager.Current.SetupAirstrikeScreen(Cars);
         }
     }
 

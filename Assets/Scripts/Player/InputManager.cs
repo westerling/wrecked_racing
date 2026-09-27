@@ -7,9 +7,9 @@ public class InputManager : MonoBehaviour
     public event Action<float> Accelerate;
     public event Action<float> Brake;
     public event Action<float> Steer;
+    public event Action<Vector2> Aim;
     public event Action FireStarted;
     public event Action FireStopped;
-
     public event Action<Player, MenuNavigation> NavigateMenu;
     public event Action<Player> BackMenu;
     public event Action<Player> GoMenu;
@@ -56,6 +56,11 @@ public class InputManager : MonoBehaviour
     protected void SendBrake(float value)
     {
         Brake?.Invoke(value);
+    }
+
+    protected void SendAim(Vector2 value)
+    {
+        Aim?.Invoke(value);
     }
 
     protected void SendSteer(float value)
@@ -136,6 +141,13 @@ public class InputManager : MonoBehaviour
         m_PlayerInput.actions["Steer"].canceled += SteerPerformed;
         m_PlayerInput.actions["Fire"].performed += FirePerfomed;
         m_PlayerInput.actions["Fire"].canceled += FireStoppedPerformed;
+        m_PlayerInput.actions["AimInput"].performed += AimInputPerformed;
+        m_PlayerInput.actions["AimInput"].canceled += AimInputPerformed;
+    }
+
+    private void AimInputPerformed(InputAction.CallbackContext obj)
+    {
+        SendAim(obj.ReadValue<Vector2>());
     }
 
     private void SteerPerformed(InputAction.CallbackContext obj)
@@ -203,6 +215,8 @@ public class InputManager : MonoBehaviour
         m_PlayerInput.actions["Steer"].canceled -= SteerPerformed;
         m_PlayerInput.actions["Fire"].performed -= FirePerfomed;
         m_PlayerInput.actions["Fire"].canceled -= FireStoppedPerformed;
+        m_PlayerInput.actions["AimInput"].performed -= AimInputPerformed;
+        m_PlayerInput.actions["AimInput"].canceled -= AimInputPerformed;
     }
 
     private void RemoveMenuListeners()

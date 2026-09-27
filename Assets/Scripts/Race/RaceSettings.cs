@@ -3,7 +3,7 @@ using UnityEngine;
 public class RaceSettings
 {
     private GameObject m_Car;
-
+    private bool m_AirstrikeOn;
     private int m_SceneIndex;
     
     private int m_NumberOfBots;
@@ -25,5 +25,11 @@ public class RaceSettings
     { 
         get => m_NumberOfBots; 
         set => m_NumberOfBots = value; 
+    }
+
+    public bool AirstrikeOn
+    {
+        get => m_AirstrikeOn;
+        set => m_AirstrikeOn = value;
     }
 }
