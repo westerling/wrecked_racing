@@ -15,7 +15,13 @@ public class RaceSettingsMenu : ButtonsMenu
     private TMP_Text m_CarDescription;
 
     [SerializeField]
+    private TMP_Text m_GameDescription;
+
+    [SerializeField]
     private Image m_CarImage;
+
+    [SerializeField]
+    private Button m_StartButton;
 
     private int m_TrackIndex = 0;
     private int m_CarIndex = 0;
@@ -163,6 +169,11 @@ public class RaceSettingsMenu : ButtonsMenu
         UpdateInformation();
     }
 
+    public void SelectStartButton()
+    {
+        EventSystem.SetSelectedGameObject(m_StartButton.gameObject);
+    }
+
     private void UpdateInformation()
     {
         GetInformation();
@@ -191,14 +202,36 @@ public class RaceSettingsMenu : ButtonsMenu
 
     private void CreateDescription()
     {
+        m_TrackDescription.text = m_SelectedTrackInfo.TrackDescription;
+        m_CarDescription.text = m_SelectedCar.Stats.Name + "\n"
+            + "\n"
+            + m_SelectedCar.Stats.Description;
+
         var airstrikeText = m_IsAirstrikeOn ? "ON" : "OFF";
         var powerupText = m_IsPowerupsOn ? "ON" : "OFF";
 
-        m_TrackDescription.text =
-            m_SelectedTrackInfo.TrackDescription + "\n"
+        m_GameDescription.text = playerPointsText() + "\n"
+            + "\n"
             + "Airstrike: " + airstrikeText + "\n"
             + "Powerups: " + powerupText;
+    }
 
-        m_CarDescription.text = m_SelectedCar.Stats.Name + "\n" + m_SelectedCar.Stats.Description;
+    private string playerPointsText()
+    {
+        switch (GameManager.Current.ActivePlayers.Count)
+        {
+            case 1:
+                return "Try to run as fast as possible!";
+            case 2:
+                return "First to 6 points win.";
+            case 3:
+                return "First to 8 points win.";
+            case 4:
+                return "First to 12 points win.";
+            default:
+                break;
+        }
+
+        return "Tips: Stay on the track!";
     }
 }
