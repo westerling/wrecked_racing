@@ -6,6 +6,9 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager Current;
 
+    [SerializeField]
+    private Menu m_MainMenu;
+
     private List<Menu> m_Menus = new List<Menu>();
 
     private void Awake()
@@ -16,6 +19,13 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         GameManager.Current.PlayerStatusChanged += OnPlayerStatusChanged;
+    }
+
+    public void ResetMenus()
+    {
+        m_Menus.Clear();
+
+        AddMenu(m_MainMenu);
     }
 
     public void AddMenu(Menu menu)
@@ -33,6 +43,16 @@ public class MenuManager : MonoBehaviour
 
         m_Menus.Add(menu);
         SetActiveGameObject();
+    }
+
+    public void CleanMenus()
+    {
+        foreach (var menu in m_Menus)
+        {
+            menu.gameObject.SetActive(false);
+        }
+
+        m_Menus.Clear();
     }
 
     public void PopMenu(Menu menu)

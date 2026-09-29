@@ -283,4 +283,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e4005478689094d82d10213d64b980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CountdownText: {fileID: 255969284725567172}

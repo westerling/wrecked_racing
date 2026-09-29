@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     public event Action<GameState> GameStateChanged;
 
     [SerializeField]
+    private GameObject m_MenuCamera;
+
+    [SerializeField]
     private GameObject m_RaceCamera;
 
     [SerializeField]
@@ -85,7 +88,9 @@ public class GameManager : MonoBehaviour
         Current = this;
 
         //StartCoroutine(ShowSplashScreen());
-        SceneManager.LoadSceneAsync((int)SceneIndexes.Title_Screen, LoadSceneMode.Additive);
+        //SceneManager.LoadSceneAsync((int)SceneIndexes.Title_Screen, LoadSceneMode.Additive);
+        
+        ResetUiElements();
     }
 
     public void SetGameState(GameState gameState)
@@ -104,8 +109,11 @@ public class GameManager : MonoBehaviour
         RaceSettings = raceSettings;
 
         UIManager.Current.SetScreenActive(Screens.LoadingScreen, true);
+        MenuManager.Current.CleanMenus();
 
-        m_LoadingScenes.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Title_Screen));
+        m_MenuCamera.SetActive(false);
+
+        //m_LoadingScenes.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Title_Screen));
         m_LoadingScenes.Add(SceneManager.LoadSceneAsync(raceSettings.SceneIndex, LoadSceneMode.Additive));
 
         m_CurrentLoadedScene = raceSettings.SceneIndex;
@@ -118,11 +126,18 @@ public class GameManager : MonoBehaviour
     public void UnloadTrack()
     {
         m_LoadingScenes.Add(SceneManager.UnloadSceneAsync(m_CurrentLoadedScene));
-        m_LoadingScenes.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Title_Screen, LoadSceneMode.Additive));
+        //m_LoadingScenes.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Title_Screen, LoadSceneMode.Additive));
 
         StartCoroutine(GetSceneLoadProgress());
 
         SetGameState(GameState.Menu);
+        ResetUiElements();
+    }
+
+    private void ResetUiElements()
+    {
+        m_MenuCamera.SetActive(true);
+        MenuManager.Current.ResetMenus();
     }
 
     [UsedImplicitly]

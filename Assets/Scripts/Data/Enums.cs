@@ -109,9 +109,17 @@ public enum Screens
 {
     SplashScreen = 0,
     LoadingScreen = 1,
-    PauseScreen = 2,
     PointScreen = 3,
     AirstrikeScreen = 4
+}
+
+public enum Menus
+{
+    MainMenu,
+    PlayersMenu,
+    SettingsMenu,
+    RaceSettingsMenu,
+    PauseMenu
 }
 
 public enum PlayerColor

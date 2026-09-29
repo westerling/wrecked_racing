@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MainMenu : ButtonsMenu
 {
     [SerializeField]
-    private Menu m_StartGameMenu;
+    private Menu m_PlayersMenu;
 
     [SerializeField]
     private Menu m_SettingsMenu;
@@ -16,7 +15,7 @@ public class MainMenu : ButtonsMenu
 
     public void OpenPlayerSettingsMenu()
     {
-        MenuManager.Current.AddMenu(m_StartGameMenu, this);
+        MenuManager.Current.AddMenu(m_PlayersMenu, this);
     }
 
     public void OpenSettingsMenu()

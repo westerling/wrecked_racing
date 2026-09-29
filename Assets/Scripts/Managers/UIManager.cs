@@ -16,15 +16,8 @@ public class UIManager : MonoBehaviour
     private GameObject m_LoadingScreen;
 
     [SerializeField]
-    private GameObject m_CountDownScreen;
-
-    [SerializeField]
     private GameObject m_PointScreen;
 
-    [SerializeField]
-    private GameObject m_PauseScreen;
-
-    [Header("Airstrike")]
     [SerializeField]
     private GameObject m_AirstrikeScreen;
 
