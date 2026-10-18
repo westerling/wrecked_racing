@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     public event Action<float> Brake;
     public event Action<float> Steer;
     public event Action<Vector2> Aim;
+    public event Action Pause;
     public event Action FireStarted;
     public event Action FireStopped;
     public event Action<Player, MenuNavigation> NavigateMenu;
@@ -78,6 +79,11 @@ public class InputManager : MonoBehaviour
         FireStopped?.Invoke();
     }
 
+    protected void SendGoPause()
+    {
+        Pause?.Invoke();
+    }
+
     protected void SendNavigateMenu(MenuNavigation navigation)
     {
         NavigateMenu?.Invoke(m_Player, navigation);
@@ -143,6 +149,12 @@ public class InputManager : MonoBehaviour
         m_PlayerInput.actions["Fire"].canceled += FireStoppedPerformed;
         m_PlayerInput.actions["AimInput"].performed += AimInputPerformed;
         m_PlayerInput.actions["AimInput"].canceled += AimInputPerformed;
+        m_PlayerInput.actions["Pause"].performed += PauseInputPerformed;
+    }
+
+    private void PauseInputPerformed(InputAction.CallbackContext context)
+    {
+        SendGoPause();
     }
 
     private void AimInputPerformed(InputAction.CallbackContext obj)

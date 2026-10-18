@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88df1760752d567459d59c0f5fe5d676, type: 3}
   m_Name: Green
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCardSprite
-  m_PlayerReady: {fileID: 21300000, guid: dbf2fc0cf8c3460469ed2961989d2a05, type: 3}
-  m_PlayerNotReady: {fileID: 21300000, guid: 1fe855050b6d7e04f97ee94aaf00179a, type: 3}
-  m_Locked: {fileID: 21300000, guid: c3d0e2780f896d8428b221da22aac9bb, type: 3}
+  m_BackgroundImage: {fileID: 21300000, guid: 603d1f310918bb941a49c8a7c6402ced, type: 3}
+  m_Icon: {fileID: 21300000, guid: 772dd32af388c1f4fb6c0ea12b7f7eda, type: 3}
   m_PlayerColor: 0
+  m_Color: {r: 0.22301881, g: 0.7433963, b: 0.27675337, a: 0.78431374}
+  m_ColorUnavailable: {r: 0, g: 0.19999999, b: 0.005817604, a: 0.8901961}

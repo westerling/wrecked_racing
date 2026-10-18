@@ -86,10 +86,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Current = this;
-
-        //StartCoroutine(ShowSplashScreen());
-        //SceneManager.LoadSceneAsync((int)SceneIndexes.Title_Screen, LoadSceneMode.Additive);
-        
         ResetUiElements();
     }
 
@@ -112,32 +108,29 @@ public class GameManager : MonoBehaviour
         MenuManager.Current.CleanMenus();
 
         m_MenuCamera.SetActive(false);
-
-        //m_LoadingScenes.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Title_Screen));
         m_LoadingScenes.Add(SceneManager.LoadSceneAsync(raceSettings.SceneIndex, LoadSceneMode.Additive));
-
         m_CurrentLoadedScene = raceSettings.SceneIndex;
 
         StartCoroutine(GetSceneLoadProgress());
-
         SetGameState(GameState.Race);
     }
 
     public void UnloadTrack()
     {
         m_LoadingScenes.Add(SceneManager.UnloadSceneAsync(m_CurrentLoadedScene));
-        //m_LoadingScenes.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Title_Screen, LoadSceneMode.Additive));
 
         StartCoroutine(GetSceneLoadProgress());
 
-        SetGameState(GameState.Menu);
+        UIManager.Current.SetScreenActive(Screens.BlackScreen, false);
         ResetUiElements();
     }
 
     private void ResetUiElements()
     {
+        MenuManager.Current.CleanMenus();
+        SetGameState(GameState.Menu);
         m_MenuCamera.SetActive(true);
-        MenuManager.Current.ResetMenus();
+        MenuManager.Current.ResetMenuLayout();
     }
 
     [UsedImplicitly]
@@ -160,14 +153,6 @@ public class GameManager : MonoBehaviour
                 PlayerStatusChanged?.Invoke(player, true);
             }
         }
-    }
-
-    private PlayerColor GivePlayerColor()
-    {
-        var allColors = Enum.GetValues(typeof(PlayerColor)).Cast<PlayerColor>();
-        var takenColors = Players.Select(p => p.Color).ToHashSet();
-
-        return allColors.FirstOrDefault(color => !takenColors.Contains(color));
     }
 
     [UsedImplicitly]
@@ -212,5 +197,6 @@ public class GameManager : MonoBehaviour
         }
 
         UIManager.Current.SetScreenActive(Screens.LoadingScreen, false);
+        UIManager.Current.SetScreenActive(Screens.BlackScreen, true);
     }
 }

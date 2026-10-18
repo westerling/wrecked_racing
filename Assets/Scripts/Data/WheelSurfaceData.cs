@@ -19,7 +19,7 @@ public class WheelSurfaceData : ScriptableObject
     [SerializeField]
     private float m_SlipSensitivity = 1f;
 
-    [Tooltip("0 = no forec, 10 = a lot of")]
+    [Tooltip("0 = no force, 10 = a lot of")]
     [Range(0f, 10f)]
     [SerializeField]
     private float m_SideForceFrequency = 0f;

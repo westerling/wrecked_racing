@@ -34,15 +34,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "NavigateY",
-                    "type": "Button",
-                    "id": "e9358d20-74da-45fe-bba2-21da3124b4ed",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Handbrake",
                     "type": "Button",
                     "id": "8919768d-46f3-4b42-9d7f-276149201782",
@@ -55,6 +46,15 @@
                     "name": "Fire",
                     "type": "Button",
                     "id": "5ba86730-6378-4a6f-ba4f-77f08363e917",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "30cc74ad-c84b-4b13-a89e-75e96e0b13ab",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -85,7 +85,7 @@
                 {
                     "name": "",
                     "id": "51a8d7f1-3226-42bc-848b-84523100f415",
-                    "path": "<XInputController>/rightTrigger",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -107,7 +107,7 @@
                 {
                     "name": "",
                     "id": "fef6a77b-dd71-4855-9eb6-b7773043b185",
-                    "path": "<XInputController>/leftTrigger",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -162,7 +162,7 @@
                 {
                     "name": "negative",
                     "id": "9f0ef636-aec4-4658-9a5b-0cc2edafdd3d",
-                    "path": "<XInputController>/leftStick/left",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -173,7 +173,7 @@
                 {
                     "name": "positive",
                     "id": "ba1f0c51-3f6c-420a-ae0a-0746a687125d",
-                    "path": "<XInputController>/leftStick/right",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -182,68 +182,35 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Keyboard",
-                    "id": "701f530f-56c6-4f66-a6a9-41cc015dc8ad",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "NavigateY",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "0c3a6dec-c09a-41d5-aad2-74910ad9342b",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "NavigateY",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "63ebaf63-f880-43f8-ab92-374468bf6696",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "NavigateY",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "Joystick",
-                    "id": "980e3208-994a-465c-b917-15491b69b752",
+                    "id": "6b687368-d704-47d9-abdf-285cef24be8f",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "NavigateY",
+                    "action": "Steer",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "negative",
-                    "id": "de75889c-dfec-4be4-a2c9-b22cb8fc6ce3",
-                    "path": "<XInputController>/leftStick/down",
+                    "id": "979534f9-1755-4a57-b354-ade78d5dfdd4",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "NavigateY",
+                    "action": "Steer",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "positive",
-                    "id": "9ff426e1-5cd4-48f0-b477-2bb5cff4601f",
-                    "path": "<XInputController>/leftStick/up",
+                    "id": "b5ffa735-cf17-4953-9fdd-8b26f6eed00f",
+                    "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "NavigateY",
+                    "action": "Steer",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -261,7 +228,7 @@
                 {
                     "name": "",
                     "id": "6fff88de-8764-4146-9336-bce3b702e8ec",
-                    "path": "<XInputController>/buttonEast",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -283,11 +250,33 @@
                 {
                     "name": "",
                     "id": "a80b1dd9-a6c4-4b92-8d16-0edb1c0a298f",
-                    "path": "<XInputController>/buttonSouth",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9631e853-fbf1-4b6d-83d7-12aff68c71b6",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15428520-cb49-471a-99c4-7006af7519bc",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -347,7 +336,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "XBOX",
+                    "name": "GamePad",
                     "id": "c3a9f37f-68a7-4570-b655-785eb1c878b7",
                     "path": "2DVector",
                     "interactions": "",
@@ -360,7 +349,7 @@
                 {
                     "name": "up",
                     "id": "5480269c-21d8-44b8-9336-f70444677efd",
-                    "path": "<XInputController>/leftStick/up",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -371,7 +360,7 @@
                 {
                     "name": "down",
                     "id": "1d4f257e-56a3-4d8e-a0b5-45922f0bd249",
-                    "path": "<XInputController>/leftStick/down",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -382,7 +371,7 @@
                 {
                     "name": "left",
                     "id": "a9ecebdf-7f1f-459e-982b-28005e33d9ed",
-                    "path": "<XInputController>/leftStick/left",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -393,7 +382,7 @@
                 {
                     "name": "right",
                     "id": "f84ac62f-342d-4f96-baa1-b942861d0848",
-                    "path": "<XInputController>/leftStick/right",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -438,7 +427,7 @@
                     "name": "NavigateRight",
                     "type": "Button",
                     "id": "ea717075-5d02-400a-a147-22f30a14dd90",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -447,7 +436,7 @@
                     "name": "GoBackMenu",
                     "type": "Button",
                     "id": "9dbf5c12-a2c4-469a-8220-2f1a0ca4753a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -456,7 +445,7 @@
                     "name": "EnterMenu",
                     "type": "Button",
                     "id": "884cd27d-1dda-4ab0-bb01-126859a1897c",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -469,7 +458,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
                     "action": "NavigateUp",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -477,10 +466,10 @@
                 {
                     "name": "",
                     "id": "afbcdb97-cfc9-4c79-9a8a-6d2f0b6c8d01",
-                    "path": "<XInputController>/leftStick/up",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Controller",
                     "action": "NavigateUp",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -488,7 +477,7 @@
                 {
                     "name": "",
                     "id": "356cd3e9-e176-41ac-9d88-406499e264a9",
-                    "path": "<XInputController>/dpad/up",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
@@ -502,7 +491,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
                     "action": "NavigateDown",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -510,10 +499,10 @@
                 {
                     "name": "",
                     "id": "d7ed8d7a-5b2e-45cb-a7b2-330b08ebe653",
-                    "path": "<XInputController>/leftStick/down",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Controller",
                     "action": "NavigateDown",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -521,7 +510,7 @@
                 {
                     "name": "",
                     "id": "68f92d31-b0c9-4484-99e2-acb039d458aa",
-                    "path": "<XInputController>/dpad/down",
+                    "path": "<Gamepad>/dpad/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
@@ -535,7 +524,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
                     "action": "NavigateLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -543,10 +532,10 @@
                 {
                     "name": "",
                     "id": "db06c96d-b322-4d2c-898e-fc48abccf564",
-                    "path": "<XInputController>/leftStick/left",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Controller",
                     "action": "NavigateLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -554,7 +543,7 @@
                 {
                     "name": "",
                     "id": "a7c09085-9e58-4c27-8e94-6b4888cd27d5",
-                    "path": "<XInputController>/dpad/left",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
@@ -564,22 +553,22 @@
                 },
                 {
                     "name": "",
-                    "id": "fe22c429-51ad-4e4a-97af-c96ab883884e",
-                    "path": "<XInputController>/leftStick/right",
+                    "id": "b441eef2-0c69-46a7-b0e9-f438b3c41b05",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
                     "action": "NavigateRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b441eef2-0c69-46a7-b0e9-f438b3c41b05",
-                    "path": "<Keyboard>/rightArrow",
+                    "id": "fe22c429-51ad-4e4a-97af-c96ab883884e",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Controller",
                     "action": "NavigateRight",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -587,7 +576,7 @@
                 {
                     "name": "",
                     "id": "9fef801b-bced-439f-9ce3-19792d8d8163",
-                    "path": "<XInputController>/dpad/right",
+                    "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
@@ -601,7 +590,7 @@
                     "path": "<Keyboard>/backspace",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
                     "action": "GoBackMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -612,7 +601,7 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
                     "action": "GoBackMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -620,10 +609,10 @@
                 {
                     "name": "",
                     "id": "fcbdfd53-1007-49db-bf8c-c339ba17a971",
-                    "path": "<XInputController>/buttonEast",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Controller",
                     "action": "GoBackMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -634,7 +623,7 @@
                     "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
                     "action": "EnterMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -642,10 +631,10 @@
                 {
                     "name": "",
                     "id": "9df210d2-08f5-44d7-a249-ebd31dd3fb1f",
-                    "path": "<XInputController>/buttonSouth",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Controller",
                     "action": "EnterMenu",
                     "isComposite": false,
                     "isPartOfComposite": false

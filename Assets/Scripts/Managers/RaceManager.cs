@@ -10,6 +10,7 @@ public class RaceManager : MonoBehaviour
     public static RaceManager Current;
 
     public event Action<RaceStatus> RaceStatusChanged;
+    public event Action<CameraStatus> CameraStatusChanged;
     public event Action<GameObject> LeaderChanged;
 
     [SerializeField]
@@ -32,6 +33,8 @@ public class RaceManager : MonoBehaviour
     private bool m_DeathPoolOpen = false;
 
     private RaceStatus m_RaceStatus;
+
+    private const float cameraMargin = 0.25f;
 
     private Checkpoint m_NextCheckpoint;
     private Checkpoint m_LastCheckpoint;
@@ -90,15 +93,39 @@ public class RaceManager : MonoBehaviour
     {
         Current = this;
 
+        UIManager.Current.AddRaceListeners();
         SpawnPools();
         SetupCamera();
         SetupRace();
+        PauseTime(false);
     }
 
     private void Start()
     {
         SetStartPoints();
         ResetRace();
+    }
+
+    public void Quit()
+    {
+        PauseTime(false);
+        Destroy(m_Camera);
+
+        UIManager.Current.SetScreenActive(Screens.PointScreen, false);
+        UIManager.Current.SetScreenActive(Screens.AirstrikeScreen, false);
+        GameManager.Current.UnloadTrack();
+    }
+
+    public void PauseTime(bool pauseTime)
+    {
+        Time.timeScale = pauseTime ? 0 : 1;
+
+        UIManager.Current.SetScreenActive(Screens.PointScreen, !pauseTime);
+        
+        if (m_RaceSettings.AirstrikeOn)
+        {
+            UIManager.Current.SetScreenActive(Screens.AirstrikeScreen, !pauseTime);
+        }
     }
 
     private void SetStartPoints()
@@ -144,13 +171,6 @@ public class RaceManager : MonoBehaviour
 
         m_DeathPool.Clear();
         m_DeathPoolOpen = false;
-    }
-
-    public void Quit()
-    {
-        UIManager.Current.SetScreenActive(Screens.PointScreen, false);
-        UIManager.Current.SetScreenActive(Screens.AirstrikeScreen, false);
-        GameManager.Current.UnloadTrack();
     }
 
     private void SetupCamera()
@@ -397,7 +417,15 @@ public class RaceManager : MonoBehaviour
     {
         RaceTimer = 0f;
         RaceStatus = RaceStatus.Countdown;
+        StartCoroutine(CameraDelay(1f));
         Countdown.StartCountdown();
+    }
+
+    private IEnumerator CameraDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        CameraStatusChanged?.Invoke(CameraStatus.CameraCutIn);
     }
 
     private void ResetCarPanels()
@@ -442,7 +470,7 @@ public class RaceManager : MonoBehaviour
 
     private void SpawnCars()
     {
-        foreach (var player in GameManager.Current.Players)
+        foreach (var player in GameManager.Current.ActivePlayers)
         {
             var carGameObject = Instantiate(m_RaceSettings.Car, m_CarTransform);
 
@@ -494,7 +522,11 @@ public class RaceManager : MonoBehaviour
 
     private IEnumerator StartPauseEnumerator(int delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(delay - cameraMargin);
+
+        CameraStatusChanged?.Invoke(CameraStatus.CameraCutOut);
+
+        yield return new WaitForSeconds(cameraMargin);
 
         ResetRace();
     }

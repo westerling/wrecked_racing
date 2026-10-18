@@ -69,6 +69,14 @@ public enum RaceStatus
     Finished = 3
 }
 
+public enum CameraStatus
+{
+    CameraOff = 0,
+    CameraOn = 1,
+    CameraCutIn = 2,
+    CameraCutOut = 3
+}
+
 public enum CountdownEvents
 {
     Preparation = 0,
@@ -110,16 +118,24 @@ public enum Screens
     SplashScreen = 0,
     LoadingScreen = 1,
     PointScreen = 3,
-    AirstrikeScreen = 4
+    AirstrikeScreen = 4,
+    BlackScreen = 5
 }
 
-public enum Menus
+public enum MenuType
 {
     MainMenu,
     PlayersMenu,
     SettingsMenu,
     RaceSettingsMenu,
-    PauseMenu
+    PauseMenu,
+    PauseSettingsMenu
+}
+
+public enum MenuLoadMode
+{
+    Single = 0,
+    Additive = 1
 }
 
 public enum PlayerColor

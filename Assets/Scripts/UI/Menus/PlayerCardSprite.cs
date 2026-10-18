@@ -4,42 +4,42 @@ using UnityEngine;
 public class PlayerCardSprite : ScriptableObject
 {
     [SerializeField]
-    private Sprite m_PlayerReady;
+    private Sprite m_BackgroundImage;
 
     [SerializeField]
-    private Sprite m_PlayerNotReady;
-
-    [SerializeField]
-    private Sprite m_Locked;
-
-    [SerializeField]
-    private Sprite m_Open;
+    private Sprite m_Icon;
 
     [SerializeField]
     private PlayerColor m_PlayerColor;
+
+    [SerializeField]
+    private Color m_Color;
+
+    [SerializeField]
+    private Color m_ColorUnavailable;
 
     public PlayerColor PlayerColor
     {
         get => m_PlayerColor;
     }
     
-    public Sprite PlayerNotReady
+    public Color Color
     {
-        get => m_PlayerNotReady;
+        get => m_Color;
     }
     
-    public Sprite PlayerReady
+    public Sprite BackgroundImage
     {
-        get => m_PlayerReady;
+        get => m_BackgroundImage;
     }
 
-    public Sprite Locked
+    public Sprite Icon
     {
-        get => m_Locked;
+        get => m_Icon;
     }
-    
-    public Sprite Open
+
+    public Color ColorUnavailable
     {
-        get => m_Open;
+        get => m_ColorUnavailable;
     }
 }

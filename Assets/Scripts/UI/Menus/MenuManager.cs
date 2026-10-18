@@ -9,7 +9,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private Menu m_MainMenu;
 
-    private List<Menu> m_Menus = new List<Menu>();
+    [SerializeField]
+    private List<Menu> m_Menus = new();
+
+    private readonly List<Menu> m_ActiveMenus = new();
 
     private void Awake()
     {
@@ -21,19 +24,58 @@ public class MenuManager : MonoBehaviour
         GameManager.Current.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
-    public void ResetMenus()
+    public void ResetMenuLayout()
     {
-        m_Menus.Clear();
+        AddMenu(MenuType.MainMenu, MenuLoadMode.Single);
+    }
 
-        AddMenu(m_MainMenu);
+    public void AddMenu(MenuType menuType, MenuLoadMode loadMode)
+    {
+        if (loadMode == MenuLoadMode.Single)
+        {
+            m_ActiveMenus.Clear();
+        }
+
+        var menu = m_Menus.FirstOrDefault(x => x.MenuType == menuType);
+
+        if (menu == null)
+        {
+            Debug.LogError("No Menu of type: " + menuType + " exists.");
+            return;
+        }
+
+        menu.gameObject.SetActive(true);
+        m_ActiveMenus.Add(menu);
+        SetActiveSelectedMenuItem();
+    }
+
+    public void AddMenu(MenuType menuType, Menu parent, MenuLoadMode loadMode)
+    {
+        if (loadMode == MenuLoadMode.Single)
+        {
+            m_ActiveMenus.Clear();
+        }
+
+        var menu = m_Menus.FirstOrDefault(x => x.MenuType == menuType);
+
+        if (menu == null)
+        {
+            Debug.LogError("No Menu of type: " + menuType + " exists.");
+            return;
+        }
+
+        parent.gameObject.SetActive(false);
+        menu.gameObject.SetActive(true);
+        m_ActiveMenus.Add(menu);
+        SetActiveSelectedMenuItem();
     }
 
     public void AddMenu(Menu menu)
     {
         menu.gameObject.SetActive(true);
 
-        m_Menus.Add(menu);
-        SetActiveGameObject();
+        m_ActiveMenus.Add(menu);
+        SetActiveSelectedMenuItem();
     }
 
     public void AddMenu(Menu menu, Menu parent)
@@ -41,18 +83,18 @@ public class MenuManager : MonoBehaviour
         parent.gameObject.SetActive(false);
         menu.gameObject.SetActive(true);
 
-        m_Menus.Add(menu);
-        SetActiveGameObject();
+        m_ActiveMenus.Add(menu);
+        SetActiveSelectedMenuItem();
     }
 
     public void CleanMenus()
     {
-        foreach (var menu in m_Menus)
+        foreach (var menu in m_ActiveMenus)
         {
             menu.gameObject.SetActive(false);
         }
 
-        m_Menus.Clear();
+        m_ActiveMenus.Clear();
     }
 
     public void PopMenu(Menu menu)
@@ -61,22 +103,22 @@ public class MenuManager : MonoBehaviour
         {
             oldMenu.gameObject.SetActive(false);
 
-            if (m_Menus.Contains(menu))
+            if (m_ActiveMenus.Contains(menu))
             {
-                m_Menus.Remove(menu);
+                m_ActiveMenus.Remove(menu);
             }
         }
 
-        if (m_Menus.Any())
+        if (m_ActiveMenus.Any())
         {
-            var parentMenu = m_Menus.Last();
+            var parentMenu = m_ActiveMenus.Last();
             parentMenu.gameObject.SetActive(true);
 
-            SetActiveGameObject();
+            SetActiveSelectedMenuItem();
         }
     }
 
-    private void SetActiveGameObject()
+    private void SetActiveSelectedMenuItem()
     {
         if (TryGetActiveMenu(out var menu))
         {
@@ -89,9 +131,9 @@ public class MenuManager : MonoBehaviour
 
     private bool TryGetActiveMenu(out Menu menu)
     {
-        if (m_Menus.Any())
+        if (m_ActiveMenus.Any())
         {
-            menu = m_Menus.Last();
+            menu = m_ActiveMenus.Last();
             return true;
         }
 
@@ -128,12 +170,12 @@ public class MenuManager : MonoBehaviour
 
     private void BackMenuPerformed(Player player)
     {
-        m_Menus.Last()?.LeaveMenuPerformed(player);
+        m_ActiveMenus.Last()?.LeaveMenuPerformed(player);
     }
 
     private void GoMenuPerformed(Player player)
     {
-        m_Menus.Last()?.EnterMenuPerformed(player);
+        m_ActiveMenus.Last()?.EnterMenuPerformed(player);
     }
 
     private void NavigateMenuPerformed(Player player, MenuNavigation navigation)
@@ -141,16 +183,16 @@ public class MenuManager : MonoBehaviour
         switch (navigation)
         {
             case MenuNavigation.Up:
-                m_Menus.Last()?.NavigateUpPerformed(player);
+                m_ActiveMenus.Last()?.NavigateUpPerformed(player);
                 break;
             case MenuNavigation.Down:
-                m_Menus.Last()?.NavigateDownPerformed(player);
+                m_ActiveMenus.Last()?.NavigateDownPerformed(player);
                 break;
             case MenuNavigation.Left:
-                m_Menus.Last()?.NavigateLeftPerformed(player);
+                m_ActiveMenus.Last()?.NavigateLeftPerformed(player);
                 break;
             case MenuNavigation.Right:
-                m_Menus.Last()?.NavigateRightPerformed(player);
+                m_ActiveMenus.Last()?.NavigateRightPerformed(player);
                 break;
         }
     }

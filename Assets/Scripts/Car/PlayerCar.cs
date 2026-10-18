@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerCar : Car
@@ -68,6 +69,7 @@ public class PlayerCar : Car
     private void Start()
     {
         SetMaterial();
+        AddLateListeners();
     }
 
     private void SetMaterial()
@@ -112,6 +114,21 @@ public class PlayerCar : Car
         RaceManager.Current.RaceStatusChanged += OnRaceStatusChanged;
     }
 
+    private void AddLateListeners()
+    {
+        InputManager.Pause += OnPause;
+    }
+
+    private void OnPause()
+    {
+        if (RaceManager.Current.RaceStatus == RaceStatus.Race)
+        {
+            GameManager.Current.SetGameState(GameState.Menu);
+            RaceManager.Current.PauseTime(true);
+            MenuManager.Current.AddMenu(MenuType.PauseMenu, MenuLoadMode.Single);
+        }
+    }
+
     private void OnRaceStatusChanged(RaceStatus raceStatus)
     {
         m_Timer = 0;
@@ -128,6 +145,7 @@ public class PlayerCar : Car
 
     private void RemoveListeners()
     {
+        InputManager.Pause -= OnPause;
         RaceManager.Current.RaceStatusChanged -= OnRaceStatusChanged;
     }
 

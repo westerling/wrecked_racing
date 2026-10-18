@@ -1,13 +1,35 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerCard : MonoBehaviour
 {
     [SerializeField]
-    private Image m_Image;
+    private Image m_ColorImage;
 
     [SerializeField]
-    private InputImageSelector m_InputImageSelector;
+    private Image m_Icon;
+
+    [SerializeField]
+    private GameObject[] m_KeyboardImages;
+
+    [SerializeField]
+    private GameObject[] m_GamepadImages;
+
+    [SerializeField]
+    private GameObject m_ColorCarousel;
+
+    [SerializeField]
+    private TMP_Text m_ReadyText;
+
+    [SerializeField]
+    private TMP_Text m_StatusText;
+
+    [SerializeField]
+    private TMP_Text m_ColorText;
+
+    [SerializeField]
+    private Color m_DefaultColor;
 
     private Player m_Player;
     private PlayerColor m_Color;
@@ -31,14 +53,44 @@ public class PlayerCard : MonoBehaviour
         set => m_Color = value;
     }
 
-    public Image Image
+    public Image Icon
     {
-        get => m_Image;
-        set => m_Image = value;
+        get => m_Icon;
+        set => m_Icon = value;
     }
 
-    public InputImageSelector InputImageSelector
+    public TMP_Text StatusText
     {
-        get => m_InputImageSelector;
+        get => m_StatusText;
+    }
+        
+    public TMP_Text ColorText
+    {
+        get => m_ColorText;
+    }
+
+    public TMP_Text ReadyText
+    {
+        get => m_ReadyText;
+    }
+    
+    public GameObject[] KeyboardImages
+    {
+        get => m_KeyboardImages;
+    }
+
+    public GameObject[] GamepadImages
+    {
+        get => m_GamepadImages;
+    }
+
+    public Image ColorImage
+    {
+        get => m_ColorImage;
+    }
+
+    public GameObject ColorCarousel
+    {
+        get => m_ColorCarousel;
     }
 }

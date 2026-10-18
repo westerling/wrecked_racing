@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88df1760752d567459d59c0f5fe5d676, type: 3}
   m_Name: Purple
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCardSprite
-  m_PlayerReady: {fileID: 21300000, guid: 323c5eda2e6ea1e408d60ec6dbc74bea, type: 3}
-  m_PlayerNotReady: {fileID: 21300000, guid: ca313239d88ae2148bdc5e77bc78572d, type: 3}
-  m_Locked: {fileID: 21300000, guid: 6d41527c309a9bd4599cbd726c534c42, type: 3}
-  m_Open: {fileID: 0}
+  m_BackgroundImage: {fileID: 21300000, guid: 5f9a91fc74de04d4592f83cabf04a016, type: 3}
+  m_Icon: {fileID: 21300000, guid: 5d24e1d8d015df942a59b681e389bd69, type: 3}
   m_PlayerColor: 6
+  m_Color: {r: 0.6387689, g: 0, b: 0.89433956, a: 0.8}
+  m_ColorUnavailable: {r: 0.23664422, g: 0.01122815, b: 0.3132075, a: 0.87058824}

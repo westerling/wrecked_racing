@@ -1,4 +1,5 @@
-using TMPro;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayersMenu : Menu
@@ -9,52 +10,85 @@ public class PlayersMenu : Menu
     [SerializeField]
     private Menu m_RaceSettingsMenu;
 
-    [SerializeField]
-    private TMP_Text m_StatusText;
+    private List<Player> m_ReadyPlayers = new List<Player>();
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
-        UpdateText();
-        m_PlayerCardsManager.ResetPlayerCards();
+        m_ReadyPlayers.Clear();
+        m_PlayerCardsManager.RemoveAllPlayerCards();
+
+        AddPlayerCards();
+    }
+
+    private void AddPlayerCards()
+    {
+        foreach (var player in GameManager.Current.Players)
+        {
+            m_PlayerCardsManager.TryAddPlayerCard(player.InputType);
+        }
     }
 
     public override void EnterMenuPerformed(Player player)
     {
-        if (m_PlayerCardsManager.IsPlayerAdded(player))
+        if (m_PlayerCardsManager.PlayerCardExists(player))
         {
             if (m_PlayerCardsManager.IsPlayerReady(player))
             {
                 if (m_PlayerCardsManager.AllPlayersReady())
                 {
-                    MenuManager.Current.AddMenu(m_RaceSettingsMenu, this);
+                    StartRace();
+                }
+                else
+                {
+                    return;
                 }
             }
             else
             {
-                m_PlayerCardsManager.TrySetPlayerReady(player);
+                if (m_PlayerCardsManager.TrySetPlayerReady(player))
+                {
+                    m_ReadyPlayers.Add(player);
+
+                    if (m_PlayerCardsManager.AllPlayersReady())
+                    {
+                        StartRace();
+                    }
+                }
             }
         }
         else
         {
-            var playerAdded = m_PlayerCardsManager.TryAddPlayer(player);
-
-            if (!playerAdded)
+            if (m_PlayerCardsManager.FreePlayerCardExists())
             {
-                Debug.LogError("Player could not be added.");
+                if (!m_PlayerCardsManager.TryAddPlayer(player))
+                {
+                    Debug.LogError("Player could not be added.");
+                }
             }
-        }
-
-        UpdateText();
+            else
+            {
+                if (!m_PlayerCardsManager.TryAddPlayerCard(player.InputType))
+                {
+                    Debug.LogError("No more player cards.");
+                }
+            }
+        }           
     }
 
     public override void LeaveMenuPerformed(Player player)
     {
-        if (m_PlayerCardsManager.IsPlayerAdded(player))
+        if (m_PlayerCardsManager.PlayerCardExists(player))
         {
             if (m_PlayerCardsManager.IsPlayerReady(player))
             {
+
+                if (m_ReadyPlayers.Contains(player))
+                {
+                    m_ReadyPlayers.Remove(player);
+                }
+
                 m_PlayerCardsManager.SetPlayerNotReady(player);
             }
             else
@@ -67,8 +101,6 @@ public class PlayersMenu : Menu
             MenuManager.Current.PopMenu(this);
             return;
         }
-
-        UpdateText();
     }
 
     public override void NavigateDownPerformed(Player player)
@@ -77,7 +109,7 @@ public class PlayersMenu : Menu
 
     public override void NavigateLeftPerformed(Player player)
     {
-        if (m_PlayerCardsManager.IsPlayerAdded(player))
+        if (m_PlayerCardsManager.PlayerCardExists(player))
         {
             if (!m_PlayerCardsManager.IsPlayerReady(player))
             {
@@ -88,7 +120,7 @@ public class PlayersMenu : Menu
 
     public override void NavigateRightPerformed(Player player)
     {
-        if (m_PlayerCardsManager.IsPlayerAdded(player))
+        if (m_PlayerCardsManager.PlayerCardExists(player))
         {
             if (!m_PlayerCardsManager.IsPlayerReady(player))
             {
@@ -103,17 +135,32 @@ public class PlayersMenu : Menu
 
     protected override void OnPlayerJoined(Player playerJoining)
     {
+        if (m_ReadyPlayers.Contains(playerJoining))
+        {
+            m_ReadyPlayers.Remove(playerJoining);
+        }
+
+        m_PlayerCardsManager.TryAddPlayerCard(playerJoining.InputType);
     }
 
     protected override void OnPlayerLeft(Player playerLeaving)
     {
+        if (m_ReadyPlayers.Contains(playerLeaving))
+        {
+            m_ReadyPlayers.Remove(playerLeaving);
+        }
+
+        m_PlayerCardsManager.RemovePlayer(playerLeaving);
+        m_PlayerCardsManager.RemovePlayerCard(playerLeaving);
     }
 
     protected override void OnPlayerStatusChanged(Player player, bool playerStatus)
     {
     }
 
-    private void UpdateText()
+    private void StartRace()
     {
+        GameManager.Current.SetActivePlayers(m_ReadyPlayers);
+        MenuManager.Current.AddMenu(m_RaceSettingsMenu, this);
     }
 }

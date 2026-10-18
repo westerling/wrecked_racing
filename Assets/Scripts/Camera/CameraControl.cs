@@ -25,7 +25,10 @@ public class CameraControl : MonoBehaviour
     private GameObject m_AudioListener;
 
     [SerializeField]
-    private Image m_FadeImage; 
+    private Image m_FadeImage;
+
+    [SerializeField]
+    private CinemachineSplineDolly m_Dolly;
 
     private CinemachineTargetGroup m_TargetGroup;
     private CinemachineCamera[] m_Cameras;
@@ -151,23 +154,28 @@ public class CameraControl : MonoBehaviour
 
     private void OnRaceStatusChanged(RaceStatus raceStatus)
     {
+        Debug.Log(raceStatus);
         switch (raceStatus)
         {
             case RaceStatus.Countdown:
                 SetBlend(Styles.Cut, 0f);
                 StartCoroutine(FadeCamera(DollyCamera, true));
+                m_Dolly.Damping.Enabled = false;
                 break;
             case RaceStatus.Race:
                 SetBlend(Styles.HardIn, 0.5f);
                 StartCoroutine(FadeCamera(DollyCamera, false));
+                m_Dolly.Damping.Enabled = true;
                 break;
             case RaceStatus.HeatEnd:
-                SetBlend(Styles.HardIn, 0.5f);
+                SetBlend(Styles.HardIn, 0.2f);
                 StartCoroutine(FadeCamera(PodiumCamera, false));
+                m_Dolly.Damping.Enabled = false;
                 break;
             case RaceStatus.Finished:
                 SetBlend(Styles.HardIn, 0.5f);
                 StartCoroutine(FadeCamera(FinishedCamera, false));
+                m_Dolly.Damping.Enabled = false;
                 break;
             default:
                 break;
@@ -178,7 +186,6 @@ public class CameraControl : MonoBehaviour
     {
         if (fade)
         {
-            yield return Fade(0f, 1f, 0.2f);
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -186,36 +193,8 @@ public class CameraControl : MonoBehaviour
         {
             camera.Priority = camera == cameraIn ? 1 : 0;
         }
-
-        yield return new WaitForSeconds(0.5f);
-
-        if (fade)
-        {
-            yield return Fade(1f, 0f, 0.2f);
-        }
     }
 
-    private IEnumerator Fade(float from, float to, float duration)
-    {
-        var color = m_FadeImage.color;
-        color.a = from;
-        m_FadeImage.color = color;
-
-        var elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-
-            color.a = Mathf.Lerp(from, to, elapsed / duration);
-            m_FadeImage.color = color;
-
-            yield return null;
-        }
-
-        color.a = to;
-        m_FadeImage.color = color;
-    }
 
     private void SetBlend(Styles style, float time)
     {

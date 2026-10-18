@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88df1760752d567459d59c0f5fe5d676, type: 3}
   m_Name: Pink
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCardSprite
-  m_PlayerReady: {fileID: 21300000, guid: d988457738d7dfb44843950f60c87436, type: 3}
-  m_PlayerNotReady: {fileID: 21300000, guid: dc5401519612a5d45b35b452984ff415, type: 3}
-  m_Locked: {fileID: 21300000, guid: 733b273437bd56b4098fe7953f4e8038, type: 3}
+  m_BackgroundImage: {fileID: 21300000, guid: a2bb371c72b5008429f69ae0431a5706, type: 3}
+  m_Icon: {fileID: 21300000, guid: 5d01a9a34274b5d43a4a1b82e91665dc, type: 3}
   m_PlayerColor: 4
+  m_Color: {r: 0.9924528, g: 0.3801281, b: 0.8297004, a: 0.7607843}
+  m_ColorUnavailable: {r: 0.3283019, g: 0, b: 0.18664716, a: 0.8901961}
