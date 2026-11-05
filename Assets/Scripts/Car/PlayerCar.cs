@@ -25,6 +25,8 @@ public class PlayerCar : Car
 
     private bool m_RaceActive = false;
     private float m_Timer;
+    private bool m_DeathTimerEnabled;
+
 
     public WeaponManager WeaponManager
     {
@@ -72,6 +74,18 @@ public class PlayerCar : Car
         AddLateListeners();
     }
 
+    public void DisableDeathTimer()
+    {
+        m_DeathTimerEnabled = false;
+        m_Timer = 0;
+    }
+
+    public void EnableDeathTimer()
+    {
+        m_DeathTimerEnabled = false;
+        m_Timer = 0;
+    }
+
     private void SetMaterial()
     {
         var newMaterial = ColorManager.Current.GetMaterial(m_Player.Color);
@@ -89,15 +103,16 @@ public class PlayerCar : Car
 
     private void CheckStationaryCar()
     {
-        if (!m_RaceActive)
+        if (!m_RaceActive || !m_DeathTimerEnabled)
         {
             return;
         }
+
         if (CurrentSpeed < 1)
         {
             m_Timer += Time.deltaTime;
 
-            if (m_Timer >= 5000)
+            if (m_Timer >= 5)
             {
                 Health.Damage(float.MaxValue);
                 m_Timer = 0;
@@ -135,6 +150,7 @@ public class PlayerCar : Car
         switch (raceStatus)
         {
             case RaceStatus.Race:
+                m_DeathTimerEnabled = true;
                 m_RaceActive = true;
                 break;
             default:

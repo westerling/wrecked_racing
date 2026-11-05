@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ad75b9ce2d8bb114591a176589234061, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ad75b9ce2d8bb114591a176589234061, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -126,3 +130,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 837cb0843e0626443a3e860cb255e70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OilSpill
+  m_MeshFilter: {fileID: 2457108427001906633}
+  m_MeshCollider: {fileID: 4297055066351386937}
+  m_SurfaceOffset: 0.04
+--- !u!33 &2457108427001906633 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: ad75b9ce2d8bb114591a176589234061, type: 3}
+  m_PrefabInstance: {fileID: 1313931722565561735}
+  m_PrefabAsset: {fileID: 0}

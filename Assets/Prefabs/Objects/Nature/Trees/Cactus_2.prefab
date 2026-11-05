@@ -71,7 +71,7 @@ PrefabInstance:
       addedObject: {fileID: 7668616730326508073}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c1b4588853fb2ef41bebc9b1a6d7bfcc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1435057269774987790}
+      addedObject: {fileID: 2006845846346538450}
   m_SourcePrefab: {fileID: 100100000, guid: c1b4588853fb2ef41bebc9b1a6d7bfcc, type: 3}
 --- !u!1 &5247170825674735569 stripped
 GameObject:
@@ -86,7 +86,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5247170825674735569}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 50
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResettableObject
   m_RigidBody: {fileID: 3628729262210415641}
---- !u!64 &1435057269774987790
-MeshCollider:
+--- !u!65 &2006845846346538450
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -152,7 +152,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4562530893379237289, guid: c1b4588853fb2ef41bebc9b1a6d7bfcc, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 3.5, z: 1}
+  m_Center: {x: 0, y: 1.5, z: 0}

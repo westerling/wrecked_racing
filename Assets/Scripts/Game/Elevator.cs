@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,6 @@ public class Elevator : MonoBehaviour
     [SerializeField] 
     private float m_Speed = 5f;
 
-    //private float m_PositionTolerance = 1.2f;
     private List<Car> m_CarsOnElevator = new List<Car>();
 
     private ElevatorState m_State;
@@ -73,19 +73,25 @@ public class Elevator : MonoBehaviour
 
         if (m_State == ElevatorState.Bottom)
         {
-            m_State = ElevatorState.MovingUp;
+            StartCoroutine(ChangeState(ElevatorState.MovingUp, 1f));
             RotateCogs(true, false);
         }
+    }
+
+    private IEnumerator ChangeState(ElevatorState state, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        m_State = state;
     }
 
     public void CarExited(Car car)
     {
         m_CarsOnElevator.Remove(car);
 
-        if (m_CarsOnElevator.Count == 0 &&
-            m_State == ElevatorState.Top)
+        if (m_CarsOnElevator.Count == 0)
         {
-            m_State = ElevatorState.MovingDown;
+            StartCoroutine(ChangeState(ElevatorState.MovingDown, 0.5f));
             RotateCogs(true, true);
         }
     }

@@ -547,8 +547,9 @@ public class RaceManager : MonoBehaviour
     private void OnCheckpointPassed(Checkpoint checkpointPassed)
     {
         RemoveCheckpointListener();
+
         m_LastCheckpoint = m_NextCheckpoint;
-        
+
         if (checkpointPassed.gameObject.TryGetComponent(out StartCheckpoint startCheckpoint))
         {
             m_StartCheckpoint = startCheckpoint;

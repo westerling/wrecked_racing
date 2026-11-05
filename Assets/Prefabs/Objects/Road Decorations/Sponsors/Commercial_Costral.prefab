@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a740364fe37214f829f4a41fe7e74c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResettableObject
-  m_RigidBody: {fileID: 0}
+  m_RigidBody: {fileID: 6228360648903030301}
 --- !u!54 &6228360648903030301
 Rigidbody:
   m_ObjectHideFlags: 0

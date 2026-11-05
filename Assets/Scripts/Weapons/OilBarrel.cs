@@ -22,6 +22,11 @@ public class OilBarrel : Weapon
                 pooledObject.transform.eulerAngles = euler;
 
                 pooledObject.SetActive(true);
+
+                if (pooledObject.TryGetComponent(out OilSpill oilSpill))
+                {
+                    oilSpill.SetupOilSpill();
+                }
             }
         }
     }

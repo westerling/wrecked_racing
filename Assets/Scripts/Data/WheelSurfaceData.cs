@@ -14,6 +14,11 @@ public class WheelSurfaceData : ScriptableObject
     [SerializeField]
     private float m_GripMultiplier = 1f;
 
+    [Tooltip("0 = No speed, 1 = Normal speed")]
+    [Range(0f, 1f)]
+    [SerializeField]
+    private float m_SpeedRatio = 1f;
+
     [Tooltip("How quickly traction breaks loose on this surface")]
     [Range(0.1f, 2f)]
     [SerializeField]
@@ -105,5 +110,15 @@ public class WheelSurfaceData : ScriptableObject
     public float StickyTimer
     {
         get => m_StickyTimer;
+    }
+
+    public bool IsSticky
+    {
+        get => m_StickyTimer > 0f;
+    }
+
+    public float SpeedPercentage
+    {
+        get => m_SpeedRatio;
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Wheel : CarComponent
 {
@@ -19,6 +20,7 @@ public class Wheel : CarComponent
     
     private AnimationCurve m_AnimationCurve;
     private WheelSurfaceData m_CurrentSurfaceData;
+    private readonly List<StickySurfaceTimer> m_StickySurfaces = new();
 
     private PooledSkidTrail m_TrailRenderer;
 
@@ -29,6 +31,7 @@ public class Wheel : CarComponent
     private float m_BrakeTorque;
     private float m_WheelRpm;
 
+    private bool m_ForceBrake;
     public WheelCollider WheelCollider 
     {
         get => m_WheelCollider;  
@@ -78,8 +81,10 @@ public class Wheel : CarComponent
 
     private void Update()
     {
+        UpdateStickySurfaces();
         UpdateWheelEffects();
         ApplySurfaceForces();
+        CheckForForcedBrake();
 
         WheelRpm = m_WheelCollider.rpm;
         WheelCollider.GetWorldPose(out Vector3 position, out Quaternion rotation);
@@ -87,17 +92,37 @@ public class Wheel : CarComponent
         GraphicsTransform.rotation = rotation;
     }
 
+    private void CheckForForcedBrake()
+    {
+        m_ForceBrake = false;
 
+        if (m_CurrentSurfaceData != null)
+        {
+            if (m_CurrentSurfaceData.SpeedPercentage < 1)
+            {
+                if (Car.CurrentSpeedRatio > m_CurrentSurfaceData.SpeedPercentage)
+                {
+                    m_ForceBrake = true;
+                }
+            }
+        }
+    }
 
     private void FixedUpdate()
     {
         var grip = m_CurrentSurfaceData != null
-            ? m_CurrentSurfaceData.GripMultiplier
-            : 1f;
+        ? m_CurrentSurfaceData.GripMultiplier
+        : 1f;
+
+        grip *= GetStickyGripMultiplier();
+
+        var speedEffect = m_CurrentSurfaceData != null
+        ? m_CurrentSurfaceData.SpeedPercentage
+        : 1f;
 
         WheelCollider.steerAngle = SteerAngle;
-        WheelCollider.motorTorque = MotorTorque * grip;
-        WheelCollider.brakeTorque = BrakeTorque * grip;
+        WheelCollider.motorTorque = MotorTorque * grip * speedEffect;
+        WheelCollider.brakeTorque = m_ForceBrake ? 500f : BrakeTorque * grip;
     }
 
     private void SetSlipCurve()
@@ -115,6 +140,19 @@ public class Wheel : CarComponent
         }
     }
 
+    private void UpdateStickySurfaces()
+    {
+        for (var i = m_StickySurfaces.Count - 1; i >= 0; i--)
+        {
+            m_StickySurfaces[i].TimeLeft -= Time.deltaTime;
+
+            if (m_StickySurfaces[i].TimeLeft <= 0)
+            {
+                m_StickySurfaces.RemoveAt(i);
+            }
+        }
+    }
+
     private void UpdateWheelEffects()
     {
         if (m_CarStatus != CarStatus.Active ||
@@ -124,7 +162,15 @@ public class Wheel : CarComponent
             return;
         }
 
+        var emitTrail = false;
+
         m_CurrentSurfaceData = GetSurfaceData(hit);
+
+        if (m_CurrentSurfaceData != null && m_CurrentSurfaceData.IsSticky)
+        {
+            AddOrRefreshStickySurface(m_CurrentSurfaceData);
+            emitTrail = true;
+        }
 
         var combinedSlip = Mathf.Sqrt(
             hit.forwardSlip * hit.forwardSlip +
@@ -156,6 +202,25 @@ public class Wheel : CarComponent
         }
 
         m_TrailRenderer.EmitTrail(combinedSlip > slipThreshold);
+    }
+
+    private void AddOrRefreshStickySurface(WheelSurfaceData surface)
+    {
+        var existing = m_StickySurfaces.Find(s => s.Surface == surface);
+
+        if (existing != null)
+        {
+            existing.TimeLeft = surface.StickyTimer;
+        }
+        else
+        {
+            m_StickySurfaces.Add(new StickySurfaceTimer
+            {
+                Surface = surface,
+                TimeLeft = surface.StickyTimer,
+                Duration = surface.StickyTimer
+            });
+        }
     }
 
     private void RemoveOldRenderer()
@@ -266,6 +331,22 @@ public class Wheel : CarComponent
             m_AudioSource.pitch,
             (0.8f + slipRatio * 0.4f) * m_CurrentSurfaceData.PitchMultiplier,
             Time.deltaTime * 5f);
+    }
+
+    private float GetStickyGripMultiplier()
+    {
+        float grip = 1f;
+
+        foreach (var sticky in m_StickySurfaces)
+        {
+            float strength = sticky.Strength;
+
+            float surfaceGrip = sticky.Surface.GripMultiplier;
+
+            grip *= Mathf.Lerp(1f, surfaceGrip, strength);
+        }
+
+        return grip;
     }
 
     private void AddListeners()

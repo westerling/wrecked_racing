@@ -10,6 +10,8 @@ public class ElevatorTrigger : MonoBehaviour
         if (collider.attachedRigidbody.TryGetComponent(out PlayerCar car))
         {
             m_Elevator.CarEntered(car);
+
+            car.DisableDeathTimer();
         }
     }
 
@@ -18,6 +20,8 @@ public class ElevatorTrigger : MonoBehaviour
         if (collider.attachedRigidbody.TryGetComponent(out PlayerCar car))
         {
             m_Elevator.CarExited(car);
+
+            car.EnableDeathTimer();
         }
     }
 }
